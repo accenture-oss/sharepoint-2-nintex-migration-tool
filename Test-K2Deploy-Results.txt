@@ -1,0 +1,104 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524000505
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+============================================
+  K2 Deployment Discovery Phase 2
+  05/24/2026 00:05:05
+============================================
+
+[1] K2 PowerShell Modules:
+  No K2 modules found in standard paths
+
+[2] K2 PowerShell Snap-ins:
+  Snap-in: SourceCode.Deployment.PowerShell - K2 Package and Deployment PowerShell SnapIn
+  Snap-in: SourceCode.Install.PowerShell - K2 Installer PowerShell SnapIn
+
+[3] K2 Command Line Tools:
+
+[4] K2 PowerShell Cmdlet DLLs:
+  SourceCode.Deployment.PowerShell.dll
+    Cmdlet: New-Package
+    Cmdlet: Send-Deploy-Package
+    Cmdlet: Send-Refresh-Package
+    Cmdlet: Write-DeploymentConfig
+    Cmdlet: Write-PackageConfig
+
+[5] Attempting to import K2 deployment...
+WARNING: Some imported command names contain one or more of the following restricted characters: # , ( ) {{ }} [ ] & - / \ $ ^ ; : " ' < > | ? @ ` * % + = ~
+  Imported SourceCode.Deployment.PowerShell as module!
+    New-Package [Cmdlet]
+    Send-Deploy-Package [Cmdlet]
+    Send-Refresh-Package [Cmdlet]
+    Write-DeploymentConfig [Cmdlet]
+    Write-PackageConfig [Cmdlet]
+
+[6] Existing .kspx deployment packages:
+  C:\Program Files\K2\Setup\App Framework Core.kspx (867KB)
+  C:\Program Files\K2\Setup\App Framework Extension Notification.kspx (460KB)
+  C:\Program Files\K2\Setup\App Installer.kspx (31KB)
+  C:\Program Files\K2\Setup\App Wizard.kspx (15372KB)
+  C:\Program Files\K2\Setup\CloudStorage.kspx (485KB)
+  C:\Program Files\K2\Setup\CustomStep.kspx (203KB)
+  C:\Program Files\K2\Setup\DocuSign_Feature_Activation.kspx (687KB)
+  C:\Program Files\K2\Setup\Dynamics365ForSales.kspx (502KB)
+  C:\Program Files\K2\Setup\ExchangeFeature.kspx (581KB)
+  C:\Program Files\K2\Setup\K2 Basic Task Form.kspx (177KB)
+
+[7] K2 Services (TCP check):
+  Port 5252 : OPEN
+  Port 5555 : OPEN
+  Port 80 : OPEN
+  Port 443 : OPEN
+
+[8] K2 Web Service endpoints:
+PS>TerminatingError(Invoke-WebRequest): "The underlying connection was closed: An unexpected error occurred on a receive."
+  http://localhost:5555/K2Services/ -> error: The underlying connection was closed: An unexpected error occurred on a receive.
+PS>TerminatingError(Invoke-WebRequest): "The underlying connection was closed: An unexpected error occurred on a receive."
+  http://localhost:5252/K2Services/ -> error: The underlying connection was closed: An unexpected error occurred on a receive.
+PS>TerminatingError(Invoke-WebRequest): "404 NOT FOUND"
+  http://localhost:80/K2/ -> NotFound
+PS>TerminatingError(Invoke-WebRequest): "404 NOT FOUND"
+  http://localhost/Designer/ -> NotFound
+PS>TerminatingError(Invoke-WebRequest): "404 NOT FOUND"
+  http://localhost/Workspace/ -> NotFound
+
+[9] PackageDeployer test:
+PS>TerminatingError(New-Object): "Cannot find type [SourceCode.Framework.Deployment.PackageDeployer]: verify that the assembly containing this type is loaded."
+  PackageDeployer failed: Cannot find type [SourceCode.Framework.Deployment.PackageDeployer]: verify that the assembly containing this type is loaded.
+
+[10] Looking for .proj/.k2proj deployment files:
+  C:\Program Files\K2\Setup\Apps\K2 Package and Deployment.xml
+    <Package>
+      <Metadata ID="c750484f-a125-4607-b86a-29e2971a7853" Patch="False" Description="K2 Package and Deployment" Publisher="SourceCode" />
+      <Components>
+        <Component id="PDC" name="K2 Package and Deployment" displayName="K2 Package and Deployment" componentGuid="052B5AC5-7EA7-0000-4691-DDDDDDDDDDD3" componentType="CLIENT_PD" setupType="7" category="4">
+          <Dependencies>
+            <AllowedDependency Type="PowerShell" Name="PowerShell" Version="3.0" MatchType="GreaterThanOrEqualTo" />
+          </Dependencies>
+          <Dialogs>
+            <dialog value="10111000000011100010" name="CLIENT" />
+            <dialog value="11111100101111100100" name="HOSTSERVERDATABASE" />
+
+============================================
+  Discovery Phase 2 Complete!
+  Results: C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Results.txt
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524000520
+**********************

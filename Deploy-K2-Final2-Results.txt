@@ -1,0 +1,126 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524030153
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-Final2-Results.txt
+============================================
+  K2 FINAL2 Deploy
+============================================
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+KPRX: 413507 bytes
+
+[1] Master K2 Configuration...
+ConfigurationManager.config (first 3000 chars):
+<?xml version="1.0" encoding="utf-16"?>
+<configuration>
+  <configSections>
+    <section name="wizards" type="SourceCode.Configuration.WizardsSection, SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" />
+    <section name="propertyWizards" type="SourceCode.Configuration.PropertyWizardsSection, SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" />
+    <section name="plugins" type="SourceCode.Configuration.PluginsSection, SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" />
+    <section name="environments" type="SourceCode.Configuration.EnvironmentsSection, SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" />
+    <section name="extenderResolvers" type="SourceCode.Configuration.ExtenderResolversSection, SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" />
+    <section name="fieldCategories" type="SourceCode.Configuration.FieldCategoriesSection, SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" />
+    <section name="toolboxCategories" type="SourceCode.Configuration.ToolboxCategoriesSection, SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" />
+  </configSections>
+  <appSettings>
+    <add key="SmartObject Default ServiceInstance GUID" value="E5609413-D844-4325-98C3-DB3CACBD406D" />
+    <add key="WorkFlow Service Instance Guid" value="12e28680-3377-4aae-98de-10d80fd728b0" />
+    <add key="WorkFlow Reporting Service Instance Guid" value="ef7310e5-b14f-464d-b0f3-a37d6c367620" />
+    <add key="URLValidationExpression" value="http(s?)://([\w-]+\.)+[\w-]+(/[\w-./?%&amp;=]*)?" />
+    <add key="SPSSiteCharacterValidation" value="\x7E\x22\x23\x25\x26\x2A\x3C\x3E\x3F\x5C\x7B\x7C\x7D" />
+    <add key="SPSFolderCharacterValidation" value="\x7E\x22\x23\x25\x26\x2A\x3C\x3E\x3F\x5C\x7B\x7C\x7D\x3A" />
+    <add key="SPSFileCharacterValidation" value="\x7E\x22\x23\x25\x26\x2A\x3C\x3E\x3F\x5C\x7B\x7C\x7D\x3A" />
+  </appSettings>
+  <environments>
+    <environment name="K2Environment">
+      <services>
+        <service type="SourceCode.Workflow.Plugins.ObjectBrowserService" assembly="SourceCode.Workflow.Plugins, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" interfaceType="SourceCode.Workflow.WizardFramework.Interfaces.IContextBrowserService" interfaceAssembly="SourceCode.Workflow.WizardFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" name="ContextBrowserService" />
+        <service type="SourceCode.Workflow.Design.EnvironmentLibraryService" assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" interfaceType="SourceCode.Workflow.Design.IEnvironmentLibraryService" interfaceAssembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" name="Env
+
+[2] Building deployer...
+Config written (matching K2Studio pattern)
+Compiling...
+  Microsoft (R) Visual C# Compiler version 4.8.9236.0
+
+  for C# 5
+  Copyright (C) Microsoft Corporation. All rights reserved.
+
+
+
+  This compiler is provided as part of the Microsoft (R) .NET Framework, but only supports language versions up to C# 5, which is no longer the latest version. For compilers that support newer versions of the C# programming language, see http://go.microsoft.com/fwlink/?LinkID=533240
+
+Compiled: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_final2\K2Deploy.exe
+
+[3] Running K2Deploy.exe...
+  === K2 Workflow Deployer ===
+  KPRX: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_final2\TestKprxWF.kprx (413507 bytes)
+  Loading KPRX...
+  FATAL: 1. Exception has been thrown by the target of an invocation.
+  2. Exception has been thrown by the target of an invocation.
+  3. Exception has been thrown by the target of an invocation.
+  4. Exception has been thrown by the target of an invocation.
+  5. Exception has been thrown by the target of an invocation.
+  6. Exception has been thrown by the target of an invocation.
+
+
+[4] Verifying...
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+
+============================================
+  FINAL2 Deploy Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524030157
+**********************

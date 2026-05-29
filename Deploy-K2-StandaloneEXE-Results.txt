@@ -1,0 +1,201 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524061031
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-StandaloneEXE-Results.txt
+============================================
+  K2 Deploy - Standalone EXE
+============================================
+[1] Finding K2 .exe.config source...
+  Searching for any K2 .exe.config...
+  Available: C:\Program Files\K2\Bin\controlutil.exe.config
+  Available: C:\Program Files\K2\Bin\SourceCode.SmartWizards.RegistrationTool.exe.config
+  Available: C:\Program Files\K2\Host Server\Bin\K2HostServer.exe.config
+    ^^^ Using this.
+
+[2] Compiling K2Deployer.exe...
+  csc.exe: C:\Windows\Microsoft.NET\Framework64\v4.0.30319\csc.exe
+  References: 150 DLLs
+  EXE compiled: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_standalone\K2Deployer.exe
+
+[3] Setting up .exe.config...
+  Copied: C:\Program Files\K2\Host Server\Bin\K2HostServer.exe.config -> C:\Shared\SPtoNintex-Migration-Tool\k2-export\_standalone\K2Deployer.exe.config
+  Config (first 500): <?xml version="1.0" encoding="utf-16"?>
+<configuration>
+  <configSections>
+    <section name="sourcecode" type="SourceCode.Configuration.SourceCodeConfigurationSection, SourceCode, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" />
+    <section name="sourcecode.transientFaultRecovery" type="SourceCode.Net.TransientFaultRecovery.Configuration.TransientFaultRecoveryConfigurationSection, SourceCode, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" />
+    <s
+
+[4] Preparing KPRX...
+  KPRX: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_standalone\SPDMigratedApproval.kprx
+
+[5] Executing K2Deployer.exe...
+  Command: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_standalone\K2Deployer.exe "C:\Shared\SPtoNintex-Migration-Tool\k2-export\_standalone\SPDMigratedApproval.kprx" "C:\Shared\SPtoNintex-Migration-Tool\k2-export\_standalone"
+  === K2 KPRX Deployer v16 (Deployment.Management + Resources Fix) ===
+  Loading: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_standalone\SPDMigratedApproval.kprx
+  LOADED: SPDMigratedApproval
+  Compiling...
+  Compiled: OK
+  pkg.Save: OK (to C:\Users\user1\AppData\Local\Temp\4\K2Deploy_7542bb32)
+
+  Files produced:
+    .\build.proj (110)
+    .\ProjectDeployment.targets (892)
+    .\SPDMigratedApproval.kprx (425730)
+    .\SPDMigratedApproval.msbuild (2204)
+    .\SPDMigratedApproval.resources (1829)
+    .\Bin\SourceCode.DeploymentTasks.dll (166208)
+    .\Bin\SourceCode.EventBus.ClientAPI.dll (23880)
+    .\Bin\SourceCode.EventBus.Common.dll (28480)
+    .\Bin\SourceCode.HostClientAPI.dll (288056)
+    .\Bin\SourceCode.Workflow.Client.dll (315200)
+    .\Bin\SourceCode.Workflow.Common.dll (203584)
+    .\Bin\SourceCode.Workflow.Management.dll (428872)
+    .\Bin\zip_aa2f2f12875248c49011cacb772e2256.exe (79074)
+    .\Resources\aa2f2f12-8752-48c4-9011-cacb772e2256-ShapesView.Views.res (52957)
+    .\Resources\NotificationServiceDetails aa2f2f12875248c49011cacb772e2256.Notifications.res (47)
+    .\Resources\zip_aa2f2f12875248c49011cacb772e2256.Processes.res (139933)
+
+  --- Exploring SourceCode.Deployment.Management ---
+    SourceCode.Deployment.Management.DeploymentException
+    SourceCode.Deployment.Management.IClientSession
+    SourceCode.Deployment.Management.InvalidPackageException
+      Version get_PackagePlatformVersion()
+    SourceCode.Deployment.Management.ISession
+      Boolean get_DeploymentInProgress()
+      IDeploymentResults get_DeploymentResults()
+      Void BeginDeploy()
+      Void BeginPackageItems(PackageItemOptions options, )
+      Void BeginUpload(Int32 totalItemCount, Int32 processedItemCount, )
+      Void CancelDeploy()
+      Void CancelPackageItems()
+      DeploymentPlan CreateDeploymentPlan(String sessionName, )
+      Void Deploy()
+      Void EndDeploy()
+      PackageItemResult EndPackageItems()
+      Void EndUpload()
+      Void EndUpload(Exception e, )
+      PackageItemResult PackageItems(PackageItemOptions options, )
+      Void SynchroniseDeployment()
+    SourceCode.Deployment.Management.BeginRemoveRelatedComparisonState
+    SourceCode.Deployment.Management.EndDeploySessionState
+    SourceCode.Deployment.Management.BeginHostVersionState
+    SourceCode.Deployment.Management.HostVersionResultState
+    SourceCode.Deployment.Management.BeginGetSPSitesState
+    SourceCode.Deployment.Management.GetSPSitesResultsRecievedState
+    SourceCode.Deployment.Management.BeginPackageSessionState
+      PackageItemOptions get_PackageItemOptions()
+    SourceCode.Deployment.Management.EndPackageSessionState
+    SourceCode.Deployment.Management.PackagingNotSupportedException
+    SourceCode.Deployment.Management.ProgressResult
+    SourceCode.Deployment.Management.SendInstructionRequest
+    SourceCode.Deployment.Management.SyncRevertChangeset
+    SourceCode.Deployment.Management.BeginCompareItemState
+    SourceCode.Deployment.Management.BeginResetComparisonState
+    SourceCode.Deployment.Management.BeginDeploySessionState
+    SourceCode.Deployment.Management.CompareItemResultReceivedState
+    SourceCode.Deployment.Management.BeginExcludeComparisonState
+    SourceCode.Deployment.Management.GetDeploySessionProgressState
+    SourceCode.Deployment.Management.SyncApplyChangeset
+    SourceCode.Deployment.Management.LoadSessionResultState
+    SourceCode.Deployment.Management.BeginLoadSessionState
+    SourceCode.Deployment.Management.BeginExcludeValidationState
+    SourceCode.Deployment.Management.BeginValidateItemState
+    SourceCode.Deployment.Management.BeginResolveComparisonState
+    SourceCode.Deployment.Management.ValidateItemResultsRecievedState
+    SourceCode.Deployment.Management.DeploySessionResultsRecievedState
+    SourceCode.Deployment.Management.SyncRequest
+    SourceCode.Deployment.Management.ProgressState
+    SourceCode.Deployment.Management.SessionMode
+    SourceCode.Deployment.Management.ClientSession
+      Void Deploy()
+      DeploymentPlan CreateDeploymentPlan(String sessionName, )
+      Void BeginDeploy()
+      Void SynchroniseDeployment()
+      Void EndDeploy()
+      Void BeginPackageItems(PackageItemOptions options, )
+      PackageItemResult EndPackageItems()
+      Void CancelDeploy()
+      Void CancelPackageItems()
+    SourceCode.Deployment.Management.SessionData
+      IDeploymentResults get_DeploymentResults()
+    SourceCode.Deployment.Management.SessionExistsException
+    SourceCode.Deployment.Management.SessionLoadSideEffects
+    SourceCode.Deployment.Management.SessionOptionChangedEventArgs
+    SourceCode.Deployment.Management.SessionOptions
+    SourceCode.Deployment.Management.SyncErrorArgs
+    SourceCode.Deployment.Management.OpenSessionOptions
+    SourceCode.Deployment.Management.Session
+      IDeploymentResults get_DeploymentResults()
+      Boolean get_DeploymentInProgress()
+      Void Deploy()
+      Void BeginDeploy()
+      Void SynchroniseDeployment()
+      Void EndDeploy()
+      Void CancelDeploy()
+      DeploymentPlan CreateDeploymentPlan(String sessionName, )
+      Void BeginUpload(Int32 totalItemCount, Int32 processedItemCount, )
+      Void EndUpload()
+      Void EndUpload(Exception e, )
+      PackageItemResult PackageItems(PackageItemOptions options, )
+      Void BeginPackageItems(PackageItemOptions options, )
+      PackageItemResult EndPackageItems()
+      Void CancelPackageItems()
+    SourceCode.Deployment.Management.Extensions
+    SourceCode.Deployment.Management.PackageDeploymentManager
+      Void add_UploadProgress(EventHandler`1 value, )
+      Void remove_UploadProgress(EventHandler`1 value, )
+      Boolean GetDeploymentResults(String sessionName, UInt32& succeededDeploymentCount, UInt32& failedDeploymentCount, )
+    SourceCode.Deployment.Management.UploadEventArgs
+    SourceCode.Deployment.Management.UserDoesNotHaveRightsForItemsException
+
+  --- ExportProcessTask with Resources ---
+    .msbuild: C:\Users\user1\AppData\Local\Temp\4\K2Deploy_7542bb32\SPDMigratedApproval.msbuild
+    Resources dir exists: True
+      aa2f2f12-8752-48c4-9011-cacb772e2256-ShapesView.Views.res (52957)
+      NotificationServiceDetails aa2f2f12875248c49011cacb772e2256.Notifications.res (47)
+      zip_aa2f2f12875248c49011cacb772e2256.Processes.res (139933)
+    Patched .msbuild with absolute paths + conn strings
+    TaskGuid from .msbuild: 3a4f1f89ea694255acd0ae6e29bdee1f
+    [BuildProjectFile] targets: InitDeploy
+  FATAL:
+  [0] System.Reflection.TargetInvocationException: Exception has been thrown by the target of an invocation.
+    at System.RuntimeMethodHandle.InvokeMethod(Object target, Object[] arguments, Signature sig, Boolean constructor)
+    at System.Reflection.RuntimeMethodInfo.UnsafeInvokeInternal(Object obj, Object[] parameters, Object[] arguments)
+    at System.Reflection.RuntimeMethodInfo.Invoke(Object obj, BindingFlags invokeAttr, Binder binder, Object[] parameters, CultureInfo culture)
+    [1] System.IndexOutOfRangeException: Index was outside the bounds of the array.
+      at SourceCode.DeploymentTasks.DeploymentTask.Initialize()
+      at SourceCode.DeploymentTasks.ExportProcessTask.Initialize()
+
+[7] Verifying deployed processes:
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+  Total: 11
+**********************
+Windows PowerShell transcript end
+End time: 20260524061036
+**********************

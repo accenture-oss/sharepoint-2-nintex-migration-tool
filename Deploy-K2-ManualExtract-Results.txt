@@ -1,0 +1,123 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524032641
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-ManualExtract-Results.txt
+============================================
+  K2 Deploy - Manual ZIP Extract
+============================================
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+KPRX: 413507 bytes
+True
+
+[1] Manual ZIP extraction...
+  SKIP WF: FrameworkGeneric.Workflow_A4GH3Iisqu1GSLbFpPmkPSdQ2+g.Reference (266344 bytes)
+  Old WF entry: FrameworkGeneric.Workflow_A4GH3Iisqu1GSLbFpPmkPSdQ2+g.Reference
+  Wrote: SPDMigratedApproval.Workflow (404KB)
+
+  Files with 'Workflow' or 'FrameworkGeneric':
+    com.K2.App.Framework.Core.ItemView_kZ31VU6A4nwBils3rw1guUdOB9s.WorkflowReport (78KB)
+    SPDMigratedApproval.Workflow (404KB)
+
+[2] Analyzing definition.model...
+  <fileitem> elements: 0
+
+  FrameworkGeneric references: 75
+    [Framework Core/FrameworkGeneric.Workflow_A4GH3Iisqu1GSLbFpPmkPSdQ2+g.Reference]
+    [Framework Core\FrameworkGeneric.Workflow.Reference]
+    [Framework Core\FrameworkGeneric.Workflow.Reference\Task]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#1c018442-30c6-427b-8a38-f83fa646914e]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#1c018442-30c6-427b-8a38-f83fa646914e.a0fbdcb3-55c1-43e8-a4c8-17fc763e7f21]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#9d9a865e-c471-48ec-890f-9e1874cb0632]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.Decision/Event]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.End/Event]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.Task]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.Task/DataField]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.Task/Event]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#DataField]
+    [urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#FileDefinitions]
+
+[3] Replacing in definition.model...
+  fileitem ref: before=True after=True
+  <fileitem> elements after: 0
+  Remaining FrameworkGeneric refs: 0
+
+[4] Repackaging...
+  Package: 721KB
+
+[5] Deploying...
+  Model: App SPD Migration Members: 105
+  ** Workflows ns=urn:SourceCode/Categories?Workflows#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F **
+  ** SPD_Migration ns=urn:SourceCode/Categories?SPD_Migration#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FWorkflows%2F **
+  ** SPD Migration\SPDMigratedApproval ns=urn:SourceCode/Workflows **
+  ** com_K2_App_SPD_Migration_SmartObject_AppSettingGroup ns=urn:SourceCode/SmartObjects/SmartObject **
+  ** com_K2_App_SPD_Migration_SmartObject_AppType ns=urn:SourceCode/SmartObjects/SmartObject **
+  ** Registered_Application_com_K2_App_SPD_Migration_SmartObject_AppType ns=urn:SourceCode/SmartObjects/Association **
+  ** com_K2_App_SPD_Migration_SmartObject_RegisteredApp ns=urn:SourceCode/SmartObjects/SmartObject **
+  ** com_K2_App_SPD_Migration_SmartObject_RegisteredAppFormType ns=urn:SourceCode/SmartObjects/SmartObject **
+  ** Registered_Application_Form_com_K2_App_SPD_Migration_SmartObject_RegisteredAppFormType ns=urn:SourceCode/SmartObjects/Association **
+  ** com_K2_App_SPD_Migration_SmartObject_RegisteredAppForm ns=urn:SourceCode/SmartObjects/SmartObject **
+  ** com_K2_App_SPD_Migration_SmartObject_VersionDetail ns=urn:SourceCode/SmartObjects/SmartObject **
+
+  DEPLOYED: 104 items
+
+[6] Processes:
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+  Total: 11
+**********************
+Windows PowerShell transcript end
+End time: 20260524032704
+**********************

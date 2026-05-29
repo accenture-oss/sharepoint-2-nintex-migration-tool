@@ -1,0 +1,223 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524023443
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Swap-Results.txt
+============================================
+  K2 Workflow KPRX Swap Deploy
+============================================
+[1] Getting TestKprxWF KPRX...
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  KPRX: 413507 bytes
+
+[2] Creating template from App Framework Core...
+True
+  Template saved: 868KB
+
+[3] Modifying template .kspx...
+  Original WF file:  (0KB)
+Cannot convert argument "newChar", with value: "TestKprxWF_SPDMigrated.Workflow", for "Replace" to type "System.Char": 
+"Cannot convert value "TestKprxWF_SPDMigrated.Workflow" to type "System.Char". Error: "String must be exactly one 
+character long.""
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Swap.ps1:105 char:1
++ $defContent = $defContent.Replace($oldWfFileName, $newWfFileName)
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodException
+    + FullyQualifiedErrorId : MethodArgumentConversionInvalidCastArgument
+Cannot convert argument "newChar", with value: "TestKprxWF_SPDMigrated.Workflow", for "Replace" to type "System.Char": "Cannot convert value "TestKprxWF_SPDMigrated.Workflow" to type "System.Char". Error: "String must be exactly one character long.""
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Swap.ps1:105 char:1
++ $defContent = $defContent.Replace($oldWfFileName, $newWfFileName)
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [], MethodException
+    + FullyQualifiedErrorId : MethodArgumentConversionInvalidCastArgument
+
+  Updated definition.model
+  KPRX process path in XML:
+PS>TerminatingError(Remove-Item): "Cannot bind argument to parameter 'Path' because it is null."
+Remove-Item : Cannot bind argument to parameter 'Path' because it is null.
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Swap.ps1:124 char:13
++ Remove-Item $wfFile.FullName -Force
++             ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Remove-Item], ParameterBindingValidationException
+    + FullyQualifiedErrorId : 
+ParameterArgumentValidationErrorNullNotAllowed,Microsoft.PowerShell.Commands.RemoveItemCommand
+Remove-Item : Cannot bind argument to parameter 'Path' because it is null.
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Swap.ps1:124 char:13
++ Remove-Item $wfFile.FullName -Force
++             ~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidData: (:) [Remove-Item], ParameterBindingValidationException
+    + FullyQualifiedErrorId : ParameterArgumentValidationErrorNullNotAllowed,Microsoft.PowerShell.Commands.RemoveItemCommand
+
+  Wrote new WF: TestKprxWF_SPDMigrated.Workflow (404KB)
+  Updated properties.model
+  Modified package contents:
+    app generated icon (32)_R2JPISfAqcROrfHANPs9zXazD+g (1KB)
+    changesets.model (0KB)
+    com.K2.App.Framework.Core.Form_d4Qri+cXvWai5bFInJeGPscfwuk.RegisterFramework (20KB)
+    com.K2.App.Framework.Core.Form_R4A+dZPqZ5qcdyvUrS7jDbhgscs.ReadonlyReviewSubmitted (42KB)
+    com.K2.App.Framework.Core.Form_zywfRBZAlo+kklSKQzK+LkWk7lU.SelectRegisteredApplication (67KB)
+    com.K2.App.Framework.Core.ItemView_+_+HWte_74cjYQjUJnoG2e9lyy8.FormInfo (23KB)
+    com.K2.App.Framework.Core.ItemView_63cD4vp_20KBV12P9enSnUoHgO8.WorkspaceRegistration (69KB)
+    com.K2.App.Framework.Core.ItemView_8hvc1XnldpbCFJ4IRViUUBdc5jw.ActionBarSubmit (24KB)
+    com.K2.App.Framework.Core.ItemView_9ptqf28mYDm0HeWELJqBOd3kDKk.StatusBar (77KB)
+    com.K2.App.Framework.Core.ItemView_aO090rxDrSuaegGYHuNi5EuRaP0.DeploymentMessage (21KB)
+    com.K2.App.Framework.Core.ItemView_cutvvOcHDS6HyHG6XEL2zy+mmLc.DeploymentConfiguration (142KB)
+    com.K2.App.Framework.Core.ItemView_HgTNyQzGNpggQOp9K0iNIKgx2C8.ActionBarReview (42KB)
+    com.K2.App.Framework.Core.ItemView_iRMLmXu5LAvBFSRr1lsPnzctL6c.FormHeaderFull (30KB)
+    com.K2.App.Framework.Core.ItemView_JxGryd023pD89j+LdgrA48gZ678.ImagePalette (190KB)
+    com.K2.App.Framework.Core.ItemView_kZ31VU6A4nwBils3rw1guUdOB9s.WorkflowReport (78KB)
+    com.K2.App.Framework.Core.ItemView_LmGLhkhZYUu9IFoNW2R2st_WpiE.FormFooter (13KB)
+    com.K2.App.Framework.Core.ItemView_lrj3LMJ4PQRcbwhzLJHnC0bQ9Pw.RegisteredApplication (83KB)
+    com.K2.App.Framework.Core.ItemView_Qgf9quZRNY1gHejobZKREqvKem4.FormBehaviour (40KB)
+    com.K2.App.Framework.Core.ItemView_qjKSO5LHyNI1rIXRWwvLEtuuDck.AppsFavorite (46KB)
+    com.K2.App.Framework.Core.ItemView_wiSU23tVMB9pUmWNVK1ZNsfETyg.VersionRegistration (105KB)
+    com.K2.App.Framework.Core.ItemView_XiLcAjH2OQzr5Hp7R_FoaP09xvs.ProcessOverviewReport (21KB)
+    com.K2.App.Framework.Core.ItemView_YKbc2c+dDKJHbgiqSKf4316mPZY.Navigation (52KB)
+    com.K2.App.Framework.Core.ItemView_yL+xsxT0HkNtREmKpsFOAs8qZMM.FormHeaderThin (23KB)
+    com.K2.App.Framework.Core.ListView_3GdAMbnbR7N0t0SV30rUoS_BRqE.RegisteredApplicationFormSpecific (59KB)
+    com_K2_App_Framework_Core_SmartObject_AppSettingGroup_IB+eG2uNWSre0KEuLHdYNk0uJZ4 (46KB)
+    com_K2_App_Framework_Core_SmartObject_AppType_l+A1fk260HdS8VvGcR+JAkaOuHU (45KB)
+    com_K2_App_Framework_Core_SmartObject_RegisteredAppFormType_knaOZIcYZ3efRB13C+COMgwxy0U (38KB)
+    com_K2_App_Framework_Core_SmartObject_RegisteredAppForm_i7R9zsYrs83Hc6z1YSgUPNrBVrc (101KB)
+    com_K2_App_Framework_Core_SmartObject_RegisteredApp_rC4DTsBEWPptAmFNx_CrZYaTtWQ (113KB)
+    com_K2_App_Framework_Core_SmartObject_VersionDetail_SORWzAt3bC9uWpdRUMnyf8HD90c (72KB)
+    definition.model (5651KB)
+    k2 app administration icon_8Xi6wOtG1X+Y+5cVMGmC2FZ4oBM (2KB)
+    k2 app arrow down (24x24)_hvq7mwz8RFx31hnmo5E_G6v1LaE (2KB)
+    k2 app arrow down (92x92)_HYg+hxTqqF4TXo4rZZUZHuTJluw (3KB)
+    k2 app arrow up (24x24)_ncK_mwvAvnuqrWyOP20BCgXzGi0 (2KB)
+    k2 app arrow up (92x92)_yTXMArtt0NuzGyCAya8Dhdf+ePM (3KB)
+    k2 app export csv 134_9A5dKaByuQqu9SgVQPT8bHXU8jU (2KB)
+    k2 app export csv 268_gCmPQ6euMEarmgWXSsC5rE8sG_A (4KB)
+    k2 app export csv 402_s_UwVka4gbgD1JQXn24TXQG0JvM (6KB)
+    k2 app generic new instance icon_CBDkRyZyFHZ8mJQ7dkvxBeAz88M (4KB)
+    k2 app health green (16x16)_1KXpvLthxvCUwosvo2xkg8s07us (2KB)
+    k2 app health green (50x50)_phXWtf3fdtkq72BlhqERsMVGX_E (2KB)
+    k2 app health orange (16x16)_hOXf2qvyUV5Dq3SxbBTpa4bn5is (2KB)
+    k2 app health orange (50x50)_VXCHUQ6b2o3h_P5JQKYAk6NAAT8 (3KB)
+    k2 app health red (16x16)_sduPltE6O0+ecOK82Q3EmnrGi7U (2KB)
+    k2 app health red (50x50)_n3stAd2sMc9FcB+eEtH3CmiVF84 (2KB)
+    k2 app health undefined (16x16)_U_8014I__16UNEuMaFi6KvPuNwg (2KB)
+    k2 app health undefined (50x50)_Mi_Ov2M3Mc3yg1LkAtbmWVdosD8 (3KB)
+    k2 app k2management icon_gVilzlHTWwtjUFPi3+HDaswJhtA (389KB)
+    k2 app k2viewflow icon_5FmlrIw4tHG+pnZgSuH7lsa9gzY (19KB)
+    k2 app lock closed (24x24)_NTtSQlNmVvPT1B7Ec7ru5igUefE (2KB)
+    k2 app lock closed (92x92)_Oek4BPkyU5bBXR4FNhlqGzQSCbY (3KB)
+    k2 app lock open (24x24)_1moUyDMPNH72zUmGVyYS3nVV9Jc (2KB)
+    k2 app lock open (92x92)_d4VC+IlsjXe6ER+R6VPD6a58zY8 (3KB)
+    k2 app logo generic k2 (64x64)_gsngMQz4KthjniNzPse7Be1hKmU (2KB)
+    k2 app pie chart 134_kSLHDzZkbaU69eCgcI0gMdTCFUM (2KB)
+    k2 app pie chart 268_ciTfjaMcgHdDiTd0p98T+0JFHuo (4KB)
+    k2 app pie chart 402_e_WoWMXElJnnEvKeDJKgwz79F0Q (6KB)
+    k2 app priority high (16x16)_0hOe1l6MglrKN1kTgWXJftvxmbs (1KB)
+    k2 app priority high (50x50)_c4hYSsJU2UaiWshofYztbJSsgZU (2KB)
+    k2 app priority low (16x16)_V9ylJa2XhRbTyQmnf7KntYtVaRc (1KB)
+    k2 app priority low (50x50)_QOFQKkyldsCuNJfxrbqli8R5Dt4 (2KB)
+    k2 app priority medium (16x16)_6voZcCqcaPp3hZ1R6GTHmFD+4BY (1KB)
+    k2 app priority medium (50x50)_aHdFE6TVAL5bXhmZnwDRmhVf0kc (2KB)
+    k2 app priority undefined (16x16)_hKKmhuRLcXh4+gg65ZoVkFul6EU (1KB)
+    k2 app priority undefined (50x50)_flCtX7YwgIiCvZ3t38GIJ99KNGA (2KB)
+    k2 app priority urgent (16x16)_LnGxyI77kXXmcGC7rbpjBMPHjkM (1KB)
+    k2 app priority urgent (50x50)_cnfjgZZPUT8BK1VuCrOMnKJqCek (2KB)
+    k2 app process overview 134_WitglKYALR50DsIG80Ikjq2IH7E (1KB)
+    k2 app process overview 268_tWORudVicdG5YUfStiIp0mJORxI (2KB)
+    k2 app process overview 402_THjXOH4kc9barKC14WMEl00upWI (4KB)
+    k2 app reporting icon_BO8t_7uyXKiXDPMf2QPykMuxTnM (2KB)
+    k2 app sector communications (84x84)_DtASp2m5Lq6OG5jtB6SBcH1FsZA (2KB)
+    k2 app sector customer service (84x84)_F6_H_yChIRl6kjl3vLYLf8ZciDE (3KB)
+    k2 app sector human resources (84x84)_OCrTRkDd8QAu53E7z0myPBrMrp8 (2KB)
+    k2 app sector information technology (84x84)_2nhS9+Xq7VkEahtPC8gEaYBqib4 (2KB)
+    k2 app sector legal (84x84)_yq8gS_vK1GfeJZQ2KZoxpgMRI18 (3KB)
+    k2 app sector marketing (84x84)_1sBls1db6s7R+bt+VyKEkRrmuv8 (3KB)
+    k2 app sector operations (84x84)_dligmiHI2TnkLtewmyiaiW5pFVQ (3KB)
+    k2 app sector sales (84x84)_oTfYui_4Wsv0oKSZdr4YrLi9dUg (2KB)
+    k2 app sector team projects (84x84)_qLWw+9HwPULEwEIQ3X4nrT5Qbqg (6KB)
+    nintex app logo 2018 generic 45_8pb513YM8zV_PrJzU2v3ssI2pcY (1KB)
+    nintex footer_qOF+NXxP_sc_q3HQ55re8gjrkLU (1KB)
+    presence icon_CU0wqhKmVLSinCI2jFyckiB5LT8 (1KB)
+    properties.model (0KB)
+    Registered_Application_com_K2_App_Framework_Core_SmartObject_AppType_k9NPdILil9xjC0834qMqVdFpYWQ (1KB)
+    Registered_Application_Form_com_K2_App_Framework_Core_SmartObject_RegisteredAppFormType_lQT8t9ky+hqzhnwxtBgyi5yXeZ0 (1KB)
+    Segoe UI Light_Br4qPhLoOurTLL1oHocA+3NyJE8 (0KB)
+    TestKprxWF_SPDMigrated.Workflow (404KB)
+    validation.model (0KB)
+    vertical divider_D+_CYFYZ5nuqfUwQ4fo9lYfw4nE (0KB)
+    FrameworkGeneric.Workflow_A4GH3Iisqu1GSLbFpPmkPSdQ2+g.Reference (260KB)
+    certificate.hash (0KB)
+    publicKey.xml (1KB)
+
+[4] Re-packaging as .kspx...
+  Created: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_swap\SPD_Migration.kspx (750KB)
+
+[5] Deploying modified .kspx via PDM...
+  Session: Deploy_SPD_20260524023449
+  Model: SPD Migration Package, Members: 105
+  ** Workflows ns=urn:SourceCode/Categories?Workflows#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F **
+  ** Framework_Core ns=urn:SourceCode/Categories?Framework_Core#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FWorkflows%2F **
+  ** SPD Migration\TestKprxWF.SPDMigrated ns=urn:SourceCode/Workflows **
+
+  DEPLOY SUCCEEDED!
+  Deployed 104 items
+
+[6] Verifying on K2 server...
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  All processes:
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+
+============================================
+  Workflow Swap Deploy Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524023459
+**********************

@@ -1,0 +1,716 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524013354
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Test-K2DeployE2E-Results.txt
+============================================
+  K2 Workflow Deploy - End-to-End Test
+  2026-05-24 01:33:54
+============================================
+[TEST 1] Loading K2 assemblies...
+  OK: SourceCode.Framework.dll (243 types)
+  OK: SourceCode.HostClientAPI.dll (38 types)
+  OK: SourceCode.Workflow.Authoring.dll (221 types)
+  OK: SourceCode.Workflow.Design.dll (418 types)
+  OK: SourceCode.Workflow.Management.dll (193 types)
+  OK: SourceCode.Workflow.Client.dll (72 types)
+  OK: SourceCode.Deployment.Management.dll (46 types)
+  OK: SourceCode.EnvironmentSettings.Client.dll (33 types)
+  Total: 8 assemblies loaded
+[TEST 2] Scanning for Process/Workflow types...
+
+  TYPE: SourceCode.Workflow.Design.ProcessViewEventLayoutData [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.ProcessViewEventLayoutDataCollection [Abstract=False, Interface=False]
+
+  TYPE: SourceCode.Workflow.Design.ProcessView [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Description [Get=True, Set=True]
+    PROP: String Name [Get=True, Set=True]
+    PROP: String DisplayName [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.ProcessViewActivityLayoutData [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.ProcessViewLineDirections [Abstract=False, Interface=False]
+
+  TYPE: SourceCode.Workflow.Design.ProcessViewLineLayoutData [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.ProcessViewNoteLayoutData [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.DefaultProcessFinishRule [Abstract=False, Interface=False]
+    CTOR()
+    CTOR(ExtenderOutputType outputType)
+
+  TYPE: SourceCode.Workflow.Design.DefaultProcessStartRule [Abstract=False, Interface=False]
+    CTOR()
+    CTOR(ExtenderOutputType outputType)
+
+  TYPE: SourceCode.Workflow.Design.DefaultProcess [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Name [Get=True, Set=True]
+    PROP: ActivityCollection Activities [Get=True, Set=False]
+    PROP: DataFieldCollection DataFields [Get=True, Set=False]
+    PROP: LineCollection Lines [Get=True, Set=False]
+    PROP: String FullName [Get=True, Set=False]
+    PROP: IProjectFolder Folder [Get=True, Set=False]
+    PROP: String Description [Get=True, Set=True]
+    PROP: String DisplayName [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.Interop.InteropProcess [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Name [Get=True, Set=True]
+    PROP: ActivityCollection Activities [Get=True, Set=False]
+    PROP: DataFieldCollection DataFields [Get=True, Set=False]
+    PROP: LineCollection Lines [Get=True, Set=False]
+    PROP: String FullName [Get=True, Set=False]
+    PROP: IProjectFolder Folder [Get=True, Set=False]
+    PROP: String Description [Get=True, Set=True]
+    PROP: String DisplayName [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Authoring.ProcessDependency [Abstract=False, Interface=False]
+    CTOR()
+    CTOR(String name, K2FieldPart property)
+    PROP: String Description [Get=True, Set=True]
+    PROP: String Name [Get=True, Set=True]
+    PROP: String DisplayName [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Authoring.ProcessDependencies [Abstract=False, Interface=False]
+
+  TYPE: SourceCode.Workflow.Authoring.ProcessFinishRule [Abstract=True, Interface=False]
+    CTOR()
+
+  TYPE: SourceCode.Workflow.Authoring.ProcessStartRule [Abstract=True, Interface=False]
+    CTOR()
+
+  TYPE: SourceCode.Workflow.Authoring.IProcess [Abstract=True, Interface=True]
+    METHOD: Void Save(String fileName)
+    PROP: ActivityCollection Activities [Get=True, Set=False]
+    PROP: DataFieldCollection DataFields [Get=True, Set=False]
+    PROP: LineCollection Lines [Get=True, Set=False]
+
+  TYPE: SourceCode.Workflow.Authoring.Process [Abstract=True, Interface=False]
+    CTOR()
+    METHOD: DeploymentResults Compile()
+    METHOD: DeploymentPackage CreateDeploymentPackage()
+    METHOD: Void CreateDeploymentPackage(DeploymentPackage package)
+    METHOD: Void CreateExportTask(DeploymentPackage package, Boolean defaultVersion)
+    METHOD: Void CreateExportTask(DeploymentPackage package, RevisionResult revisionResult, Boolean defaultVersion)
+    METHOD: Void CreateExportTask(DeploymentPackage package)
+    METHOD: DeploymentResults Deploy(DeploymentPackage package)
+    METHOD: DeploymentResults Deploy()
+    METHOD: Void Save()
+    METHOD: Void Save(TextWriter writer)
+    METHOD: Void SaveAs(String fileName)
+    PROP: String Name [Get=True, Set=True]
+    PROP: ActivityCollection Activities [Get=True, Set=False]
+    PROP: DataFieldCollection DataFields [Get=True, Set=False]
+    PROP: LineCollection Lines [Get=True, Set=False]
+    PROP: String FullName [Get=True, Set=False]
+    PROP: IProjectFolder Folder [Get=True, Set=False]
+    PROP: String Description [Get=True, Set=True]
+    PROP: String DisplayName [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Authoring.Revision.ProcessRevision [Abstract=False, Interface=False]
+    CTOR(Process process, Guid processServerGuid)
+    PROP: ActivityRevisionCollection Activities [Get=True, Set=False]
+    PROP: LineRevisionCollection Lines [Get=True, Set=False]
+    PROP: DataFieldRevisionCollection DataFields [Get=True, Set=False]
+    PROP: String Name [Get=True, Set=False]
+
+  TYPE: SourceCode.Workflow.Design.ProcessView+ProcessViewActivityLayoutDataCollection [Abstract=False, Interface=False]
+
+  TYPE: SourceCode.Workflow.Design.ProcessView+ProcessViewLineLayoutDataCollection [Abstract=False, Interface=False]
+
+  TYPE: SourceCode.Workflow.Design.ProcessView+ProcessViewNoteLayoutDataCollection [Abstract=False, Interface=False]
+    CTOR(ProcessView parent)
+
+  TYPE: SourceCode.Workflow.Design.ProcessSimulation.ProcessSimulationWizardDefinition [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.Export.ExportProcess [Abstract=False, Interface=False]
+    CTOR()
+    CTOR(String Name)
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.Export.ExportProcessCollection [Abstract=False, Interface=False]
+
+  TYPE: SourceCode.Workflow.Design.Export.ExportProcessStringTable [Abstract=False, Interface=False]
+    CTOR()
+    CTOR(String Key, String Value)
+
+  TYPE: SourceCode.Workflow.Design.Export.ExportProcessStringTableCollection [Abstract=False, Interface=False]
+
+  TYPE: SourceCode.Workflow.Design.SharePoint.WorkflowIntegration.Process.ProcessClientEventImage [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.SharePoint.WorkflowIntegration.Process.ConfigureProcess [Abstract=False, Interface=False]
+    CTOR()
+
+  TYPE: SourceCode.Workflow.Design.SharePoint.WorkflowIntegration.Process.ProcessWorkflowIntegrationProcessFinishRule [Abstract=False, Interface=False]
+    CTOR()
+
+  TYPE: SourceCode.Workflow.Design.SharePoint.Events.Common.ConfigureProcess [Abstract=False, Interface=False]
+    CTOR()
+
+  TYPE: SourceCode.Workflow.Design.ProcessStartRule.ProcessStartRuleWizardImage [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.ProcessStartRule.DefaultProcessStartRule [Abstract=False, Interface=False]
+    CTOR()
+
+  TYPE: SourceCode.Workflow.Design.ProcessStartRule.DefaultProcessStartRuleWizardDefinition [Abstract=False, Interface=False]
+    CTOR()
+    CTOR(PropertyWizardElement propertyWizardElement)
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.ProcessFinishRule.ProcessFinishRuleWizardImage [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Design.ProcessFinishRule.DefaultProcessFinishRule [Abstract=False, Interface=False]
+    CTOR()
+
+  TYPE: SourceCode.Workflow.Design.ProcessFinishRule.DefaultProcessFinishRuleWizardDefinition [Abstract=False, Interface=False]
+    CTOR()
+    CTOR(PropertyWizardElement propertyWizardElement)
+    PROP: String Name [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Management.Process [Abstract=False, Interface=False]
+    CTOR()
+    PROP: String FullName [Get=True, Set=True]
+    PROP: Activities Activities [Get=True, Set=True]
+    PROP: ProcessDataFields DataFields [Get=True, Set=True]
+    PROP: Int32 ProcID [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Management.ProcessInstance [Abstract=False, Interface=False]
+    CTOR()
+    PROP: Int32 ProcID [Get=True, Set=True]
+
+  TYPE: SourceCode.Workflow.Client.ISupportProcessScope [Abstract=True, Interface=True]
+
+  TYPE: SourceCode.Workflow.Client.ProcessInstance [Abstract=False, Interface=False]
+    PROP: DataFields DataFields [Get=True, Set=False]
+    PROP: String Description [Get=True, Set=False]
+    PROP: String Folder [Get=True, Set=False]
+    PROP: String FullName [Get=True, Set=False]
+    PROP: String Name [Get=True, Set=False]
+
+  TYPE: SourceCode.Workflow.Client.Process [Abstract=False, Interface=False]
+    PROP: String FullName [Get=True, Set=False]
+    PROP: String Name [Get=True, Set=False]
+    PROP: String Folder [Get=True, Set=False]
+    PROP: ValueType ProcID [Get=True, Set=False]
+
+  Found 41 process-related types
+[TEST 3] Scanning for Deployment types...
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentPackageResource [Abstract=False]
+    CTOR(ResourceGroups group, String name, String value)
+    CTOR(String group, String name, String value)
+    Void Dispose()
+    String get_Group()
+    String get_Name()
+    String get_Value()
+    Void set_Name(String value)
+    Void set_Value(String value)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentPackageResourceCollection [Abstract=False]
+    Void Add(DeploymentPackageResource resource)
+    Boolean Contains(DeploymentPackageResource resource)
+    Boolean Contains(String name)
+    String[] get_Groups()
+    DeploymentPackageResource get_Item(Int32 index)
+    DeploymentPackageResource get_Item(String name)
+    DeploymentPackageResource[] GetResourcesForGroup(ResourceGroups group)
+    DeploymentPackageResource[] GetResourcesForGroup(String group)
+    Void Remove(DeploymentPackageResource resource)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentWizardInitializationArgs [Abstract=False]
+    CTOR(DeploymentPackage package)
+    DeploymentPackage get_DeploymentPackage()
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentEnvironmentPropertyCollection [Abstract=False]
+    Boolean Contains(String name)
+    String get_Item(String name)
+    Void set_Item(String name, String value)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentEnvironmentCollection [Abstract=False]
+    Boolean Contains(DeploymentEnvironment environment)
+    Boolean Contains(String name)
+    DeploymentEnvironment get_Item(Int32 index)
+    DeploymentEnvironment get_Item(String name)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentPackageDependencyCollection [Abstract=False]
+    Void Add(DeploymentPackageDependency dependency)
+    Boolean Contains(DeploymentPackageDependency dependency)
+    Boolean Contains(String assemblyFile)
+    DeploymentPackageDependency get_Item(Int32 index)
+    DeploymentPackageDependency get_Item(String assemblyFile)
+    Void Remove(DeploymentPackageDependency dependency)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentPackageDependency [Abstract=False]
+    CTOR(String dependencyFile)
+    Void Dispose()
+    String get_DependencyFile()
+    String get_DependencyName()
+    Void set_DependencyFile(String value)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentEnvironment [Abstract=False]
+    Void Dispose()
+    Boolean get_IsDisposed()
+    String get_Name()
+    DeploymentPackage get_Package()
+    DeploymentEnvironmentPropertyCollection get_Properties()
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentPackage [Abstract=False]
+    CTOR()
+    CTOR(IDeploymentProperties propertiesContainer)
+    DeploymentEnvironment AddEnvironment(String name)
+    Void Dispose()
+    DeploymentResults Execute(IEngineProxy outputLogger)
+    DeploymentResults Execute()
+    DeploymentPackageDependencyCollection get_Dependencies()
+    String get_DeploymentLabelDescription()
+    String get_DeploymentLabelName()
+    DeploymentEnvironmentCollection get_Environments()
+    Boolean get_IsDisposed()
+    IDeploymentProperties get_PropertiesContainer()
+    DeploymentPackageResourceCollection get_Resources()
+    String get_SelectedEnvironment()
+    String get_SmartObjectConnectionString()
+    DeploymentTargetCollection get_Targets()
+    Boolean get_TestOnly()
+    String get_WorkflowManagementConnectionString()
+    Void Load(String folderPath, String packageName)
+    Void RemoveEnvironment(String name)
+    Void Save(String folderPath, String packageName)
+    Void set_DeploymentLabelDescription(String value)
+    Void set_DeploymentLabelName(String value)
+    Void set_SelectedEnvironment(String value)
+    Void set_SmartObjectConnectionString(String value)
+    Void set_TestOnly(Boolean value)
+    Void set_WorkflowManagementConnectionString(String value)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentTaskPropertyCollection [Abstract=False]
+    Void Add(DeploymentTaskProperty property)
+    Boolean Contains(DeploymentTaskProperty property)
+    Boolean Contains(String name)
+    DeploymentTaskProperty get_Item(Int32 index)
+    DeploymentTaskProperty get_Item(String name)
+    Void Remove(DeploymentTaskProperty property)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentTaskResource [Abstract=False]
+    CTOR(String name, ResourceValueTypes valueType, Object value)
+    Void Dispose()
+    String get_Name()
+    Object get_Value()
+    ResourceValueTypes get_ValueType()
+    Void set_Name(String value)
+    Void set_Value(Object value)
+    Void set_ValueType(ResourceValueTypes value)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentTaskProperty [Abstract=False]
+    CTOR(String name, String environmentPropertyName)
+    CTOR(String name, PropertyType propertyType, String constantValue)
+    Void Dispose()
+    String get_Name()
+    String get_PropertyName()
+    PropertyType get_PropertyType()
+    String get_PropertyValue()
+    PropertyValueType get_ValueType()
+    Void set_Name(String value)
+    Void set_PropertyName(String value)
+    Void set_PropertyType(PropertyType value)
+    Void set_ValueType(PropertyValueType value)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentTaskResourceCollection [Abstract=False]
+    Void Add(DeploymentTaskResource resource)
+    Boolean Contains(DeploymentTaskResource resource)
+    Boolean Contains(String name)
+    DeploymentTaskResource get_Item(Int32 index)
+    DeploymentTaskResource get_Item(String name)
+    Void Remove(DeploymentTaskResource resource)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentResults [Abstract=False]
+    CTOR()
+    Void Dispose()
+    CompilerErrorCollection get_Errors()
+    Boolean get_IsDisposed()
+    StringCollection get_Output()
+    Boolean get_Successful()
+    Void Merge(DeploymentResults results)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentTarget [Abstract=False]
+    CTOR(IDeployable parent)
+    Void Dispose()
+    String get_Description()
+    Boolean get_Enabled()
+    Int32 get_ExecutionOrder()
+    DeploymentTaskCollection get_Tasks()
+    String get_Text()
+    Void set_Description(String value)
+    Void set_Enabled(Boolean value)
+    Void set_ExecutionOrder(Int32 value)
+    Void set_Text(String value)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentTargetCollection [Abstract=False]
+    Void Add(DeploymentTarget target)
+    Boolean Contains(DeploymentTarget target)
+    Boolean Contains(String name)
+    DeploymentTarget get_Item(Int32 index)
+    DeploymentTarget get_Item(String name)
+    Void Remove(DeploymentTarget target)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentTask [Abstract=False]
+    CTOR()
+    Void Dispose()
+    String get_AssemblyFile()
+    DeploymentTarget get_DeploymentTarget()
+    String get_Description()
+    Int32 get_ExecutionOrder()
+    String get_MetaData()
+    DeploymentTaskPropertyCollection get_Properties()
+    DeploymentTaskResourceCollection get_Resources()
+    Guid get_TaskGuid()
+    String get_Text()
+    String get_Type()
+    Void set_AssemblyFile(String value)
+    Void set_Description(String value)
+    Void set_ExecutionOrder(Int32 value)
+    Void set_MetaData(String value)
+    Void set_TaskGuid(Guid value)
+    Void set_Text(String value)
+    Void set_Type(String value)
+
+  TYPE: SourceCode.Framework.Deployment.DeploymentTaskCollection [Abstract=False]
+    Void Add(DeploymentTask task)
+    Boolean Contains(DeploymentTask task)
+    Boolean Contains(String name)
+    DeploymentTask get_Item(Int32 index)
+    DeploymentTask get_Item(String name)
+    Void Remove(DeploymentTask task)
+
+  TYPE: SourceCode.Workflow.Design.Notification.Deployment [Abstract=False]
+    CTOR()
+    Void Dispose()
+    Boolean get_IsDisposed()
+    DeploymentTask GetDeploymentTask(Process process, DeploymentTarget target)
+    Void SetPackageResource(Process process, DeploymentPackage package)
+
+  TYPE: SourceCode.Workflow.Design.SmartObjectServices.Deployment [Abstract=False]
+    CTOR()
+    DeploymentTask GetDeploymentTask(ServiceInstanceType servicetype, Process process, DeploymentTarget target)
+    Void SetPackageResource(ServiceInstanceType servicetype, Process process, PersistableObjectList`1 association, SmartObjectServicesDesignerMappingCollection mappings, Boolean useSmartObjectServicesDesignerMapping, SmartObjectCreation smartObjectCreation, DeploymentPackage package)
+
+  TYPE: SourceCode.Deployment.Management.EndDeploySessionState [Abstract=False]
+    SyncState Execute(IServiceProvider provider)
+    Void GetObjectData(SerializationInfo info, StreamingContext context)
+
+  TYPE: SourceCode.Deployment.Management.BeginPackageSessionState [Abstract=False]
+    CTOR(PackageItemOptions packageItemOptions)
+    SyncState Execute(IServiceProvider provider)
+    PackageItemOptions get_PackageItemOptions()
+    Void GetObjectData(SerializationInfo info, StreamingContext context)
+
+  TYPE: SourceCode.Deployment.Management.EndPackageSessionState [Abstract=False]
+    SyncState Execute(IServiceProvider provider)
+    Void GetObjectData(SerializationInfo info, StreamingContext context)
+
+  TYPE: SourceCode.Deployment.Management.BeginDeploySessionState [Abstract=False]
+    CTOR(Boolean synchroniseCall)
+    SyncState Execute(IServiceProvider provider)
+    Void GetObjectData(SerializationInfo info, StreamingContext context)
+
+  TYPE: SourceCode.Deployment.Management.GetDeploySessionProgressState [Abstract=False]
+    SyncState Execute(IServiceProvider provider)
+    DeploymentResult[] get_NextResults()
+    Void GetObjectData(SerializationInfo info, StreamingContext context)
+
+  TYPE: SourceCode.Deployment.Management.DeploySessionResultsRecievedState [Abstract=False]
+    SyncState Execute(IServiceProvider provider)
+    Void GetObjectData(SerializationInfo info, StreamingContext context)
+
+  TYPE: SourceCode.Deployment.Management.PackageDeploymentManager [Abstract=False]
+    CTOR()
+    CTOR(IServiceProvider provider)
+    Void add_UploadProgress(EventHandler`1 value)
+    Void CloseSession(String sessionName)
+    List`1 CompareServiceObjectsXml(String sourceSOXml, String targetSOXml)
+    ClientSession CreateEditSession(String sessionName, Stream packageStream)
+    ClientSession CreateSession(String sessionName)
+    ClientSession CreateSession(String sessionName, Stream packageStream)
+    Void Dispose()
+    IEnumerable`1 GetCategoriesAndDataWithoutRights(Boolean throwExceptionIfAny)
+    Boolean GetDeploymentResults(String sessionName, UInt32& succeededDeploymentCount, UInt32& failedDeploymentCount)
+    OAuthToken GetOAuthTokenByFQN(String fqn, Guid resourceID, String resourceAudience, Boolean forceTokenRefresh)
+    Boolean GetProgress(String sessionName, SessionMode mode, ProgressResult& result)
+    Object GetService(Type serviceType)
+    IEnumerable`1 GetSPCategoriesAndDataWithoutModifyRights(Boolean throwExceptionIfAny)
+    ClientSession OpenSession(String sessionName)
+    ClientSession OpenSession(String sessionName, OpenSessionOptions options)
+    Boolean Ping()
+    Void remove_UploadProgress(EventHandler`1 value)
+    SyncState Send(String sessionName, SyncState state)
+    Void ValidateUserRights()
+
+
+[TEST 4] Management Server methods...
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  Connected to K2 Management Server
+  11 existing processes:
+    [7] com.K2.System.AppWizard\AppCatalog.Error.Workflow
+    [5] com.K2.System.AppWizard\Application.AdministratorRequest.Workflow
+    [3] com.K2.System.AppWizard\Application.Deletion.Workflow
+    [4] com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow
+    [6] com.K2.System.AppWizard\Application.Generation.Workflow
+    [9] DocApproval\DocApproval.Workflow.Approval
+    [1] Framework Core\FrameworkGeneric.Workflow.Reference
+    [2] Framework Extension\GeneralNotification.Workflow.SendNotification
+    [10] NintexPOC5 Contacts\Contacts Workflow
+    [8] Webhook Subscriptions\SubscriptionRenewal
+    [11] Workflow\TestKprxWF
+
+  Upload/Import/Deploy methods:
+    Boolean CreateActionInstanceRight(ActionInstanceRight actInstRight)
+    Boolean CreateActionInstanceRights(ActionInstanceRights actInstRights)
+    BaseAPIConnection CreateConnection()
+    Int32 CreateErrorProfile(ErrorProfile errorProfile)
+    Boolean CreateRole(Role role)
+    Boolean CreateRoles(Roles roles)
+    Boolean CreateRolesForProcess(Roles roles, Int32 procSetId)
+    ProcessFolders GetDefaultProcSetProcesses(EventTypes eventType)
+    Activities GetProcActivities(Int32 procID)
+    Process GetProcess(Int32 procID)
+    Activities GetProcessActivities(String userName, Int32 procID)
+    ProcessDataFields GetProcessDataFields(Int32 procID)
+    Processes GetProcessDeleteVersionsWithRunningInstances(ProcessDeleteOption chosenOption, Int32 specificVersion, Int32 procSetId)
+    Processes GetProcesses(ProcessCriteriaFilter filter, Int32 procSetID)
+    Processes GetProcessesCurrentVersion()
+    Processes GetProcessesFromExportLabel(String exportLabel, String username)
+    Events GetProcessEvents(Int32 procID)
+    ProcessFolders GetProcessFolders()
+    Permissions GetProcessGroupPermissions(Int32 procSetID)
+    ProcessInstances GetProcessInstances(Int32 procID, String folio)
+    ProcessInstances GetProcessInstancesAll(String fullName, String folio, String originator, String fromDate, String toDate)
+    ProcessInstances GetProcessInstancesProcSet(Int32 procSetID, String folio, String originator, String fromDate, String toDate)
+    Dictionary`2 GetProcessInstanceStatusCount(Int32 procSetId, Int32 procInstStatus)
+    ProcessSets GetProcessIPCOrphans(ProcessDeleteOption chosenOption, Int32 specificVersion, Int32 procSetId)
+    Byte[] GetProcessKprx(Int32 procID)
+    Byte[] GetProcessSource(Int32 procID)
+    Permissions GetProcessUserandGroupPermissions(Int32 procSetID, ProcSetPermissionsCriteriaFilter filter)
+    Permissions GetProcessUserPermissions(Int32 procSetID)
+    Processes GetProcessVersions(Int32 procSetID)
+    ProcessXMLFields GetProcessXMLFields(Int32 procID)
+    Activities GetProcInstActivities(Int32 procInstID)
+    ProcessSet GetProcSet(String processFullName)
+    ProcSetPermissions GetProcSetGroupPermissions()
+    ProcessSets GetProcSets(String[] procsetNames, String[] viewNames)
+    IProcessSetConfig GetProcSetThreshold(Int32 procSetId)
+    List`1 GetProcSetViews(String processFullName)
+    Void SetProcessInstanceVersion(Int32 procInstID, Int32 targetProcVersion)
+    Void SetProcSetThreshold(Int32 procSetId, IProcessSetConfig config)
+    Boolean UpdateOrAddProcUserPermissions(Int32 procSetID, Permissions permissions)
+    Void ZoneCreateNew(AvailabilityZone zone)
+
+[TEST 5] K2 PowerShell Snap-in...
+  Snap-in loaded
+  CMD: Deploy-Package
+    -FileName [String]
+    -ConfigFile [String]
+    -ConnectionString [String]
+    -NoAnalyze [SwitchParameter]
+    -K2Host [String]
+    -Port [UInt32]
+    -Integrated [Boolean]
+    -IsPrimaryLogin [Boolean]
+    -SecurityLabel [String]
+    -Username [String]
+    -Password [String]
+    -WindowsDomain [String]
+    -Verbose [SwitchParameter]
+    -Debug [SwitchParameter]
+    -ErrorAction [ActionPreference]
+    -WarningAction [ActionPreference]
+    -InformationAction [ActionPreference]
+    -ErrorVariable [String]
+    -WarningVariable [String]
+    -InformationVariable [String]
+    -OutVariable [String]
+    -OutBuffer [Int32]
+    -PipelineVariable [String]
+    -WhatIf [SwitchParameter]
+    -Confirm [SwitchParameter]
+  CMD: New-Package
+    -FileName [String]
+    -InputFileName [String]
+    -Description [String]
+    -ExcludeDependencies [SwitchParameter]
+    -ConnectionString [String]
+    -OutputLog [SwitchParameter]
+    -Verbose [SwitchParameter]
+    -Debug [SwitchParameter]
+    -ErrorAction [ActionPreference]
+    -WarningAction [ActionPreference]
+    -InformationAction [ActionPreference]
+    -ErrorVariable [String]
+    -WarningVariable [String]
+    -InformationVariable [String]
+    -OutVariable [String]
+    -OutBuffer [Int32]
+    -PipelineVariable [String]
+    -WhatIf [SwitchParameter]
+    -Confirm [SwitchParameter]
+  CMD: Refresh-Package
+    -SourceFileName [String]
+    -TargetFileName [String]
+    -ConnectionString [String]
+    -Verbose [SwitchParameter]
+    -Debug [SwitchParameter]
+    -ErrorAction [ActionPreference]
+    -WarningAction [ActionPreference]
+    -InformationAction [ActionPreference]
+    -ErrorVariable [String]
+    -WarningVariable [String]
+    -InformationVariable [String]
+    -OutVariable [String]
+    -OutBuffer [Int32]
+    -PipelineVariable [String]
+    -WhatIf [SwitchParameter]
+    -Confirm [SwitchParameter]
+  CMD: Send-Deploy-Package
+    -FileName [String]
+    -ConfigFile [String]
+    -ConnectionString [String]
+    -NoAnalyze [SwitchParameter]
+    -K2Host [String]
+    -Port [UInt32]
+    -Integrated [Boolean]
+    -IsPrimaryLogin [Boolean]
+    -SecurityLabel [String]
+    -Username [String]
+    -Password [String]
+    -WindowsDomain [String]
+    -Verbose [SwitchParameter]
+    -Debug [SwitchParameter]
+    -ErrorAction [ActionPreference]
+    -WarningAction [ActionPreference]
+    -InformationAction [ActionPreference]
+    -ErrorVariable [String]
+    -WarningVariable [String]
+    -InformationVariable [String]
+    -OutVariable [String]
+    -OutBuffer [Int32]
+    -PipelineVariable [String]
+    -WhatIf [SwitchParameter]
+    -Confirm [SwitchParameter]
+  CMD: Send-Refresh-Package
+    -SourceFileName [String]
+    -TargetFileName [String]
+    -ConnectionString [String]
+    -Verbose [SwitchParameter]
+    -Debug [SwitchParameter]
+    -ErrorAction [ActionPreference]
+    -WarningAction [ActionPreference]
+    -InformationAction [ActionPreference]
+    -ErrorVariable [String]
+    -WarningVariable [String]
+    -InformationVariable [String]
+    -OutVariable [String]
+    -OutBuffer [Int32]
+    -PipelineVariable [String]
+    -WhatIf [SwitchParameter]
+    -Confirm [SwitchParameter]
+  CMD: Write-DeploymentConfig
+    -InputFile [String]
+    -OutputFile [String]
+    -ConnectionString [String]
+    -Verbose [SwitchParameter]
+    -Debug [SwitchParameter]
+    -ErrorAction [ActionPreference]
+    -WarningAction [ActionPreference]
+    -InformationAction [ActionPreference]
+    -ErrorVariable [String]
+    -WarningVariable [String]
+    -InformationVariable [String]
+    -OutVariable [String]
+    -OutBuffer [Int32]
+    -PipelineVariable [String]
+    -WhatIf [SwitchParameter]
+    -Confirm [SwitchParameter]
+  CMD: Write-PackageConfig
+    -InputFile [String]
+    -OutputFile [String]
+    -ConnectionString [String]
+    -Verbose [SwitchParameter]
+    -Debug [SwitchParameter]
+    -ErrorAction [ActionPreference]
+    -WarningAction [ActionPreference]
+    -InformationAction [ActionPreference]
+    -ErrorVariable [String]
+    -WarningVariable [String]
+    -InformationVariable [String]
+    -OutVariable [String]
+    -OutBuffer [Int32]
+    -PipelineVariable [String]
+    -WhatIf [SwitchParameter]
+    -Confirm [SwitchParameter]
+
+[TEST 6] Deploy existing K2 .kspx from Setup folder...
+  Found: App Framework Core.kspx (867KB)
+  Copied to: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_deploy_test\App Framework Core.kspx
+  Deploying App Framework Core.kspx...
+WARNING: No configuration file found for this Deployment Package.
+WARNING: Session created with NoAnalyze Option set to 'True'. This option deploys ALL objects to the server.
+  DEPLOY SUCCESS!
+
+[TEST 7] Process Instance API test...
+  Found: SourceCode.Workflow.Client.Connection
+  Client test: Exception calling "Open" with "2" argument(s): "Send failed with error: An existing connection was forcibly closed by the remote host. "
+
+============================================
+  E2E Test Complete!
+  Results: C:\Shared\SPtoNintex-Migration-Tool\Test-K2DeployE2E-Results.txt
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524013425
+**********************

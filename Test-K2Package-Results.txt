@@ -1,0 +1,258 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524001649
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+============================================
+  K2 Package Format Discovery
+============================================
+
+[1] Analyzing smallest .kspx: CustomStep.kspx
+  Extracted to: C:\Users\user1\AppData\Local\Temp\4\kspx_study_001649
+  changesets.model (0KB)
+  com_K2_System_Management_Workflows_Configuration_SmartObject_ycquwwSnMuj8o1vKg0fF9wWKzxA (21KB)
+  com_K2_System_Management_Workflows_CustomStep_Forms_Main_2Huw1qPkzfs9spJ4IaXepJIva1I (71KB)
+  com_K2_System_Management_Workflows_CustomStep_SmartObject_KVx9sWXmo5l9BdZjSd6m8C_7Hcw (30KB)
+  com_K2_System_Management_Workflows_CustomStep_Views_Configuration_VqeTkmWL14I40eveSDmEHl7CrNI (194KB)
+  com_K2_System_Management_Workflows_CustomStep_Views_List_EfVihhqjVwGyernnjj9jhH5lM+4 (138KB)
+  com_K2_System_Workflow_Configuration_smxRv6UDhjxzqq6qI+pxihyTPyM (5KB)
+  com_K2_System_Workflow_CustomSteps_Srw9Emta+FEjOY67_tNaHcM_nBo (5KB)
+  definition.model (2030KB)
+  properties.model (0KB)
+  validation.model (0KB)
+  Signature\certificate.hash (0KB)
+  Signature\publicKey.xml (1KB)
+
+[2] definition.model (first 100 lines):
+  <?xml version="1.0" encoding="utf-8"?>
+  <model id="1" name="CustomStep-3/9/2020 6:51:36 PM" itemtype="2" apiver="9" ns="" excl="False" nextid="6719" minorApiVer="5">
+    <set id="2" name="Members" itemtype="4" apiver="9" readonly="False" count="15" xmlns="urn:SourceCode/ComponentModel">
+      <ct id="3" name="com_K2_System_Management_Workflows_CustomStep_Views_List" itemtype="10" apiver="9" ns="urn:SourceCode/SmartForms/View" excl="False" displayname="CustomStep.List" scope="0" hostversion="5.1012.0.0" flags="4">
+        <tref id="4" name="View" itemtype="9" apiver="9" required="True" ns="urn:SourceCode/SmartForms" displayname="View" scope="0" dataType="1" flags="0">
+          <null />
+          <null />
+        </tref>
+        <fi id="1359" name="com_K2_System_Management_Workflows_CustomStep_Views_List" itemtype="0" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List#FileDefinitions" excl="False" displayname="com_K2_System_Management_Workflows_CustomStep_Views_List" scope="0" sha="a95d9bb0ee4c6e5e155a31a4e299bf9743c13a8c935668d3f608084c827c6292" fileName="com_K2_System_Management_Workflows_CustomStep_Views_List_EfVihhqjVwGyernnjj9jhH5lM+4" />
+        <set id="5" name="Members" itemtype="4" readonly="False" count="7" xmlns="">
+          <prop id="6" name="Guid" itemtype="13" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List" excl="False" displayname="Guid" scope="0" unique="True" modAttr="3">
+            <tref id="7" name="GUID" itemtype="9" required="True" ns="urn:SourceCode/ComponentModel" displayname="GUID" scope="0" dataType="120" flags="0">
+              <null />
+              <null />
+            </tref>
+            <valueref id="9" name="Value" itemtype="6" required="True" type="120" value="3550cf0b-9874-49c7-9ca5-f3740dc9ad09" />
+            <null />
+            <set id="8" name="References" itemtype="4" readonly="False" count="0" />
+          </prop>
+          <prop id="10" name="Description" itemtype="13" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List" excl="False" displayname="Description" scope="0" unique="False" modAttr="3">
+            <tref id="11" name="String" itemtype="9" required="True" ns="urn:SourceCode/ComponentModel" displayname="String" scope="0" dataType="18" flags="0">
+              <null />
+              <null />
+            </tref>
+            <valueref id="13" name="Value" itemtype="6" required="True" type="18" />
+            <null />
+            <set id="12" name="References" itemtype="4" readonly="False" count="0" />
+          </prop>
+          <prop id="14" name="Type" itemtype="13" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List" excl="False" displayname="Type" scope="0" unique="False" modAttr="1">
+            <tref id="15" name="String" itemtype="9" required="True" ns="urn:SourceCode/ComponentModel" displayname="String" scope="0" dataType="18" flags="0">
+              <null />
+              <null />
+            </tref>
+            <valueref id="17" name="Value" itemtype="6" required="True" type="18" value="List" />
+            <null />
+            <set id="16" name="References" itemtype="4" readonly="False" count="0" />
+          </prop>
+          <ct id="18" name="Controls" itemtype="10" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List" excl="False" displayname="Controls" scope="0" flags="0">
+            <null />
+            <null />
+            <set id="19" name="Members" itemtype="4" readonly="False" count="55">
+              <ct id="20" name="Cell Cell8" itemtype="10" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List#Controls" excl="False" displayname="Cell Cell8" scope="0" flags="0">
+                <tref id="21" name="Control" itemtype="9" required="True" ns="urn:SourceCode/SmartForms" displayname="Control" scope="0" dataType="1" flags="0">
+                  <null />
+                  <null />
+                </tref>
+                <null />
+                <set id="22" name="Members" itemtype="4" readonly="False" count="1">
+                  <prop id="23" name="Guid" itemtype="13" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List#Controls.Cell Cell8" excl="False" displayname="Guid" scope="2" unique="True" modAttr="1">
+                    <tref id="24" name="GUID" itemtype="9" required="True" ns="urn:SourceCode/ComponentModel" displayname="GUID" scope="0" dataType="120" flags="0">
+                      <null />
+                      <null />
+                    </tref>
+                    <valueref id="26" name="Value" itemtype="6" required="True" type="120" value="db3acba8-7df3-663c-c933-a6d1a61fc737" />
+                    <null />
+                    <set id="25" name="References" itemtype="4" readonly="False" count="0" />
+                  </prop>
+                </set>
+                <set id="27" name="References" itemtype="4" readonly="False" count="0" />
+              </ct>
+              <ct id="28" name="Cell Cell9" itemtype="10" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List#Controls" excl="False" displayname="Cell Cell9" scope="0" flags="0">
+                <tref id="29" name="Control" itemtype="9" required="True" ns="urn:SourceCode/SmartForms" displayname="Control" scope="0" dataType="1" flags="0">
+                  <null />
+                  <null />
+                </tref>
+                <null />
+                <set id="30" name="Members" itemtype="4" readonly="False" count="1">
+                  <prop id="31" name="Guid" itemtype="13" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List#Controls.Cell Cell9" excl="False" displayname="Guid" scope="2" unique="True" modAttr="1">
+                    <tref id="32" name="GUID" itemtype="9" required="True" ns="urn:SourceCode/ComponentModel" displayname="GUID" scope="0" dataType="120" flags="0">
+                      <null />
+                      <null />
+                    </tref>
+                    <valueref id="34" name="Value" itemtype="6" required="True" type="120" value="21b2f36e-ad6f-9b59-fa57-2ae4ee8f6490" />
+                    <null />
+                    <set id="33" name="References" itemtype="4" readonly="False" count="0" />
+                  </prop>
+                </set>
+                <set id="35" name="References" itemtype="4" readonly="False" count="0" />
+              </ct>
+              <ct id="36" name="Cell Cell10" itemtype="10" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List#Controls" excl="False" displayname="Cell Cell10" scope="0" flags="0">
+                <tref id="37" name="Control" itemtype="9" required="True" ns="urn:SourceCode/SmartForms" displayname="Control" scope="0" dataType="1" flags="0">
+                  <null />
+                  <null />
+                </tref>
+                <null />
+                <set id="38" name="Members" itemtype="4" readonly="False" count="1">
+                  <prop id="39" name="Guid" itemtype="13" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List#Controls.Cell Cell10" excl="False" displayname="Guid" scope="2" unique="True" modAttr="1">
+                    <tref id="40" name="GUID" itemtype="9" required="True" ns="urn:SourceCode/ComponentModel" displayname="GUID" scope="0" dataType="120" flags="0">
+                      <null />
+                      <null />
+                    </tref>
+                    <valueref id="42" name="Value" itemtype="6" required="True" type="120" value="ce154820-09f5-5989-fe40-d78d0689c3aa" />
+                    <null />
+                    <set id="41" name="References" itemtype="4" readonly="False" count="0" />
+                  </prop>
+                </set>
+                <set id="43" name="References" itemtype="4" readonly="False" count="0" />
+              </ct>
+              <ct id="44" name="Cell Cell11" itemtype="10" ns="urn:SourceCode/SmartForms/View?com_K2_System_Management_Workflows_CustomStep_Views_List#Controls" excl="False" displayname="Cell Cell11" scope="0" flags="0">
+                <tref id="45" name="Control" itemtype="9" required="True" ns="urn:SourceCode/SmartForms" displayname="Control" scope="0" dataType="1" flags="0">
+
+[3] changesets.model (first 50 lines):
+             
+
+[4] properties.model:
+  <?xml version="1.0" encoding="utf-8"?>
+  <modelproperties name="CustomStep-3/9/2020 6:51:36 PM" desc="" apiver="9" minorApiVer="4">
+    <customproperties created="2020-03-09T18:51:37.4601174Z" modified="2020-03-09T18:51:42.1170916Z" />
+  </modelproperties>
+
+[5] Testing Write-PackageConfig...
+  Write-PackageConfig output:
+    <?xml version="1.0" encoding="utf-8"?>
+    <c xmlns="http://schemas.k2.com/Package">
+      <p validate="true">
+        <exs />
+        <incs>
+          <i n="com_K2_System_Management_Workflows_CustomStep_Forms_Main" ns="urn:SourceCode/SmartForms/Form" includeDependencies="true" />
+          <i n="com_K2_System_Management_Workflows_CustomStep_Views_Configuration" ns="urn:SourceCode/SmartForms/View" includeDependencies="true" />
+          <i n="com_K2_System_Management_Workflows_CustomStep_Views_List" ns="urn:SourceCode/SmartForms/View" includeDependencies="true" />
+          <i n="com_K2_System_Workflow_Configuration" ns="urn:SourceCode/SmartObjects/ServiceObject?CustomStepsService" includeDependencies="true" />
+          <i n="com_K2_System_Workflow_CustomSteps" ns="urn:SourceCode/SmartObjects/ServiceObject?CustomStepsService" includeDependencies="true" />
+          <i n="com_K2_System_Management_Workflows_Configuration_SmartObject" ns="urn:SourceCode/SmartObjects/SmartObject" includeDependencies="true" />
+          <i n="com_K2_System_Management_Workflows_CustomStep_SmartObject" ns="urn:SourceCode/SmartObjects/SmartObject" includeDependencies="true" />
+        </incs>
+        <rem />
+        <vars />
+      </p>
+    </c>
+
+[6] Testing Write-DeploymentConfig...
+  Write-DeploymentConfig output:
+    <?xml version="1.0" encoding="utf-8"?>
+    <configuration xmlns="http://schemas.k2.com/Deployment">
+      <package>
+        <variables />
+        <resolveOptions>
+          <defaultOptions>
+            <resolve name="Category" namespace="urn:SourceCode/Category" action="Default" />
+            <resolve name="SmartObject" namespace="urn:SourceCode/SmartObjects" action="Default" />
+            <resolve name="SmartObjectData" namespace="urn:SourceCode/SmartObjects" action="Default" />
+            <resolve name="Service Instance" namespace="urn:SourceCode/SmartObjects/ServiceInstance" action="Default" />
+            <resolve name="Form" namespace="urn:SourceCode/SmartForms" action="Default" />
+            <resolve name="View" namespace="urn:SourceCode/SmartForms" action="Default" />
+            <resolve name="Image" namespace="urn:SourceCode/SmartForms" action="Default" />
+            <resolve name="Process" namespace="urn:SourceCode/Workflow" action="Default" />
+            <resolve name="Workflow" namespace="urn:SourceCode/Workflow" action="Default" />
+            <resolve name="Event" namespace="urn:SourceCode/EventBus" action="Default" />
+            <resolve name="Role" namespace="urn:SourceCode/Identities" action="Default" />
+            <resolve name="Field" namespace="urn:SourceCode/EnvironmentSettings" action="Default" />
+          </defaultOptions>
+          <specificOptions>
+            <resolve name="Custom Step" namespace="urn:SourceCode/Categories?Custom Step#Path.%2Froot%2FSystem%2FManagement%2FWorkflows%2F" action="Default" />
+            <resolve name="Forms" namespace="urn:SourceCode/Categories?Forms#Path.%2Froot%2FSystem%2FManagement%2FWorkflows%2FCustom Step%2F" action="Default" />
+            <resolve name="Management" namespace="urn:SourceCode/Categories?Management#Path.%2Froot%2FSystem%2F" action="Default" />
+            <resolve name="root" namespace="urn:SourceCode/Categories?root#Path.%2F" action="Default" />
+            <resolve name="SmartObjects" namespace="urn:SourceCode/Categories?SmartObjects#Path.%2Froot%2FSystem%2FManagement%2FWorkflows%2FCustom Step%2F" action="Default" />
+            <resolve name="System" namespace="urn:SourceCode/Categories?System#Path.%2Froot%2F" action="Default" />
+            <resolve name="Views" namespace="urn:SourceCode/Categories?Views#Path.%2Froot%2FSystem%2FManagement%2FWorkflows%2FCustom Step%2F" action="Default" />
+            <resolve name="Workflows" namespace="urn:SourceCode/Categories?Workflows#Path.%2Froot%2FSystem%2FManagement%2F" action="Default" />
+            <resolve name="com_K2_System_Management_Workflows_CustomStep_Forms_Main" namespace="urn:SourceCode/SmartForms/Form" action="Default" />
+            <resolve name="com_K2_System_Management_Workflows_CustomStep_Views_Configuration" namespace="urn:SourceCode/SmartForms/View" action="Default" />
+            <resolve name="com_K2_System_Management_Workflows_CustomStep_Views_List" namespace="urn:SourceCode/SmartForms/View" action="Default" />
+            <resolve name="com_K2_System_Workflow_Configuration" namespace="urn:SourceCode/SmartObjects/ServiceObject?CustomStepsService" action="Default" />
+            <resolve name="com_K2_System_Workflow_CustomSteps" namespace="urn:SourceCode/SmartObjects/ServiceObject?CustomStepsService" action="Default" />
+            <resolve name="com_K2_System_Management_Workflows_Configuration_SmartObject" namespace="urn:SourceCode/SmartObjects/SmartObject" action="Default" />
+            <resolve name="com_K2_System_Management_Workflows_CustomStep_SmartObject" namespace="urn:SourceCode/SmartObjects/SmartObject" action="Default" />
+          </specificOptions>
+          <referenceOptions>
+            <rebind id="1237" name="Cell" baseType="Control" action="Default" targetName="" />
+            <rebind id="1239" name="ListTable" baseType="Control" action="Default" targetName="" />
+            <rebind id="1241" name="Section" baseType="Control" action="Default" targetName="" />
+            <rebind id="1243" name="Row" baseType="Control" action="Default" targetName="" />
+            <rebind id="1245" name="Column" baseType="Control" action="Default" targetName="" />
+            <rebind id="1247" name="View" baseType="Control" action="Default" targetName="" />
+            <rebind id="1249" name="Label" baseType="Control" action="Default" targetName="" />
+            <rebind id="1251" name="DataLabel" baseType="Control" action="Default" targetName="" />
+            <rebind id="1253" name="ToolBarButton" baseType="Control" action="Default" targetName="" />
+            <rebind id="1255" name="ToolbarTable" baseType="Control" action="Default" targetName="" />
+            <rebind id="1257" name="CheckBox" baseType="Control" action="Default" targetName="" />
+            <rebind id="3719" name="Table" baseType="Control" action="Default" targetName="" />
+            <rebind id="3727" name="TextBox" baseType="Control" action="Default" targetName="" />
+            <rebind id="3729" name="ImagePostBack" baseType="Control" action="Default" targetName="" />
+            <rebind id="3733" name="Button" baseType="Control" action="Default" targetName="" />
+            <rebind id="3736" name="SmartObjects_Authoring_Service" baseType="SmartObject" action="Default" targetName="" />
+            <rebind id="3749" name="DropDown" baseType="Control" action="Default" targetName="" />
+            <rebind id="5902" name="Lithium" baseType="Theme" action="Default" targetName="" />
+            <rebind id="5904" name="Panel" baseType="Control" action="Default" targetName="" />
+            <rebind id="5906" name="AreaItem" baseType="Control" action="Default" targetName="" />
+            <rebind id="5910" name="Form" baseType="Control" action="Default" targetName="" />
+            <rebind id="5912" name="Area" baseType="Control" action="Default" targetName="" />
+            <rebind id="6091" name="CustomStepsService" baseType="SourceCode.SmartObjects.Services.CustomSteps.Service" action="Default" targetName="" />
+          </referenceOptions>
+        </resolveOptions>
+      </package>
+    </configuration>
+
+[7] Testing Send-Deploy-Package with existing K2 package (WhatIf)...
+PS>TerminatingError(Send-Deploy-Package): "Access to the path 'C:\Program Files\K2\Setup\CustomStep_20260524_1.log' is denied."
+  Send-Deploy-Package WhatIf failed: Access to the path 'C:\Program Files\K2\Setup\CustomStep_20260524_1.log' is denied.
+
+[8] New-Package InputFileName format probe...
+PS>TerminatingError(New-Package): "Object reference not set to an instance of an object."
+  New-Package error: Object reference not set to an instance of an object.
+  Inner:
+
+[9] New-Package without InputFileName...
+PS>TerminatingError(New-Package): "Value cannot be null.
+Parameter name: inputUri"
+  Error: Value cannot be null.
+Parameter name: inputUri
+
+============================================
+  Discovery Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524001652
+**********************

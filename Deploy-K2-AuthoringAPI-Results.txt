@@ -1,0 +1,228 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524041514
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-AuthoringAPI-Results.txt
+============================================
+  K2 Deploy - Authoring API
+============================================
+[1] Finding Authoring API classes...
+  System.Diagnostics.Process [System]
+    ctor()
+  SourceCode.Workflow.Authoring.Process [SourceCode.Workflow.Authoring]
+    ctor()
+    DeploymentResults Deploy(DeploymentPackage package)
+    DeploymentPackage CreateDeploymentPackage()
+    Void CreateDeploymentPackage(DeploymentPackage package)
+    Void SaveAs(String fileName)
+    Void Save()
+    Process Load(String fileName)
+    Void CreateExportTask(DeploymentPackage package, Boolean defaultVersion)
+    Void CreateExportTask(DeploymentPackage package, RevisionResult revisionResult, Boolean defaultVersion)
+    Void CreateExportTask(DeploymentPackage package)
+    Void Save(TextWriter writer)
+    DeploymentResults Deploy()
+  SourceCode.Workflow.Client.Process [SourceCode.Workflow.Client]
+  SourceCode.Workflow.Management.Process [SourceCode.Workflow.Management]
+    ctor()
+    Void LoadDataFields(Object workflowManager)
+    Void LoadDataFields(WorkflowManagementServer workflowManager)
+    Void LoadInstances(Object workflowManager)
+    Void LoadInstances(WorkflowManagementServer workflowManager)
+    Void LoadXmlFields(Object workflowManager)
+    Void LoadXmlFields(WorkflowManagementServer workflowManager)
+    Void LoadExportSource(Object workflowManager, Int32 procSetID)
+    Void LoadExportSource(WorkflowManagementServer workflowManager, Int32 procSetID)
+  SourceCode.WebDesigner.Process.ProcessObjects.Process [SourceCode.WebDesigner.Process]
+    ctor(String processName, Nullable`1 saveDate, Nullable`1 processId)
+  K2Studio.Process [Interop.K2Studio]
+  EnvDTE.Process [EnvDTE]
+  Microsoft.Graph.Process [Microsoft.Graph]
+    ctor()
+  SourceCode.Workflow.Design.DefaultProcess [SourceCode.Workflow.Authoring]
+    ctor()
+
+  All Authoring types with Deploy/Serialize:
+    System.Web.UI.Design.ControlSerializer
+    System.Web.UI.Design.DesignTimeResourceProviderFactory
+    System.Web.UI.Design.IDesignTimeResourceProviderFactoryService
+    System.ComponentModel.Design.Serialization.CodeDomSerializationProvider
+    System.ComponentModel.Design.Serialization.CodeDomSerializer
+    System.ComponentModel.Design.Serialization.CodeDomSerializerBase
+    System.ComponentModel.Design.Serialization.CodeDomSerializerException
+    System.ComponentModel.Design.Serialization.CollectionCodeDomSerializer
+    System.ComponentModel.Design.Serialization.ComponentCodeDomSerializer
+    System.ComponentModel.Design.Serialization.ComponentTypeCodeDomSerializer
+    System.ComponentModel.Design.Serialization.ContainerCodeDomSerializer
+    System.ComponentModel.Design.Serialization.EnumCodeDomSerializer
+    System.ComponentModel.Design.Serialization.EventMemberCodeDomSerializer
+    System.ComponentModel.Design.Serialization.MemberCodeDomSerializer
+    System.ComponentModel.Design.Serialization.PrimitiveCodeDomSerializer
+    System.ComponentModel.Design.Serialization.PropertyMemberCodeDomSerializer
+    System.ComponentModel.Design.Serialization.ResourceCodeDomSerializer
+    System.ComponentModel.Design.Serialization.RootCodeDomSerializer
+    System.ComponentModel.Design.Serialization.SerializeAbsoluteContext
+    System.ComponentModel.Design.Serialization.TypeCodeDomSerializer
+    System.ComponentModel.Design.Serialization.CodeDomComponentSerializationService
+    System.ComponentModel.Design.Serialization.DesignerSerializationManager
+    System.ComponentModel.Design.Serialization.LocalizationCodeDomSerializer
+    System.ComponentModel.Design.Serialization.ResourcePropertyMemberCodeDomSerializer
+    System.Diagnostics.Design.StringDictionaryCodeDomSerializer
+    System.Data.Design.DataSourceSerializationException
+    System.Data.Design.DataSourceXmlSerializationAttribute
+    System.Data.Design.DataSourceXmlSerializer
+    System.Data.Design.IDataSourceXmlSerializable
+    System.Data.Design.PropertyReferenceSerializer
+    System.Windows.Forms.Design.ControlCodeDomSerializer
+    System.Windows.Forms.Design.DataGridViewRowCollectionCodeDomSerializer
+    System.Windows.Forms.Design.ImageListCodeDomSerializer
+    System.Windows.Forms.Design.TableLayoutControlCollectionCodeDomSerializer
+    System.Windows.Forms.Design.TableLayoutPanelCodeDomSerializer
+    System.Windows.Forms.Design.ToolStripCodeDomSerializer
+    System.Windows.Forms.Design.ToolStripMenuItemCodeDomSerializer
+    System.ComponentModel.Design.Serialization.ResourceCodeDomSerializer+SerializationResourceManager
+    System.ComponentModel.Design.Serialization.CodeDomComponentSerializationService+CodeDomSerializationStore
+    System.ComponentModel.Design.Serialization.DesignerSerializationManager+SerializationSession
+    System.Data.Design.DataSourceXmlSerializer+PropertySerializationInfo
+    System.Data.Design.DataSourceXmlSerializer+XmlSerializableProperty
+    System.Windows.Forms.Design.ControlDesigner+DesignerControlCollectionCodeDomSerializer
+    System.Windows.Forms.Design.TableLayoutPanelDesigner+DesignerTableLayoutControlCollectionCodeDomSerializer
+    System.ComponentModel.Design.Serialization.CodeDomComponentSerializationService+CodeDomSerializationStore+ComponentListCodeDomSerializer
+    System.ComponentModel.Design.Serialization.CodeDomComponentSerializationService+CodeDomSerializationStore+PassThroughSerializationManager
+    System.ComponentModel.Design.Serialization.CodeDomComponentSerializationService+CodeDomSerializationStore+LocalDesignerSerializationManager
+    SourceCode.SmartObjects.Authoring.IXmlTextSerialization
+    SourceCode.SmartObjects.Authoring.ReadOnlyPersistableObjectCollectionBaseXmlTextSerializable`2
+    SourceCode.SmartObjects.Authoring.PersistableObjectCollectionBaseXmlTextSerializable`2
+    SourceCode.SmartObjects.Authoring.PersistableContainerObjectXmlTextSerializable
+    SourceCode.Workflow.Design.DeploymentLayoutFileCreator
+    SourceCode.Workflow.Design.Notification.Deployment
+    SourceCode.Workflow.Design.Interop.InteropItemSerializer
+    SourceCode.Workflow.Authoring.EventItem+EventItemSerializationState
+    SourceCode.Workflow.Design.SerialNoFieldPart
+    SourceCode.Workflow.Design.ConfigSettingFactory
+    SourceCode.Workflow.Design.SmartObjectServices.Deployment
+    SourceCode.Workflow.Design.SimpleRules.SimpleRuleFactory
+    SourceCode.Workflow.Design.Common.Extensions.SerializationInfoExtensions
+    SourceCode.WebDesigner.Deployment.Deployment
+    SourceCode.WebDesigner.Deployment.DeploymentServiceProvider
+    SourceCode.WebDesigner.Deployment.K2Process.Factory
+    SourceCode.WebDesigner.Framework.ObjectModel.Core.Deployment.DeploymentLookup
+    System.Drawing.Design.ToolboxItemContainer+ToolboxItemSerializer
+    System.Drawing.Design.ToolboxItemContainer+ToolboxSerializationBinder
+    SourceCode.Forms.Authoring.DeployableState
+    SourceCode.Forms.Authoring.DeployableStateCollection
+    SourceCode.Forms.Authoring.IXmlSerializableObject
+    SourceCode.Forms.Design.ConfigurationSettings+DeploymentSection
+    SourceCode.WebDesigner.Framework.CodeGen.Core.Deployment.DeploymentLookup
+    SourceCode.WebDesigner.Framework.CodeGen.Core.Attributes.GenerateSerializableAttribute
+    SourceCode.WebDesigner.Framework.CodeGen.Core.Attributes.DeployableAttribute
+    SourceCode.WebDesigner.WebServices.Client.FrameworkInterop.DeployProcessCompletedEventHandler
+    SourceCode.WebDesigner.WebServices.Client.FrameworkInterop.DeployProcessCompletedEventArgs
+    SourceCode.WebDesigner.WebServices.Client.FrameworkInterop.DeployProcessWithStatusCompletedEventHandler
+    SourceCode.WebDesigner.WebServices.Client.FrameworkInterop.DeployProcessWithStatusCompletedEventArgs
+    SourceCode.Workflow.Design.ConfigSettingFactory
+    SourceCode.Workflow.Design.ActiveDirectory.Validation.ValidatorFactory
+    SourceCode.Workflow.Design.Crm.SerializationInfoExtensions
+    SourceCode.Workflow.Design.ConfigSettingFactory
+    SourceCode.Workflow.Design.ItemReference.SerializationInfoExtensions
+    SourceCode.Workflow.Design.ItemReference.K2FieldFactory
+    SourceCode.Workflow.Design.ProcessApproval.DeployProcessEvent
+    SourceCode.Workflow.Design.ProcessApproval.DeployProcessEventItem
+    SourceCode.Workflow.Design.ProcessApproval.DeployProcessIcon
+    SourceCode.Workflow.Design.ProcessApproval.DeployProcessPropertyWizardDefinition
+    SourceCode.Workflow.Design.ProcessApproval.DeployProcessWizardDefinition
+    SourceCode.Workflow.Design.ConfigSettingFactory
+    SourceCode.Workflow.Design.ConfigSettingFactory
+    SourceCode.Workflow.Design.ConfigSettingFactory
+    SourceCode.Workflow.Design.WordDocuments.Validation.ValidatorFactory
+    SourceCode.Workflow.Design.WordDocuments.Extensions.SerializationInfoExtensions
+    Microsoft.Web.Design.DesignTimeResourceProviderFactoryService
+    Microsoft.Web.Design.DefaultDesignTimeResourceProviderFactory
+    Microsoft.Web.Design.Server.ReflectionSerializer
+    Microsoft.Web.Design.Server.ServerDocumentDesignerFactory
+    SourceCode.Designer.Client.DeploymentResult
+    SourceCode.Designer.Client.GlobalJsonSerializerSettings
+    SourceCode.Designer.Client.IDeploy
+    SourceCode.Designer.Client.IDeploymentResult
+    SourceCode.Designer.Client.Exceptions.Deployment.DeploymentError
+    SourceCode.Designer.Client.Exceptions.Deployment.IDeploymentError
+    SourceCode.Designer.ComponentModel.Serialization.ISerializer
+    SourceCode.Designer.ComponentModel.Serialization.LocalFileSerializer
+
+[2] Loading KPRX...
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  KPRX: 413507 bytes
+  Root: <?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b13
+
+  Trying XmlSerializer deserialization...
+    Found: SourceCode.Workflow.Design.DefaultProcess in SourceCode.Workflow.Authoring
+    ProcessType: SourceCode.Workflow.Design.DefaultProcess
+    Base: SourceCode.Workflow.Authoring.Process
+PS C:\Shared\SPtoNintex-Migration-Tool> TerminatingError(New-Object): "Exception calling ".ctor" with "1" argument(s): "There was an error reflecting type 'SourceCode.Workflow.Design.DefaultProcess'.""
+    XmlSerializer failed: Exception calling ".ctor" with "1" argument(s): "There was an error reflecting type 'SourceCode.Workflow.Design.DefaultProcess'."
+    Inner: There was an error reflecting type 'SourceCode.Workflow.Design.DefaultProcess'.
+
+[3] Trying DeploymentManager...
+  DeploymentManager NOT FOUND in Authoring namespace
+  All DeploymentManager types:
+    SourceCode.Deployment.Management.PackageDeploymentManager [SourceCode.Deployment.Management]
+    Microsoft.SharePoint.Administration.AppDeployment.AzureDeploymentManager [Microsoft.SharePoint]
+
+[4] Processes:
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+  Total: 11
+**********************
+Windows PowerShell transcript end
+End time: 20260524041552
+**********************

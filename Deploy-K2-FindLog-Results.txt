@@ -1,0 +1,157 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524040337
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-FindLog-Results.txt
+============================================
+  K2 Deploy - Find Log + Test Unmodified
+============================================
+[1] Searching for K2 logs...
+  Checking: C:\Program Files\K2\Bin
+  Checking: C:\ProgramData\SourceCode\HostServer
+  Checking: C:\ProgramData\SourceCode
+
+  HostServerLogging.config:
+  Config at: C:\Program Files\K2\Host Server\Bin\HostServerLogging.config
+
+  Windows Event Log (K2 errors):
+  [05/24/2026 03:57:52] [SourceCode.Logging.Extension.EventLogExtension] 30010 'App Framework Core' package deployed 	 5/24/2026 3:57:52 AM
+User Account: 	User1
+Success	View	com.K2.App.Framework.Core.ItemView.FormHeaderFull	00:00:00.1235014
+Success	View	com.K2.App.Framework.Core.ItemView.VersionRegistration	00:00:00.1357352
+Success	View	com.K2.App.Framework.Core.ItemView.FormFooter	00:00:00.0771837
+Success	Form	com.K2.App.Framework.Core.Form.RegisterFramework	00:00:00.0989192
+Success	View	com.K2.App.Framework.Core.ItemView.FormHeaderThin	00:00:00.0790932
+Succe
+  [05/24/2026 03:57:52] [SourceCode.Logging.Extension.EventLogExtension] 30003 Authorization Failed
+   at SourceCode.SmartObjects.ServiceBroker.Broker.Execute(DacSettings dacSettings, Boolean isList, DataTable bulkInputTable)
+   at SourceCode.SmartObjects.Runtime.SmartObjectClientServer.ExecuteSQLQuery(String query, DacParameterCollection parameterList, ExecuteSQLQueryReaderOptions options)
+   at SourceCode.SmartObjects.Runtime.SmartObjectClientServer.ExecuteSQLQueryReader(String query, DacParameterCollection parameters, Boolean autoAlias, String sessionCookie)
+  [05/24/2026 03:57:51] [SourceCode.Logging.Extension.EventLogExtension] 30003 I/O error occurred.
+   at SourceCode.ComponentModel.PackageManagerService.ServicePackage.GetStream(Uri itemUri, FileMode mode)
+   at SourceCode.ComponentModel.FileItem.OpenRead()
+   at SourceCode.Runtime.Services.Workflow.WorkflowDeploymentService.Deploy(IDeploymentContext context)
+   at SourceCode.Deployment.Runtime.ServerSession.DoDeployment(Boolean deploymentLoggingEnabled, ISessionManager sessionManager, Int32 sessionId, IComparisonResults comparisonResults, DeploymentPlan deployme
+  [05/24/2026 03:53:09] [SourceCode.Logging.Extension.EventLogExtension] 30010 'App Framework Core' package deployed 	 5/24/2026 3:53:09 AM
+User Account: 	User1
+Success	View	com.K2.App.Framework.Core.ItemView.FormHeaderFull	00:00:00.1043396
+Success	View	com.K2.App.Framework.Core.ItemView.VersionRegistration	00:00:00.1824328
+Success	View	com.K2.App.Framework.Core.ItemView.FormFooter	00:00:00.1089355
+Success	Form	com.K2.App.Framework.Core.Form.RegisterFramework	00:00:00.0893487
+Success	View	com.K2.App.Framework.Core.ItemView.FormHeaderThin	00:00:00.0815154
+Succe
+  [05/24/2026 03:53:09] [SourceCode.Logging.Extension.EventLogExtension] 30003 Authorization Failed
+   at SourceCode.SmartObjects.ServiceBroker.Broker.Execute(DacSettings dacSettings, Boolean isList, DataTable bulkInputTable)
+   at SourceCode.SmartObjects.Runtime.SmartObjectClientServer.ExecuteSQLQuery(String query, DacParameterCollection parameterList, ExecuteSQLQueryReaderOptions options)
+   at SourceCode.SmartObjects.Runtime.SmartObjectClientServer.ExecuteSQLQueryReader(String query, DacParameterCollection parameters, Boolean autoAlias, String sessionCookie)
+  [05/24/2026 03:53:08] [SourceCode.Logging.Extension.EventLogExtension] 30003 I/O error occurred.
+   at SourceCode.ComponentModel.PackageManagerService.ServicePackage.GetStream(Uri itemUri, FileMode mode)
+   at SourceCode.ComponentModel.FileItem.OpenRead()
+   at SourceCode.Runtime.Services.Workflow.WorkflowDeploymentService.Deploy(IDeploymentContext context)
+   at SourceCode.Deployment.Runtime.ServerSession.DoDeployment(Boolean deploymentLoggingEnabled, ISessionManager sessionManager, Int32 sessionId, IComparisonResults comparisonResults, DeploymentPlan deployme
+  [05/24/2026 03:47:33] [SourceCode.Logging.Extension.EventLogExtension] 30010 'App SPD Migration' package deployed 	 5/24/2026 3:47:33 AM
+User Account: 	User1
+Success	View	com.K2.App.Framework.Core.ItemView.FormHeaderFull	00:00:00.5479895
+Fail	SmartObject	com_K2_App_SPD_Migration_SmartObject_VersionDetail
+	I/O error occurred.	System.IO.IOException: I/O error occurred.
+	at SourceCode.ComponentModel.PackageManagerService.ServicePackage.GetStream(Uri itemUri, FileMode mode)
+	at SourceCode.ComponentModel.FileItem.OpenRead()
+	at SourceCode.Runtime.Services.SmartOb
+  [05/24/2026 03:47:32] [SourceCode.Logging.Extension.EventLogExtension] 30003 I/O error occurred.
+   at SourceCode.ComponentModel.PackageManagerService.ServicePackage.GetStream(Uri itemUri, FileMode mode)
+   at SourceCode.ComponentModel.FileItem.OpenRead()
+   at SourceCode.Runtime.Services.SmartObjects.RuntimeService.Deploy(IDeploymentContext context)
+   at SourceCode.Deployment.Runtime.ServerSession.DoDeployment(Boolean deploymentLoggingEnabled, ISessionManager sessionManager, Int32 sessionId, IComparisonResults comparisonResults, DeploymentPlan deploymentPlan,
+  [05/24/2026 03:47:32] [SourceCode.Logging.Extension.EventLogExtension] 30003 I/O error occurred.
+   at SourceCode.ComponentModel.PackageManagerService.ServicePackage.GetStream(Uri itemUri, FileMode mode)
+   at SourceCode.ComponentModel.FileItem.OpenRead()
+   at SourceCode.Runtime.Services.SmartObjects.RuntimeService.Deploy(IDeploymentContext context)
+   at SourceCode.Deployment.Runtime.ServerSession.DoDeployment(Boolean deploymentLoggingEnabled, ISessionManager sessionManager, Int32 sessionId, IComparisonResults comparisonResults, DeploymentPlan deploymentPlan,
+  [05/24/2026 03:47:31] [SourceCode.Logging.Extension.EventLogExtension] 30003 I/O error occurred.
+   at SourceCode.ComponentModel.PackageManagerService.ServicePackage.GetStream(Uri itemUri, FileMode mode)
+   at SourceCode.ComponentModel.FileItem.OpenRead()
+   at SourceCode.Runtime.Services.Workflow.WorkflowDeploymentService.Deploy(IDeploymentContext context)
+   at SourceCode.Deployment.Runtime.ServerSession.DoDeployment(Boolean deploymentLoggingEnabled, ISessionManager sessionManager, Int32 sessionId, IComparisonResults comparisonResults, DeploymentPlan deployme
+
+[2] CategoryPath collision check...
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  <CategoryPath> occurrences: 1
+    <CategoryPath>Workflow</CategoryPath>
+
+[3] Deploy with UNMODIFIED KPRX...
+True
+  Using UNMODIFIED KPRX as TestKprxWF.Workflow
+Deploy-Package : I/O error occurred.
+At C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-FindLog.ps1:186 char:1
++ Deploy-Package -FileName $finalKspx -ConfigFile $deployConfigXml -Con ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (:) [Deploy-Package], IOException
+    + FullyQualifiedErrorId : 0,SourceCode.Deployment.PowerShell.DeployPackage
+Deploy-Package : I/O error occurred.
+At C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-FindLog.ps1:186 char:1
++ Deploy-Package -FileName $finalKspx -ConfigFile $deployConfigXml -Con ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (:) [Deploy-Package], IOException
+    + FullyQualifiedErrorId : 0,SourceCode.Deployment.PowerShell.DeployPackage
+
+
+  Unmodified deploy completed!
+
+[4] Processes:
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+  Total: 11
+**********************
+Windows PowerShell transcript end
+End time: 20260524040351
+**********************

@@ -1,0 +1,88 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524021708
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-PDM-Results.txt
+============================================
+  K2 PDM Deploy Test
+============================================
+[1] Getting KPRX from TestKprxWF...
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  KPRX: 413507 bytes
+  KPRX is XML: True
+  First 200 chars: ﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b1
+
+[1b] Getting FrameworkGeneric KPRX (ProcID=14)...
+  KPRX2: 266344 bytes, isXML=True
+  First 300 chars: ﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.Artifac
+
+[2] Connecting PDM...
+True
+  Connected!
+
+[3] Loading App Framework Core.kspx into PDM session...
+  Session: Test_Deploy_20260524021708
+  Model: App Framework Core
+  Members: 105
+
+[3b] Deploying via session.Deploy()...
+  Deploy() failed: 'NoAnalyze' is a ReadOnly property.
+
+[3c] Trying session.Send() instead...
+  SyncState enum not found in assembly
+  ENUM: SourceCode.Deployment.Management.ProgressState
+  ENUM: SourceCode.Deployment.Management.SessionMode
+  ENUM: SourceCode.Deployment.Management.SessionLoadSideEffects
+  ENUM: SourceCode.Deployment.Management.OpenSessionOptions
+
+[4] Building proper .kspx from real KPRX...
+  Real WF entry:
+  Real WF file:  (0KB)
+
+[5] Using Model to build .kspx programmatically...
+  Empty model created: SPD_Migrated_Workflows
+  Trying to load KPRX into model...
+  Load KPRX failed: Exception calling "Load" with "2" argument(s): "Cannot read that as a ZipFile"
+
+[5b] Loading real .kspx into empty session...
+  Load .kspx result: None
+  Model members: 0
+
+[5c] Saving model as new .kspx...
+  Save failed: Exception calling "Save" with "1" argument(s): "Object reference not set to an instance of an object."
+
+============================================
+  PDM Deploy Test Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524021711
+**********************

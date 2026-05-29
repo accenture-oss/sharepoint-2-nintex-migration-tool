@@ -1,0 +1,387 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524024837
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2Workflow-FINAL-Results.txt
+============================================
+  K2 FINAL Workflow Deploy
+  Strategy: Process SDK Direct Deploy
+============================================
+[0] Loading assemblies...
+  Loaded: SourceCode.Framework.dll
+  Loaded: SourceCode.HostClientAPI.dll
+  Loaded: SourceCode.Workflow.Authoring.dll
+  Loaded: SourceCode.Workflow.Design.dll
+  Loaded: SourceCode.Workflow.Management.dll
+  Loaded: SourceCode.Workflow.Client.dll
+  Loaded: SourceCode.Deployment.Management.dll
+  Loaded: SourceCode.EnvironmentSettings.Client.dll
+  Loaded: SourceCode.ComponentModel.dll
+
+[1] Getting TestKprxWF KPRX...
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  KPRX: 413507 bytes
+
+[2] Process class full API...
+  Void add_AnyItemAdded(EventHandler`1 value)
+  Void add_AnyItemAdding(EventHandler`1 value)
+  Void add_AnyItemPropertyChanged(EventHandler`1 value)
+  Void add_AnyItemPropertyChanging(EventHandler`1 value)
+  Void add_AnyItemRemoved(EventHandler`1 value)
+  Void add_AnyItemRemoving(EventHandler`1 value)
+  Void add_CurrentExecutionLayerChanged(EventHandler value)
+  Void add_CurrentViewChanged(EventHandler value)
+  Void add_ItemAdded(EventHandler`1 value)
+  Void add_ItemAdding(EventHandler`1 value)
+  Void add_ItemRemoved(EventHandler`1 value)
+  Void add_ItemRemoving(EventHandler`1 value)
+  Void add_PropertyChanged(EventHandler`1 value)
+  Void add_PropertyChanging(EventHandler`1 value)
+  Void add_RepairError(EventHandler`1 value)
+  T Clone()
+  T Clone(Guid newGuid)
+  T CloneInContext(CloningContext context)
+  T CloneInContext(CloningContext context, Guid newGuid)
+  MemoryStream CloneToStream()
+  DeploymentResults Compile()
+  Void Compress(Stream stream, Boolean makeSelfExtract)
+  Void Compress(String fileName, Boolean makeSelfExtract)
+  DeploymentPackage CreateDeploymentPackage()
+  Void CreateDeploymentPackage(DeploymentPackage package)
+  Void CreateExportTask(DeploymentPackage package, Boolean defaultVersion)
+  Void CreateExportTask(DeploymentPackage package)
+  Void CreateExportTask(DeploymentPackage package, RevisionResult revisionResult, Boolean defaultVersion)
+  Void Delete()
+  DeploymentResults Deploy(DeploymentPackage package)
+  DeploymentResults Deploy()
+  Void DisableEvents()
+  Void Dispose()
+  Void EnableEvents()
+  PersistableObject FindChild(Guid guid, Boolean recursive)
+  T FindContainerOfType()
+  ActivityCollection get_Activities()
+  String get_BusinessOwner()
+  String get_CategoryPath()
+  PersistableContainerObject get_Container()
+  ExecutionLayer get_CurrentExecutionLayer()
+  WorkflowView get_CurrentView()
+  CustomConfigurationSettings get_CustomConfigurationSettings()
+  DataFieldCollection get_DataFields()
+  ExecutionLayer get_DefaultExecutionLayer()
+  SupportedLanguages get_DefaultLanguage()
+  ProcessDependencies get_Dependencies()
+  Boolean get_DeployToCategory()
+  String get_Description()
+  String get_DisplayName()
+  EscalationCollection get_Escalations()
+  ExceptionRule get_Exception()
+  ExecutableItem[] get_ExecutableItems()
+  ExecutionLayerCollection get_ExecutionLayers()
+  Int32 get_ExpectedDuration()
+  ExtenderProjectCollection get_ExtenderProjects()
+  String get_FileName()
+  ProcessFinishRule get_FinishRule()
+  IProjectFolder get_Folder()
+  String get_FolderPath()
+  String get_FullFileName()
+  String get_FullName()
+  Guid get_Guid()
+  Boolean get_IsDisposed()
+  Boolean get_IsIntLoading()
+  Boolean get_IsLoading()
+  LineCollection get_Lines()
+  ObjectLoadException[] get_LoadErrors()
+  Boolean get_Locked()
+  String get_MetaData()
+  Boolean get_Modified()
+  String get_Name()
+  Int32 get_Priority()
+  String get_ProcSetFolderName()
+  IProject get_Project()
+  IProjectFile get_ProjectFile()
+  ReferenceCollection get_References()
+  String get_ServerFolderPath()
+  ISite get_Site()
+  ComponentCollection get_SitedChildren()
+  StartActivity get_StartActivity()
+  ProcessStartRule get_StartRule()
+  String get_TechnicalOwner()
+  WorkflowDesignerVerbCollection get_Verbs()
+  ViewCollection get_Views()
+  WizardDefinition get_WizardDefinition()
+  WorkingHours get_WorkingHours()
+  XmlFieldCollection get_XmlFields()
+  Version GetProjectTargetFrameworkVersion()
+  Object GetService(Type serviceType)
+  Boolean PropertyChangingEventHooked(String methodType, String methodName)
+  Void remove_AnyItemAdded(EventHandler`1 value)
+  Void remove_AnyItemAdding(EventHandler`1 value)
+  Void remove_AnyItemPropertyChanged(EventHandler`1 value)
+  Void remove_AnyItemPropertyChanging(EventHandler`1 value)
+  Void remove_AnyItemRemoved(EventHandler`1 value)
+  Void remove_AnyItemRemoving(EventHandler`1 value)
+  Void remove_CurrentExecutionLayerChanged(EventHandler value)
+  Void remove_CurrentViewChanged(EventHandler value)
+  Void remove_ItemAdded(EventHandler`1 value)
+  Void remove_ItemAdding(EventHandler`1 value)
+  Void remove_ItemRemoved(EventHandler`1 value)
+  Void remove_ItemRemoving(EventHandler`1 value)
+  Void remove_PropertyChanged(EventHandler`1 value)
+  Void remove_PropertyChanging(EventHandler`1 value)
+  Void remove_RepairError(EventHandler`1 value)
+  Void Save()
+  Void Save(TextWriter writer)
+  Void SaveAs(String fileName)
+  Void set_BusinessOwner(String value)
+  Void set_CategoryPath(String value)
+  Void set_CurrentExecutionLayer(ExecutionLayer value)
+  Void set_CurrentView(WorkflowView value)
+  Void set_DefaultLanguage(SupportedLanguages value)
+  Void set_DeployToCategory(Boolean value)
+  Void set_Description(String value)
+  Void set_DisplayName(String value)
+  Void set_Exception(ExceptionRule value)
+  Void set_ExpectedDuration(Int32 value)
+  Void set_FinishRule(ProcessFinishRule value)
+  Void set_Guid(Guid value)
+  Void set_Locked(Boolean value)
+  Void set_MetaData(String value)
+  Void set_Name(String value)
+  Void set_Priority(Int32 value)
+  Void set_ProcSetFolderName(String value)
+  Void set_Site(ISite value)
+  Void set_StartRule(ProcessStartRule value)
+  Void set_TechnicalOwner(String value)
+  Void set_WizardDefinition(WizardDefinition value)
+  Void SetOutputLogger(IEngineProxy logger)
+  Void UnloadExtenderProjects()
+  Void UpdateCustomContextCode()
+  Void UpdateCustomContextCode(GenerationOptions options)
+  Void ValidateDisplayName(String name)
+  Void ValidateName(String name)
+
+[3] Deserializing KPRX into DefaultProcess...
+PS>TerminatingError(New-Object): "Exception calling ".ctor" with "0" argument(s): "Please ensure that the needed configuration node(s)  are configured in your configuration file C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe.Config. Please refer to the help documentation for further details.""
+  DefaultProcess creation failed: Exception calling ".ctor" with "0" argument(s): "Please ensure that the needed configuration node(s)  are configured in your configuration file C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe.Config. Please refer to the help documentation for further details."
+
+  Trying XmlSerializer...
+PS>TerminatingError(New-Object): "Exception calling ".ctor" with "1" argument(s): "There was an error reflecting type 'SourceCode.Workflow.Design.DefaultProcess'.""
+  XmlSerializer failed: Exception calling ".ctor" with "1" argument(s): "There was an error reflecting type 'SourceCode.Workflow.Design.DefaultProcess'."
+
+  Trying Process.Load from TextReader...
+  Process base static methods:
+    String MakeRelative(String baseString, String fullString) [Public=False]
+    Process Load(XmlReader reader, String fileName) [Public=False]
+    Process Load(String fileName) [Public=True]
+    INSTANCE: Process Load(String fileName)
+
+  Checking IProcess interface...
+    IProcess: ActivityCollection get_Activities()
+    IProcess: String get_BusinessOwner()
+    IProcess: Void set_BusinessOwner(String value)
+    IProcess: DataFieldCollection get_DataFields()
+    IProcess: SupportedLanguages get_DefaultLanguage()
+    IProcess: Void set_DefaultLanguage(SupportedLanguages value)
+    IProcess: ExceptionRule get_Exception()
+    IProcess: Void set_Exception(ExceptionRule value)
+    IProcess: Int32 get_ExpectedDuration()
+    IProcess: Void set_ExpectedDuration(Int32 value)
+    IProcess: LineCollection get_Lines()
+    IProcess: Int32 get_Priority()
+    IProcess: Void set_Priority(Int32 value)
+    IProcess: Void Save(String fileName)
+    IProcess: StartActivity get_StartActivity()
+    IProcess: ProcessFinishRule get_FinishRule()
+    IProcess: Void set_FinishRule(ProcessFinishRule value)
+    IProcess: ProcessStartRule get_StartRule()
+    IProcess: Void set_StartRule(ProcessStartRule value)
+    IProcess: String get_TechnicalOwner()
+    IProcess: Void set_TechnicalOwner(String value)
+    IProcess: WorkingHours get_WorkingHours()
+    IProcess: XmlFieldCollection get_XmlFields()
+
+[4] DeploymentPackage approach...
+  DeploymentPackage created
+  WorkflowManagementConnectionString set
+  PKG: TestOnly = False
+  PKG: WorkflowManagementConnectionString = Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=localhost;Port=5555
+  PKG: DeploymentLabelName =
+  PKG: DeploymentLabelDescription =
+  PKG: SmartObjectConnectionString = Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=localhost;Port=5555
+  PKG: SelectedEnvironment =
+  PKG: Targets =
+  PKG: PropertiesContainer =
+  PKG: Resources =
+  PKG: Environments =
+  PKG: Dependencies =
+  PKG: IsDisposed = False
+  Targets count: 0
+PS>TerminatingError(New-Object): "Exception calling ".ctor" with "0" argument(s): "Please ensure that the needed configuration node(s)  are configured in your configuration file C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe.Config. Please refer to the help documentation for further details.""
+  DeploymentPackage failed: Exception calling ".ctor" with "0" argument(s): "Please ensure that the needed configuration node(s)  are configured in your configuration file C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe.Config. Please refer to the help documentation for further details."
+
+[5] SaveAs + Load pattern...
+PS>TerminatingError(New-Object): "Exception calling ".ctor" with "0" argument(s): "Please ensure that the needed configuration node(s)  are configured in your configuration file C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe.Config. Please refer to the help documentation for further details.""
+  SaveAs pattern failed: Exception calling ".ctor" with "0" argument(s): "Please ensure that the needed configuration node(s)  are configured in your configuration file C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe.Config. Please refer to the help documentation for further details."
+
+[6] WorkflowManagementServer write methods...
+  Boolean AddStringTableEntry(String primaryFolder, String name, String value)
+  Boolean AddWorkType(String userName, WorkType workType)
+  Boolean CreateActionInstanceRight(ActionInstanceRight actInstRight)
+  Boolean CreateActionInstanceRights(ActionInstanceRights actInstRights)
+  BaseAPIConnection CreateConnection()
+  Int32 CreateErrorProfile(ErrorProfile errorProfile)
+  Boolean CreateRole(Role role)
+  Boolean CreateRoles(Roles roles)
+  Boolean CreateRolesForProcess(Roles roles, Int32 procSetId)
+  Boolean SaveActionInstanceRight(ActionInstanceRight actInstRight)
+  Boolean SaveActionInstanceRights(ActionInstanceRights actInstRights)
+  Boolean SaveActionRights(ActionRights actionRights)
+  Boolean SaveServerData(Server server)
+  Void set_Connection(BaseAPIConnection value)
+  Boolean SetDefaultProcess(String procSetName, Int32 processID)
+  Void SetProcessInstanceVersion(Int32 procInstID, Int32 targetProcVersion)
+  Void SetProcSetThreshold(Int32 procSetId, IProcessSetConfig config)
+  Boolean SetRunAsUser(String userName, String password, String securityLabel, Guid objectGuid, Int32 procID)
+  Void SetServerThreshold(IProcessSetConfig config)
+  Boolean SetUserStatus(String userName, UserStatuses userStatus)
+  Void SetUserStatuses(Users users)
+  Boolean UpdateAdminUsers(AdminPermissions adminPermissions)
+  Boolean UpdateErrorProfile(ErrorProfile errorProfile)
+  Boolean UpdateGroupPermissions(String groupName, Permissions permissions)
+  Boolean UpdateOrAddProcUserPermissions(Int32 procSetID, Permissions permissions)
+  Boolean UpdateProcGroupPermissions(Int32 procSetID, Permissions permissions)
+  Boolean UpdateProcPermissions(Int32 procSetID, Permissions permissions, Boolean remove)
+  Boolean UpdateProcPermissions(Int32 procSetID, Permissions permissions)
+  Boolean UpdateProcUserPermissions(Int32 procSetID, Permissions permissions)
+  Boolean UpdateRole(String name, String procsetName, Int32 interval, Boolean dynamic)
+  Boolean UpdateRole(String name, Int32 interval, Boolean dynamic)
+  Boolean UpdateServerSettings()
+  Boolean UpdateStringTable()
+  Boolean UpdateUserPermissions(String userName, Permissions permissions)
+  Boolean UpdateWorkType(String userName, WorkType workType)
+
+  All methods containing 'Kprx' or 'Process' or 'ProcSet':
+  Void ClearProcSetThreshold(Int32 procSetId)
+  Boolean CreateRolesForProcess(Roles roles, Int32 procSetId)
+  Boolean DeleteAllProcessInstances(String procFullName, Int32 version)
+  Boolean DeleteProcessDefinition(String procFullName, Int32 version, Boolean deleteLogEntries)
+  Boolean DeleteProcessInstances(Int32 procInstID, Boolean deleteLogEntries)
+  Boolean DeleteProcessInstances(IEnumerable`1 procInstIDs, Boolean deleteLogEntries)
+  Permissions GetAllProcessUserandGroupPermissions(ProcSetPermissionsCriteriaFilter filter)
+  ProcessFolders GetDefaultProcSetProcesses()
+  ProcessFolders GetDefaultProcSetProcesses(EventTypes eventType)
+  Activities GetProcActivities(Int32 procID)
+  Process GetProcess(Int32 procID)
+  Activities GetProcessActivities(String userName, Int32 procID)
+  ProcessDataFields GetProcessDataFields(Int32 procID)
+  Processes GetProcessDeleteVersionsWithRunningInstances(ProcessDeleteOption chosenOption, Int32 specificVersion, Int32 procSetId)
+  Processes GetProcesses(ProcessCriteriaFilter filter, Int32 procSetID)
+  Processes GetProcesses(Int32 procSetID)
+  Processes GetProcesses(ProcessCriteriaFilter filter)
+  Processes GetProcessesCurrentVersion()
+  Processes GetProcessesFromExportLabel(String exportLabel, String username)
+  Events GetProcessEvents(Int32 procID)
+  ProcessFolders GetProcessFolders()
+  Permissions GetProcessGroupPermissions(Int32 procSetID)
+  ProcessInstances GetProcessInstances()
+  ProcessInstances GetProcessInstances(Int32 procID)
+  ProcessInstances GetProcessInstances(String folio)
+  ProcessInstances GetProcessInstances(Int32 procID, String folio)
+  ProcessInstances GetProcessInstancesAll(String fullName, String folio, String originator, String fromDate, String toDate)
+  ProcessInstances GetProcessInstancesAll(DateTime fromDate, DateTime toDate, String fullName, String folio, String originator)
+  ProcessInstances GetProcessInstancesAll(String fullName, String folio, String originator)
+  ProcessInstances GetProcessInstancesAll(ProcessInstanceCriteriaFilter filter)
+  ProcessInstances GetProcessInstancesProcSet(ProcessInstanceCriteriaFilter filter, Int32 procSetID)
+  ProcessInstances GetProcessInstancesProcSet(DateTime fromDate, DateTime toDate, Int32 procSetID, String folio, String originator)
+  ProcessInstances GetProcessInstancesProcSet(Int32 procSetID, String folio, String originator, String fromDate, String toDate)
+  Dictionary`2 GetProcessInstanceStatusCount(Int32 procSetId)
+  Dictionary`2 GetProcessInstanceStatusCount(Int32 procSetId, Int32 procInstStatus)
+  ProcessSets GetProcessIPCOrphans(ProcessDeleteOption chosenOption, Int32 specificVersion, Int32 procSetId)
+  Byte[] GetProcessKprx(String procSetFullName, Boolean defaultVersion)
+  Byte[] GetProcessKprx(String procSetFullName)
+  Byte[] GetProcessKprx(Int32 procID)
+  Byte[] GetProcessSource(String procSetFullName)
+  Byte[] GetProcessSource(Int32 procID)
+  Permissions GetProcessUserandGroupPermissions(Int32 procSetID, ProcSetPermissionsCriteriaFilter filter)
+  Permissions GetProcessUserPermissions(Int32 procSetID)
+  Processes GetProcessVersions(Int32 procSetID)
+  ProcessXMLFields GetProcessXMLFields(Int32 procID)
+  Activities GetProcInstActivities(Int32 procInstID)
+  ProcessSet GetProcSet(String processFullName)
+  ProcessSet GetProcSet(Int32 procSetID)
+  ProcSetPermissions GetProcSetGroupPermissions()
+  ProcessSets GetProcSets()
+  ProcessSets GetProcSets(String[] procsetNames, String[] viewNames)
+  ProcessSets GetProcSets(String[] viewNames)
+  IProcessSetConfig GetProcSetThreshold(Int32 procSetId)
+  List`1 GetProcSetViews(String processFullName)
+  ProcessSets GetUserParticipatingProcesses(String userName)
+  Boolean SetDefaultProcess(String procSetName, Int32 processID)
+  Void SetProcessInstanceVersion(Int32 procInstID, Int32 targetProcVersion)
+  Void SetProcSetThreshold(Int32 procSetId, IProcessSetConfig config)
+  Boolean StartProcessInstances(Int32 procInstID)
+  Boolean StopProcessInstances(Int32 procInstID)
+  Void TerminateProcessInstance(Int32 procInstID, String reason)
+  Boolean UpdateOrAddProcUserPermissions(Int32 procSetID, Permissions permissions)
+  Boolean UpdateProcGroupPermissions(Int32 procSetID, Permissions permissions)
+  Boolean UpdateProcPermissions(Int32 procSetID, Permissions permissions, Boolean remove)
+  Boolean UpdateProcPermissions(Int32 procSetID, Permissions permissions)
+  Boolean UpdateProcUserPermissions(Int32 procSetID, Permissions permissions)
+
+[7] Attempting direct WMS deploy...
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  Found: Boolean CreateRole(Role role)
+  Found: Boolean CreateRoles(Roles roles)
+  Found: Boolean CreateRolesForProcess(Roles roles, Int32 procSetId)
+  Found: Boolean CreateActionInstanceRight(ActionInstanceRight actInstRight)
+  Found: Boolean CreateActionInstanceRights(ActionInstanceRights actInstRights)
+  Found: Int32 CreateErrorProfile(ErrorProfile errorProfile)
+  Found: BaseAPIConnection CreateConnection()
+
+============================================
+  FINAL Deploy Test Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524024838
+**********************

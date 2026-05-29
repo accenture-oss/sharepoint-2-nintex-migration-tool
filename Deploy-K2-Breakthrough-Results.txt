@@ -1,0 +1,151 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524033233
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-Breakthrough-Results.txt
+============================================
+  K2 Deploy - BREAKTHROUGH
+============================================
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+KPRX: 413507 bytes
+
+[1] Checking DeployToCategory...
+  <DeployToCategory> elements: 1
+    Value: [1] OuterXML: <DeployToCategory>1</DeployToCategory>
+  DeployToCategory attributes: 0
+  Raw matches:
+    [DeployToCategory>1]
+    [DeployToCategory>]
+  Fixed DeployToCategory!
+
+  KPRX root + children:
+  <Process
+    Type="SourceCode.Workflow.Design.DefaultProcess"
+    Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"
+    Version="4"
+  >
+    <Dependencies />
+    <References />
+    <ExecutionLayers />
+    <Lines />
+    <Activities />
+    <StartActivity />
+    <XmlFields />
+    <Views />
+    <Guid />
+    <Name />
+    <DisplayName />
+    <ExtenderNamespace />
+    <ExceptionGuid />
+    <DefaultExecutionLayer />
+    <CurrentExecutionLayer />
+    <CurrentView />
+    <CategoryPath />
+    <DeployToCategory />
+
+[2] Looking for ProcessSerializer...
+
+[3] Checking P&D cmdlets...
+  Registered: SourceCode.Deployment.PowerShell
+  Registered: SourceCode.Install.PowerShell
+  Snap-in loaded!
+  CMD: Deploy-Package
+  CMD: New-Package
+  CMD: Refresh-Package
+  CMD: Send-Deploy-Package
+  CMD: Send-Refresh-Package
+  CMD: Write-DeploymentConfig
+  CMD: Write-PackageConfig
+  Write-DeploymentConfig found!
+  Parameters: InputFile, OutputFile, ConnectionString, Verbose, Debug, ErrorAction, WarningAction, InformationAction, ErrorVariable, WarningVariable, InformationVariable, OutVariable, OutBuffer, PipelineVariable, WhatIf, Confirm
+  Deploy-Package parameters:
+    -FileName
+    -ConfigFile
+    -ConnectionString
+    -NoAnalyze
+    -K2Host
+    -Port
+    -Integrated
+    -IsPrimaryLogin
+    -SecurityLabel
+    -Username
+    -Password
+    -WindowsDomain
+    -Verbose
+    -Debug
+    -ErrorAction
+    -WarningAction
+    -InformationAction
+    -ErrorVariable
+    -WarningVariable
+    -InformationVariable
+    -OutVariable
+    -OutBuffer
+    -PipelineVariable
+    -WhatIf
+    -Confirm
+
+[4] Deploy-Package approach...
+PS>TerminatingError(Write-DeploymentConfig): "A parameter cannot be found that matches parameter name 'FileName'."
+  Write-DeploymentConfig failed: A parameter cannot be found that matches parameter name 'FileName'.
+PS>TerminatingError(New-Package): "A parameter cannot be found that matches parameter name 'ProcessFile'."
+  Package deploy error: A parameter cannot be found that matches parameter name 'ProcessFile'.
+
+[5] Processes:
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+  Total: 11
+**********************
+Windows PowerShell transcript end
+End time: 20260524033237
+**********************

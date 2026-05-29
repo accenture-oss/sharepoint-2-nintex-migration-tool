@@ -1,0 +1,444 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524021336
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Final-Results.txt
+============================================
+  K2 Final Deployment Test
+============================================
+========================================
+  APPROACH A: PDM API with Connection
+========================================
+[A1] PDM created
+[A2] Creating connection...
+  Connection type: SourceCode.Hosting.Client.BaseAPI.BaseAPIConnectionBroker
+  CONN: Boolean Authenticate(String connectionString)
+  CONN: Void Close()
+  CONN: String DisconnectSession()
+  CONN: Void Dispose()
+  CONN: String EncryptString(String hostServer, Int32 port, String data)
+  CONN: Boolean EndSession(String sessionCookie)
+  CONN: String get_AuthData()
+  CONN: String get_Host()
+  CONN: Boolean get_Integrated()
+  CONN: Boolean get_IsAuthenticated()
+  CONN: Boolean get_IsConnected()
+  CONN: Boolean get_IsPrimaryLogin()
+  CONN: Exception get_LastException()
+  CONN: UInt32 get_Port()
+  CONN: String get_SecurityLabelName()
+  CONN: IServerInfo get_ServerInfo()
+  CONN: String get_SessionCookie()
+  CONN: String GetDelegationTicket(String userID, String securityLabelName, ValueType expiry, Int32 uses)
+  CONN: String GetResumableSessionCookie()
+  CONN: String GetSessionCookie()
+  CONN: Boolean Open(String connectionString)
+  CONN: TimeSpan Ping()
+  CONN: Boolean ResumeSession(String sessionCookie)
+  CONN: Void set_SessionCookie(String )
+[A3] Opening connection...
+True
+  Connected! IsConnected=Boolean IsConnected
+[A4] Creating empty session...
+  Session created: SourceCode.Deployment.Management.ClientSession
+
+  === ClientSession Methods ===
+  SESSION: Void add_OptionChangedEvent(EventHandler value)
+  SESSION: Void BeginDeploy()
+  SESSION: Void BeginPackageItems(PackageItemOptions options)
+  SESSION: Void BeginUpload(Int32 totalItemCount, Int32 processedItemCount)
+  SESSION: Void CancelCompare()
+  SESSION: Void CancelDeploy()
+  SESSION: Void CancelPackageItems()
+  SESSION: Void CancelValidate()
+  SESSION: Void ClearAllConflicts()
+  SESSION: Void ClearAllValidationResults()
+  SESSION: Void ClearCache()
+  SESSION: ComparisonResult Compare(ITypedItem item)
+  SESSION: DeploymentPlan CreateDeploymentPlan(String sessionName)
+  SESSION: Void Deploy()
+  SESSION: Boolean DiscoverItems(PackageItemOptions options, IEnumerable`1& items)
+  SESSION: Void Dispose()
+  SESSION: Void EndDeploy()
+  SESSION: PackageItemResult EndPackageItems()
+  SESSION: Void EndUpload()
+  SESSION: Void EndUpload(Exception e)
+  SESSION: Void ExcludeConflict(ComparisonResult result)
+  SESSION: Void ExcludeValidationResults(IValidationResults results)
+  SESSION: Void ExpireItemCache(ITypedItem item)
+  SESSION: FindItemsResult FindItems(QueryItemOptions options)
+  SESSION: Boolean get_AutoAnalyze()
+  SESSION: Boolean get_ComparisonInProgress()
+  SESSION: IComparisonResults get_ComparisonResults()
+  SESSION: Boolean get_DeploymentInProgress()
+  SESSION: IDeploymentResults get_DeploymentResults()
+  SESSION: Boolean get_Disconnecting()
+  SESSION: Boolean get_DisconnectOnClose()
+  SESSION: Boolean get_ExcludeAll()
+  SESSION: IModel get_ExternalModel()
+  SESSION: Boolean get_HaltOnError()
+  SESSION: IModel get_Model()
+  SESSION: String get_Name()
+  SESSION: Boolean get_NoAnalyze()
+  SESSION: Boolean get_PackagingInProgress()
+  SESSION: IServiceProvider get_ServiceProvider()
+  SESSION: FQName get_SessionOwner()
+  SESSION: Boolean get_ValidationInProgress()
+  SESSION: IValidationResults get_ValidationResults()
+  SESSION: IEnumerable`1 GetBaseTypes()
+  SESSION: Version GetHostVersion()
+  SESSION: GetItemResult GetItem(GetItemOptions options)
+  SESSION: Stream GetItemDefinition(MemberRefBase memberRef)
+  SESSION: ItemVersions GetItemVersions(MemberRefBase memberRef)
+  SESSION: Object GetOption(String setting)
+  SESSION: T GetOption(String setting, T defaultValue)
+  SESSION: IValidationResults GetReferenceInfo(QueryValidationOptions options)
+  SESSION: Object GetService(Type serviceType)
+  SESSION: IEnumerable`1 GetSPSitesForMapping(String serverURL, String rootWebURL)
+  SESSION: SessionLoadSideEffects Load(Stream packageStream, Nullable`1 streamId)
+  SESSION: SessionLoadSideEffects Load(Stream packageStream, Object state)
+  SESSION: Void OnCommitChangeChangeset(IChangesetManagerService service, IModelChangeset changeset)
+  SESSION: Void OnRevertChangeChangeset(IChangesetManagerService service, IModelChangeset changeset)
+  SESSION: PackageItemResult PackageItems(PackageItemOptions options)
+  SESSION: Void remove_OptionChangedEvent(EventHandler value)
+  SESSION: Void RemoveRelatedConflicts(UInt32 itemId)
+  SESSION: Void ResetConflict(ComparisonResult result)
+  SESSION: Void ResolveConflict(ComparisonResult result)
+  SESSION: SyncState Send(SyncState state)
+  SESSION: Void set_DisconnectOnClose(Boolean value)
+  SESSION: Void set_ServiceProvider(IServiceProvider value)
+  SESSION: Void SetOption(String setting, Object value)
+  SESSION: IDisposable Subscribe(IObserver`1 observer)
+  SESSION: IDisposable Subscribe(IObserver`1 observer)
+  SESSION: IDisposable Subscribe(IObserver`1 observer)
+  SESSION: Void SynchroniseDeployment()
+  SESSION: Void Synchronize()
+  SESSION: IValidationResults Validate(ITypedItem item)
+
+  === ClientSession Properties ===
+  PROP: Boolean DisconnectOnClose = False
+  PROP: Boolean Disconnecting = False
+  PROP: IServiceProvider ServiceProvider = System.ComponentModel.Design.ServiceContainer
+  PROP: String Name = SPD_Migration_20260524021336
+  PROP: FQName SessionOwner = SourceCode.Hosting.Server.Interfaces.FQName
+  PROP: IModel Model = SourceCode.ComponentModel.Model
+  PROP: IModel ExternalModel =
+  PROP: Boolean HaltOnError = False
+  PROP: Boolean NoAnalyze = False
+  PROP: Boolean ExcludeAll = False
+  PROP: Boolean AutoAnalyze = False
+  PROP: IComparisonResults ComparisonResults =
+  PROP: IValidationResults ValidationResults =
+  PROP: IDeploymentResults DeploymentResults =
+  PROP: Boolean ValidationInProgress = False
+  PROP: Boolean ComparisonInProgress = False
+  PROP: Boolean DeploymentInProgress = False
+  PROP: Boolean PackagingInProgress = False
+
+[A5] Exploring session model...
+  Model type: SourceCode.ComponentModel.Model
+  MODEL: Void add_PropertyChanged(PropertyChangedEventHandler value)
+  MODEL: Void AddService(Type serviceType, ServiceCreatorCallback callback, Boolean promote)
+  MODEL: Void AddService(Type serviceType, ServiceCreatorCallback callback)
+  MODEL: Void AddService(Type serviceType, Object serviceInstance, Boolean promote)
+  MODEL: Void AddService(Type serviceType, Object serviceInstance)
+  MODEL: Model Create(String name, String ns)
+  MODEL: Model Create()
+  MODEL: Model Create(IPackageService packageService, IFileStorageService fileStorage)
+  MODEL: Model Create(IServiceProvider provider, String name, String ns)
+  MODEL: Model Create(String name)
+  MODEL: Void Dispose()
+  MODEL: Boolean Equals(Object obj)
+  MODEL: FindItemsResult FindItems(QueryItemOptions options)
+  MODEL: AssociationType get_Association()
+  MODEL: String get_Description()
+  MODEL: Boolean get_Exclude()
+  MODEL: UInt32 get_Id()
+  MODEL: Boolean get_IsDisposed()
+  MODEL: ItemTypes get_ItemType()
+  MODEL: Boolean get_Loading()
+  MODEL: ModelItemSet`1 get_Members()
+  MODEL: Model get_Model()
+  MODEL: IModelProperties get_ModelProperties()
+  MODEL: Boolean get_Modified()
+  MODEL: String get_Name()
+  MODEL: String get_Namespace()
+  MODEL: UInt32 get_NextId()
+  MODEL: ModelItemBase get_ParentItem()
+  MODEL: String get_UniqueName()
+  MODEL: IValidationResults get_ValidationResults()
+  MODEL: Version get_Version()
+  MODEL: IEnumerable`1 GetDependencies(String name, String ns, Boolean recursive)
+  MODEL: IEnumerable`1 GetDependencies(UInt32 itemId, Boolean recursive)
+  MODEL: IEnumerable`1 GetDependenciesRefs(UInt32 itemId, Boolean recursive)
+  MODEL: IEnumerable`1 GetDependencyIds(UInt32 id, Boolean recursive)
+  MODEL: IEnumerable`1 GetDependencyIds(String name, String ns, Boolean recursive)
+  MODEL: IEnumerable`1 GetDependentIds(UInt32 itemId, Boolean recursive)
+  MODEL: IEnumerable`1 GetDependentIds(String name, String ns, Boolean recursive)
+  MODEL: IEnumerable`1 GetDependentIds(IEnumerable`1 items, Boolean recursive)
+  MODEL: IEnumerable`1 GetDependents(String name, String ns, Boolean recursive)
+  MODEL: IEnumerable`1 GetDependents(UInt32 itemId, Boolean recursive)
+  MODEL: IEnumerable`1 GetDescendants()
+  MODEL: IEnumerator`1 GetEnumerator()
+  MODEL: IEnumerable`1 GetGraphIdGroups()
+  MODEL: IEnumerable`1 GetGraphItemIds()
+  MODEL: IEnumerable`1 GetGraphItems()
+  MODEL: Int32 GetHashCode()
+  MODEL: GetItemResult GetItem(GetItemOptions options)
+  MODEL: Stream GetItemDefinition(TypeRef typeRef)
+  MODEL: TypedItemBase GetItemFromReference(UInt32 referenceId)
+  MODEL: IEnumerable`1 GetItemReferenceIds(UInt32 itemId)
+  MODEL: IEnumerable`1 GetItemReferences(TypedItemBase item)
+  MODEL: IEnumerable`1 GetItemReferences(String name, String ns)
+  MODEL: T GetModelItem(UInt32 id)
+  MODEL: IEnumerable`1 GetModelItemIdsByName(String name, String ns)
+  MODEL: IEnumerable`1 GetModelItemsByName(String name, String ns)
+  MODEL: Boolean GetModelProperties(Stream packageStream, String& name, String& description, Boolean& advancedMode)
+  MODEL: Void GetObjectData(SerializationInfo info, StreamingContext context)
+  MODEL: ModelReference GetReference()
+  MODEL: Object GetService(Type serviceType)
+  MODEL: Model Load(Stream packageStream)
+  MODEL: Model Load(Stream packageStream, ModelLoadOptions options)
+  MODEL: Model Load(Stream packageStream, IServiceProvider provider)
+  MODEL: Model Load(Stream packageStream, IServiceProvider provider, ModelLoadOptions options)
+  MODEL: Void remove_PropertyChanged(PropertyChangedEventHandler value)
+  MODEL: Void RemoveService(Type serviceType)
+  MODEL: Void RemoveService(Type serviceType, Boolean promote)
+  MODEL: Void Save(Stream outputStream, X509Certificate2 certificate)
+  MODEL: Void Save(Stream outputStream)
+  MODEL: Void Save()
+  MODEL: Void set_Description(String value)
+  MODEL: Void set_Exclude(Boolean value)
+  MODEL: Void set_Modified(Boolean value)
+  MODEL: Void set_Name(String value)
+  MODEL: Void set_Namespace(String value)
+  MODEL: Void set_Version(Version value)
+  MODEL: IEnumerable`1 SortGraphItemIds(IEnumerable`1 items)
+  MODEL: IEnumerable`1 SortGraphItems(IEnumerable`1 items)
+  MODEL: Void SubscribeToEvents()
+  MODEL: Void UnsubscribeToEvents()
+  MODEL: IValidationResults Validate(IQueryContext context)
+  MODEL PROP: UInt32 NextId = 2
+  MODEL PROP: IModelProperties ModelProperties = [created, 2026-05-24T02:13:40.1231029Z] [modified, 2026-05-24T02:13:40.1231029Z]
+  MODEL PROP: Boolean Loading = False
+  MODEL PROP: Version Version =
+  MODEL PROP: ModelItemSet`1 Members =
+  MODEL PROP: IValidationResults ValidationResults =
+  MODEL PROP: ItemTypes ItemType = Model
+  MODEL PROP: String Description =
+  MODEL PROP: Boolean Exclude = False
+  MODEL PROP: String Namespace =
+  MODEL PROP: String UniqueName = n=SPD_Migration_20260524021336, ns=
+  MODEL PROP: UInt32 Id = 1
+  MODEL PROP: String Name = SPD_Migration_20260524021336
+  MODEL PROP: AssociationType Association = Declaration
+  MODEL PROP: Model Model = SourceCode.ComponentModel.Model
+  MODEL PROP: ModelItemBase ParentItem =
+  MODEL PROP: Boolean Modified = False
+  MODEL PROP: Boolean IsDisposed = False
+
+[A6] Creating session from existing .kspx...
+  Session from .kspx created!
+  Model2 Name: App Installer
+  Members type: SourceCode.ComponentModel.Collections.ModelItemSet`1[[SourceCode.ComponentModel.MemberItemBase, SourceCode.ComponentModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d]]
+  Members count: 9
+  Member[0]: ComplexType Name=com_K2_App_Catalog_Installer_SmartObject_InstalledApp ItemType=ComplexType
+  Member[1]: ComplexType Name=AppCatalogInstaller ItemType=ComplexType
+  Member[2]: ComplexType Name=com_K2_App_Catalog_Installer_SmartObject_Deployment ItemType=ComplexType
+  Member[3]: ComplexType Name=com_K2_App_Catalog_Installer_SmartObject_App ItemType=ComplexType
+  Member[4]: ComplexType Name=SmartObjects ItemType=ComplexType
+  Member[5]: ComplexType Name=Installer ItemType=ComplexType
+  Member[6]: ComplexType Name=App_Catalog ItemType=ComplexType
+  Member[7]: ComplexType Name=System ItemType=ComplexType
+  Member[8]: ComplexType Name=root ItemType=ComplexType
+
+[A7] Deploying App Installer via PDM Send()...
+  Send failed: Unable to find type [SourceCode.Deployment.Management.SyncState].
+
+  PDM APPROACH: SUCCESS!
+
+========================================
+  APPROACH B: Clone .kspx + Deploy
+========================================
+[B1] Getting KPRX from TestKprxWF...
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  KPRX: 413507 bytes
+[B2] Extracting App Framework Core.kspx (has FrameworkGeneric.Workflow)...
+  Found workflow files:
+    com.K2.App.Framework.Core.ItemView_kZ31VU6A4nwBils3rw1guUdOB9s.WorkflowReport (78KB)
+    First bytes: 3C 53 6F 75 72 63 65 43 6F 64 65 2E 46 6F 72 6D 73 20 56 65 72 73 69 6F 6E 3D 22 32 37 22 3E 0D 0A 20 20 3C 56 69 65 77 73 3E 0D 0A 20 20 20 20 3C 56 69
+    FrameworkGeneric.Workflow_A4GH3Iisqu1GSLbFpPmkPSdQ2+g.Reference (260KB)
+    First bytes: EF BB BF 3C 3F 78 6D 6C 20 76 65 72 73 69 6F 6E 3D 22 31 2E 30 22 20 65 6E 63 6F 64 69 6E 67 3D 22 75 74 66 2D 38 22 3F 3E 3C 50 72 6F 63 65 73 73 20 54
+
+[B3] Reading definition.model workflow entries...
+  Workflow entries (itemtype=12): 0
+  Process entries: 81
+  PROC: ns="urn:SourceCode/Workflows" displayname="Framework Core\FrameworkGeneric.Workflow.Reference"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Process"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity" displayname="Task"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Activity"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows" displayname="Framework Core\FrameworkGeneric.Workflow.Reference"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Process"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity" displayname="Task"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Activity"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows" displayname="Framework Core\FrameworkGeneric.Workflow.Reference"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Process"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity" displayname="Task"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Activity"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows" displayname="Framework Core\FrameworkGeneric.Workflow.Reference"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Process"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows" excl="False" displayname="Framework Core\FrameworkGeneric.Workflow.Reference"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Process"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#FileDefinitions" excl="False" displayname="Framework Core\FrameworkGeneric.Workflow.Reference"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity" excl="False" displayname="Generic User Task"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Activity"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.Task/Event" excl="False" displayname="Generic User Task"
+  PROC: ns="urn:SourceCode/Workflow" displayname="EventItem"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference" excl="False" displayname="1c018442-30c6-427b-8a38-f83fa646914e"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#1c018442-30c6-427b-8a38-f83fa646914e" excl="False" displayname="Body"
+  PROC: ns="urn:SourceCode/Workflow" displayname="K2Field"
+  PROC: ns="urn:SourceCode/Workflow" displayname="K2Field"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#1c018442-30c6-427b-8a38-f83fa646914e" excl="False" displayname="From"
+  PROC: ns="urn:SourceCode/Workflow" displayname="K2Field"
+  PROC: ns="urn:SourceCode/Workflow" displayname="K2Field"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#1c018442-30c6-427b-8a38-f83fa646914e" excl="False" displayname="a0fbdcb3-55c1-43e8-a4c8-17fc763e7f21"
+  PROC: ns="urn:SourceCode/Workflow" displayname="ArtifactFieldPart"
+  PROC: ns="urn:SourceCode/Workflow" displayname="FieldPart"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#1c018442-30c6-427b-8a38-f83fa646914e.a0fbdcb3-55c1-43e8-a4c8-17fc763e7f21" excl="False" displayname="OriginalGuid"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#1c018442-30c6-427b-8a38-f83fa646914e" excl="False" displayname="CC"
+  PROC: ns="urn:SourceCode/Workflow" displayname="K2Field"
+  PROC: ns="urn:SourceCode/Workflow" displayname="K2Field"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#1c018442-30c6-427b-8a38-f83fa646914e" excl="False" displayname="BCC"
+  PROC: ns="urn:SourceCode/Workflow" displayname="K2Field"
+  PROC: ns="urn:SourceCode/Workflow" displayname="K2Field"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#1c018442-30c6-427b-8a38-f83fa646914e" excl="False" displayname="OriginalGuid"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.Task" excl="False" displayname="DestinationRule"
+  PROC: ns="urn:SourceCode/Workflow" displayname="DestinationRule"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.Task" excl="False" displayname="SucceedingRule"
+  PROC: ns="urn:SourceCode/Workflow" displayname="SucceedingRule"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity" excl="False" displayname="Decision"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Activity"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.Decision/Event" excl="False" displayname="ServerEvent"
+  PROC: ns="urn:SourceCode/Workflow" displayname="EventItem"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity" excl="False" displayname="End"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Activity"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.End/Event" excl="False" displayname="ServerEvent"
+  PROC: ns="urn:SourceCode/Workflow" displayname="EventItem"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity" excl="False" displayname="Start"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Activity"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference" excl="False" displayname="CurrentView"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference" excl="False" displayname="9d9a865e-c471-48ec-890f-9e1874cb0632"
+  PROC: ns="urn:SourceCode/Workflow" displayname="ArtifactFieldPart"
+  PROC: ns="urn:SourceCode/Workflow" displayname="FieldPart"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#9d9a865e-c471-48ec-890f-9e1874cb0632" excl="False" displayname="OriginalGuid"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#DataField" excl="False" displayname="InstanceID"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.Task/DataField" excl="False" displayname="Action Result"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference" excl="False" displayname="FormIntegrations"
+  PROC: ns="urn:SourceCode/Workflow" displayname="Object"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference" excl="False" displayname="ForceUpdate"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference" excl="False" displayname="OriginalGuid"
+  PROC: ns="urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference" excl="False" displayname="TargetFrameworkVersion"
+
+[B4] Building minimal .kspx with TestKprxWF KPRX...
+  Created: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_final\SPD_Migrated_Test.kspx (42KB)
+
+[B5] Deploying custom .kspx with Deploy-Package...
+WARNING: No configuration file found for this Deployment Package.
+WARNING: Session created with NoAnalyze Option set to 'True'. This option deploys ALL objects to the server.
+Deploy-Package : The value cannot be cast to SourceCode.ComponentModel.MemberItemBase using value of type 
+SourceCode.ComponentModel.Parameter.
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Final.ps1:283 char:5
++     Deploy-Package -FileName $newKspxPath -K2Host $K2Server -Port $K2 ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Deploy-Package], InvalidCastException
+    + FullyQualifiedErrorId : 0,SourceCode.Deployment.PowerShell.DeployPackage
+Deploy-Package : The value cannot be cast to SourceCode.ComponentModel.MemberItemBase using value of type SourceCode.ComponentModel.Parameter.
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Final.ps1:283 char:5
++     Deploy-Package -FileName $newKspxPath -K2Host $K2Server -Port $K2 ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Deploy-Package], InvalidCastException
+    + FullyQualifiedErrorId : 0,SourceCode.Deployment.PowerShell.DeployPackage
+
+  DEPLOY SUCCESS!
+
+[B6] Verifying deployment...
+Cannot convert value "SourceCode.Workflow.Management.ProcessSets" to type "System.Xml.XmlDocument". Error: "The 
+specified node cannot be inserted as the valid child of this node, because the specified node is the wrong type."
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Final.ps1:292 char:1
++ $xml = [xml]$allProcs
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [], RuntimeException
+    + FullyQualifiedErrorId : InvalidCastToXmlDocument
+Cannot convert value "SourceCode.Workflow.Management.ProcessSets" to type "System.Xml.XmlDocument". Error: "The specified node cannot be inserted as the valid child of this node, because the specified node is the wrong type."
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Final.ps1:292 char:1
++ $xml = [xml]$allProcs
++ ~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidArgument: (:) [], RuntimeException
+    + FullyQualifiedErrorId : InvalidCastToXmlDocument
+
+You cannot call a method on a null-valued expression.
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Final.ps1:293 char:1
++ $procs = $xml.SelectNodes("//proc")
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : InvokeMethodOnNull
+You cannot call a method on a null-valued expression.
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Final.ps1:293 char:1
++ $procs = $xml.SelectNodes("//proc")
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : InvalidOperation: (:) [], RuntimeException
+    + FullyQualifiedErrorId : InvokeMethodOnNull
+
+  Total processes on server: 0
+
+============================================
+  Final Deployment Test Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524021342
+**********************

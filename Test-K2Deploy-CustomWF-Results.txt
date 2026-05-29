@@ -1,0 +1,461 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524023033
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-CustomWF-Results.txt
+============================================
+  K2 Custom Workflow Deploy
+============================================
+True
+PDM Connected!
+
+=== APPROACH 1: Use WF-containing .kspx as template ===
+Loaded: App Framework Core, Members: 105
+
+Searching for workflow members...
+  [ComplexType] Core ns=urn:SourceCode/Categories?Core#Path.%2Froot%2FApps%2FK2%2FFramework%2F
+  [ComplexType] Workflows ns=urn:SourceCode/Categories?Workflows#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F
+  *** WORKFLOW FOUND: Workflows ***
+    Type: SourceCode.ComponentModel.ComplexType
+    ItemType: ComplexType
+    PROP: Flags = Deployable
+    PROP: Definition =
+    PROP: Members = SourceCode.ComponentModel.Property SourceCode.ComponentModel.Property
+    PROP: References = {urn:SourceCode/Categories?Framework_Core#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FWorkflows%2F...
+    PROP: BaseType = {urn:SourceCode/Category}Category
+    PROP: Version =
+    PROP: HostVersion = 5.16.1000.0
+    PROP: ItemType = ComplexType
+    PROP: DisplayName = Workflows
+    PROP: Scope = Public
+    PROP: Description =
+    PROP: Exclude = False
+    PROP: Namespace = urn:SourceCode/Categories?Workflows#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F
+    PROP: UniqueName = n=Workflows, ns=urn:SourceCode/Categories?Workflows#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F
+    PROP: Id = 23
+    PROP: Name = Workflows
+    PROP: Association = None
+    PROP: Model = {urn:SourceCode/Category}Category {urn:SourceCode/ComponentModel}Int32 SourceCode.ComponentModel.Pro...
+    PROP: ParentItem = SourceCode.ComponentModel.ComplexType SourceCode.ComponentModel.ComplexType SourceCode.ComponentMode...
+    PROP: Modified = False
+    PROP: IsDisposed = False
+    Sub-members: 2
+      [Property] Id ns=urn:SourceCode/Categories?Workflows#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F
+      [Property] Description ns=urn:SourceCode/Categories?Workflows#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F
+  [ComplexType] Framework_Core ns=urn:SourceCode/Categories?Framework_Core#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FWorkflows%2F
+  *** WORKFLOW FOUND: Framework_Core ***
+    Type: SourceCode.ComponentModel.ComplexType
+    ItemType: ComplexType
+    PROP: Flags = Deployable
+    PROP: Definition =
+    PROP: Members = SourceCode.ComponentModel.Property SourceCode.ComponentModel.Property
+    PROP: References = {urn:SourceCode/Workflows}Framework Core\FrameworkGeneric.Workflow.Reference: {urn:SourceCode/Workfl...
+    PROP: BaseType = {urn:SourceCode/Category}Category
+    PROP: Version =
+    PROP: HostVersion = 5.16.1000.0
+    PROP: ItemType = ComplexType
+    PROP: DisplayName = Framework Core
+    PROP: Scope = Public
+    PROP: Description =
+    PROP: Exclude = False
+    PROP: Namespace = urn:SourceCode/Categories?Framework_Core#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FWorkflows%2F
+    PROP: UniqueName = n=Framework_Core, ns=urn:SourceCode/Categories?Framework_Core#Path.%2Froot%2FApps%2FK2%2FFramework%2...
+    PROP: Id = 37
+    PROP: Name = Framework_Core
+    PROP: Association = None
+    PROP: Model = {urn:SourceCode/Category}Category {urn:SourceCode/ComponentModel}Int32 SourceCode.ComponentModel.Pro...
+    PROP: ParentItem = SourceCode.ComponentModel.ComplexType SourceCode.ComponentModel.ComplexType SourceCode.ComponentMode...
+    PROP: Modified = False
+    PROP: IsDisposed = False
+    Sub-members: 2
+      [Property] Id ns=urn:SourceCode/Categories?Framework_Core#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FWorkflows%2F
+      [Property] Description ns=urn:SourceCode/Categories?Framework_Core#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FWorkflows%2F
+  [ComplexType] Views ns=urn:SourceCode/Categories?Views#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F
+  [ComplexType] com.K2.App.Framework.Core.ItemView.FormInfo ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.App.Framework.Core.ItemView.ProcessOverviewReport ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.App.Framework.Core.ItemView.DeploymentMessage ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.App.Framework.Core.ItemView.ActionBarReview ns=urn:SourceCode/SmartForms/View
+  [ComplexType] Framework Core\FrameworkGeneric.Workflow.Reference ns=urn:SourceCode/Workflows
+  *** WORKFLOW FOUND: Framework Core\FrameworkGeneric.Workflow.Reference ***
+    Type: SourceCode.ComponentModel.ComplexType
+    ItemType: ComplexType
+    PROP: Flags = Deployable
+    PROP: Definition = SourceCode.ComponentModel.FileItem
+    PROP: Members = SourceCode.ComponentModel.ComplexType SourceCode.ComponentModel.ComplexType SourceCode.ComponentMode...
+    PROP: References =
+    PROP: BaseType = {urn:SourceCode/Workflow}Process: {urn:SourceCode/Workflow}Object: {urn:SourceCode/ComponentModel}Pe...
+    PROP: Version =
+    PROP: HostVersion = 5.16.1000.0
+    PROP: ItemType = ComplexType
+    PROP: DisplayName = Framework Core\FrameworkGeneric.Workflow.Reference
+    PROP: Scope = Public
+    PROP: Description =
+    PROP: Exclude = False
+    PROP: Namespace = urn:SourceCode/Workflows
+    PROP: UniqueName = n=Framework Core\FrameworkGeneric.Workflow.Reference, ns=urn:SourceCode/Workflows
+    PROP: Id = 2013
+    PROP: Name = Framework Core\FrameworkGeneric.Workflow.Reference
+    PROP: Association = None
+    PROP: Model = {urn:SourceCode/Category}Category {urn:SourceCode/ComponentModel}Int32 SourceCode.ComponentModel.Pro...
+    PROP: ParentItem = SourceCode.ComponentModel.ComplexType SourceCode.ComponentModel.ComplexType SourceCode.ComponentMode...
+    PROP: Modified = False
+    PROP: IsDisposed = False
+    Sub-members: 12
+      [ComplexType] Task ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity
+      [ComplexType] Decision ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity
+      [ComplexType] End ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity
+      [ComplexType] Start ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity
+      [Property] CurrentView ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference
+      [ComplexType] 9d9a865e-c471-48ec-890f-9e1874cb0632 ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference
+      [Property] InstanceID ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#DataField
+      [Property] Action Result ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference#Activity.Task/DataField
+      [ComplexType] FormIntegrations ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference
+      [Property] ForceUpdate ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference
+      [Property] OriginalGuid ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference
+      [Property] TargetFrameworkVersion ns=urn:SourceCode/Workflows?Framework Core\FrameworkGeneric%2EWorkflow%2EReference
+  [ComplexType] From Address ns=urn:SourceCode/EnvironmentSettings/Fields
+  [ComplexType] Workspace_Interactive ns=urn:SourceCode/Categories?Workspace_Interactive#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FViews%2F
+  [ComplexType] com.K2.App.Framework.Core.ItemView.AppsFavorite ns=urn:SourceCode/SmartForms/View
+  [ComplexType] Framework_Specific ns=urn:SourceCode/Categories?Framework_Specific#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FViews%2F
+  [ComplexType] com.K2.App.Framework.Core.ItemView.ImagePalette ns=urn:SourceCode/SmartForms/View
+  [ComplexType] K2 App Export CSV 268 ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Export CSV 402 ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Process Overview 134 ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Process Overview 268 ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Process Overview 402 ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Export CSV 134 ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Pie Chart 134 ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Pie Chart 268 ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Pie Chart 402 ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Sector Customer Service (84x84) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Sector Marketing (84x84) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Sector Operations (84x84) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Sector Team Projects (84x84) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Sector Legal (84x84) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Sector Information Technology (84x84) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Sector Communications (84x84) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Sector Sales (84x84) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Sector Human Resources (84x84) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Lock Closed (24x24) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Lock Closed (92x92) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Lock Open (24x24) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Lock Open (92x92) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Arrow Down (24x24) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Arrow Down (92x92) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Priority Low (16x16) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Arrow Up (24x24) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Arrow Up (92x92) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Priority Low (50x50) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Priority Undefined (16x16) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Priority Undefined (50x50) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Priority Medium (16x16) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Priority Medium (50x50) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Priority High (16x16) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Priority High (50x50) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Priority Urgent (16x16) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Priority Urgent (50x50) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Health Red (16x16) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Health Red (50x50) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Health Orange (16x16) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Health Orange (50x50) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Health Green (16x16) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Health Green (50x50) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Health Undefined (16x16) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Health Undefined (50x50) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] Depricated ns=urn:SourceCode/Categories?Depricated#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FViews%2FFramework_Specific%2F
+  [ComplexType] com.K2.App.Framework.Core.ItemView.WorkflowReport ns=urn:SourceCode/SmartForms/View
+  *** WORKFLOW FOUND: com.K2.App.Framework.Core.ItemView.WorkflowReport ***
+    Type: SourceCode.ComponentModel.ComplexType
+    ItemType: ComplexType
+    PROP: Flags = Deployable
+    PROP: Definition = SourceCode.ComponentModel.FileItem
+    PROP: Members = SourceCode.ComponentModel.Property SourceCode.ComponentModel.Property SourceCode.ComponentModel.Prop...
+    PROP: References = {urn:SourceCode/SmartForms/Control}Cell: {urn:SourceCode/SmartForms}Control {urn:SourceCode/SmartFor...
+    PROP: BaseType = {urn:SourceCode/SmartForms}View
+    PROP: Version =
+    PROP: HostVersion = 5.16.1000.0
+    PROP: ItemType = ComplexType
+    PROP: DisplayName = Workflow Report
+    PROP: Scope = Public
+    PROP: Description =
+    PROP: Exclude = False
+    PROP: Namespace = urn:SourceCode/SmartForms/View
+    PROP: UniqueName = n=com.K2.App.Framework.Core.ItemView.WorkflowReport, ns=urn:SourceCode/SmartForms/View
+    PROP: Id = 5591
+    PROP: Name = com.K2.App.Framework.Core.ItemView.WorkflowReport
+    PROP: Association = None
+    PROP: Model = {urn:SourceCode/Category}Category {urn:SourceCode/ComponentModel}Int32 SourceCode.ComponentModel.Pro...
+    PROP: ParentItem = SourceCode.ComponentModel.ComplexType SourceCode.ComponentModel.ComplexType SourceCode.ComponentMode...
+    PROP: Modified = False
+    PROP: IsDisposed = False
+    Sub-members: 6
+      [Property] Guid ns=urn:SourceCode/SmartForms/View?com%2EK2%2EApp%2EFramework%2ECore%2EItemView%2EWorkflowReport
+      [Property] Description ns=urn:SourceCode/SmartForms/View?com%2EK2%2EApp%2EFramework%2ECore%2EItemView%2EWorkflowReport
+      [Property] Type ns=urn:SourceCode/SmartForms/View?com%2EK2%2EApp%2EFramework%2ECore%2EItemView%2EWorkflowReport
+      [ComplexType] Controls ns=urn:SourceCode/SmartForms/View?com%2EK2%2EApp%2EFramework%2ECore%2EItemView%2EWorkflowReport
+      [ComplexType] Rules ns=urn:SourceCode/SmartForms/View?com%2EK2%2EApp%2EFramework%2ECore%2EItemView%2EWorkflowReport
+      [ComplexType] Parameters ns=urn:SourceCode/SmartForms/View?com%2EK2%2EApp%2EFramework%2ECore%2EItemView%2EWorkflowReport
+  [ComplexType] com.K2.App.Framework.Core.ItemView.WorkspaceRegistration ns=urn:SourceCode/SmartForms/View
+  [ComplexType] K2 App Logo Generic K2 (64x64) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App K2Management Icon ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] App_Specific ns=urn:SourceCode/Categories?App_Specific#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FViews%2F
+  [ComplexType] com.K2.App.Framework.Core.ItemView.Navigation ns=urn:SourceCode/SmartForms/View
+  [ComplexType] K2 App Reporting Icon ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] com.K2.App.Framework.Core.ItemView.StatusBar ns=urn:SourceCode/SmartForms/View
+  [ComplexType] K2 App K2ViewFlow Icon ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] com.K2.App.Framework.Core.ItemView.DeploymentConfiguration ns=urn:SourceCode/SmartForms/View
+  [ComplexType] SmartForms Runtime ns=urn:SourceCode/EnvironmentSettings/Fields
+  [ComplexType] Workspace Url ns=urn:SourceCode/EnvironmentSettings/Fields
+  [ComplexType] Vertical Divider ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Administration Icon ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] K2 App Generic New Instance Icon ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] com.K2.App.Framework.Core.ItemView.FormBehaviour ns=urn:SourceCode/SmartForms/View
+  [ComplexType] SmartObjects ns=urn:SourceCode/Categories?SmartObjects#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F
+  [ComplexType] Framework_Specific ns=urn:SourceCode/Categories?Framework_Specific#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FSmartObjects%2F
+  [ComplexType] Forms ns=urn:SourceCode/Categories?Forms#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F
+  [ComplexType] com.K2.App.Framework.Core.Form.ReadonlyReviewSubmitted ns=urn:SourceCode/SmartForms/Form
+  [ComplexType] App Generated Icon (32) ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] com.K2.App.Framework.Core.Form.SelectRegisteredApplication ns=urn:SourceCode/SmartForms/Form
+  [ComplexType] com.K2.App.Framework.Core.ItemView.ActionBarSubmit ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.App.Framework.Core.ListView.RegisteredApplicationFormSpecific ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.App.Framework.Core.ItemView.RegisteredApplication ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.App.Framework.Core.ItemView.FormHeaderThin ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.App.Framework.Core.Form.RegisterFramework ns=urn:SourceCode/SmartForms/Form
+  [ComplexType] com.K2.App.Framework.Core.ItemView.FormFooter ns=urn:SourceCode/SmartForms/View
+  [ComplexType] Nintex Footer ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] com.K2.App.Framework.Core.ItemView.VersionRegistration ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com_K2_App_Framework_Core_SmartObject_AppSettingGroup ns=urn:SourceCode/SmartObjects/SmartObject
+  [ComplexType] com_K2_App_Framework_Core_SmartObject_AppType ns=urn:SourceCode/SmartObjects/SmartObject
+  [ComplexType] Registered_Application_com_K2_App_Framework_Core_SmartObject_AppType ns=urn:SourceCode/SmartObjects/Association
+  [ComplexType] com_K2_App_Framework_Core_SmartObject_RegisteredApp ns=urn:SourceCode/SmartObjects/SmartObject
+  [ComplexType] com_K2_App_Framework_Core_SmartObject_RegisteredAppFormType ns=urn:SourceCode/SmartObjects/SmartObject
+  [ComplexType] Registered_Application_Form_com_K2_App_Framework_Core_SmartObject_RegisteredAppFormType ns=urn:SourceCode/SmartObjects/Association
+  [ComplexType] com_K2_App_Framework_Core_SmartObject_RegisteredAppForm ns=urn:SourceCode/SmartObjects/SmartObject
+  [ComplexType] com_K2_App_Framework_Core_SmartObject_VersionDetail ns=urn:SourceCode/SmartObjects/SmartObject
+  [ComplexType] com.K2.App.Framework.Core.ItemView.FormHeaderFull ns=urn:SourceCode/SmartForms/View
+  [ComplexType] Segoe UI Light ns=urn:SourceCode/SmartForms/Font
+  [ComplexType] Presence Icon ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] Nintex App Logo 2018 Generic 45 ns=urn:SourceCode/SmartForms/Image
+  [ComplexType] Framework ns=urn:SourceCode/Categories?Framework#Path.%2Froot%2FApps%2FK2%2F
+  [ComplexType] K2 ns=urn:SourceCode/Categories?K2#Path.%2Froot%2FApps%2F
+  [ComplexType] Apps ns=urn:SourceCode/Categories?Apps#Path.%2Froot%2F
+  [ComplexType] root ns=urn:SourceCode/Categories?root#Path.%2F
+
+=== APPROACH 2: Save .kspx from loaded model ===
+Saved: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_customwf\Saved_AppFramework.kspx (868KB)
+Saved .kspx contents:
+  app generated icon (32)_R2JPISfAqcROrfHANPs9zXazD+g (1KB)
+  changesets.model (0KB)
+  com.K2.App.Framework.Core.Form_d4Qri+cXvWai5bFInJeGPscfwuk.RegisterFramework (20KB)
+  com.K2.App.Framework.Core.Form_R4A+dZPqZ5qcdyvUrS7jDbhgscs.ReadonlyReviewSubmitted (42KB)
+  com.K2.App.Framework.Core.Form_zywfRBZAlo+kklSKQzK+LkWk7lU.SelectRegisteredApplication (67KB)
+  com.K2.App.Framework.Core.ItemView_+_+HWte_74cjYQjUJnoG2e9lyy8.FormInfo (23KB)
+  com.K2.App.Framework.Core.ItemView_63cD4vp_20KBV12P9enSnUoHgO8.WorkspaceRegistration (69KB)
+  com.K2.App.Framework.Core.ItemView_8hvc1XnldpbCFJ4IRViUUBdc5jw.ActionBarSubmit (24KB)
+  com.K2.App.Framework.Core.ItemView_9ptqf28mYDm0HeWELJqBOd3kDKk.StatusBar (77KB)
+  com.K2.App.Framework.Core.ItemView_aO090rxDrSuaegGYHuNi5EuRaP0.DeploymentMessage (21KB)
+  com.K2.App.Framework.Core.ItemView_cutvvOcHDS6HyHG6XEL2zy+mmLc.DeploymentConfiguration (142KB)
+  com.K2.App.Framework.Core.ItemView_HgTNyQzGNpggQOp9K0iNIKgx2C8.ActionBarReview (42KB)
+  com.K2.App.Framework.Core.ItemView_iRMLmXu5LAvBFSRr1lsPnzctL6c.FormHeaderFull (30KB)
+  com.K2.App.Framework.Core.ItemView_JxGryd023pD89j+LdgrA48gZ678.ImagePalette (190KB)
+  com.K2.App.Framework.Core.ItemView_kZ31VU6A4nwBils3rw1guUdOB9s.WorkflowReport (78KB)
+  com.K2.App.Framework.Core.ItemView_LmGLhkhZYUu9IFoNW2R2st_WpiE.FormFooter (13KB)
+  com.K2.App.Framework.Core.ItemView_lrj3LMJ4PQRcbwhzLJHnC0bQ9Pw.RegisteredApplication (83KB)
+  com.K2.App.Framework.Core.ItemView_Qgf9quZRNY1gHejobZKREqvKem4.FormBehaviour (40KB)
+  com.K2.App.Framework.Core.ItemView_qjKSO5LHyNI1rIXRWwvLEtuuDck.AppsFavorite (46KB)
+  com.K2.App.Framework.Core.ItemView_wiSU23tVMB9pUmWNVK1ZNsfETyg.VersionRegistration (105KB)
+  com.K2.App.Framework.Core.ItemView_XiLcAjH2OQzr5Hp7R_FoaP09xvs.ProcessOverviewReport (21KB)
+  com.K2.App.Framework.Core.ItemView_YKbc2c+dDKJHbgiqSKf4316mPZY.Navigation (52KB)
+  com.K2.App.Framework.Core.ItemView_yL+xsxT0HkNtREmKpsFOAs8qZMM.FormHeaderThin (23KB)
+  com.K2.App.Framework.Core.ListView_3GdAMbnbR7N0t0SV30rUoS_BRqE.RegisteredApplicationFormSpecific (59KB)
+  com_K2_App_Framework_Core_SmartObject_AppSettingGroup_IB+eG2uNWSre0KEuLHdYNk0uJZ4 (46KB)
+  com_K2_App_Framework_Core_SmartObject_AppType_l+A1fk260HdS8VvGcR+JAkaOuHU (45KB)
+  com_K2_App_Framework_Core_SmartObject_RegisteredAppFormType_knaOZIcYZ3efRB13C+COMgwxy0U (38KB)
+  com_K2_App_Framework_Core_SmartObject_RegisteredAppForm_i7R9zsYrs83Hc6z1YSgUPNrBVrc (101KB)
+  com_K2_App_Framework_Core_SmartObject_RegisteredApp_rC4DTsBEWPptAmFNx_CrZYaTtWQ (113KB)
+  com_K2_App_Framework_Core_SmartObject_VersionDetail_SORWzAt3bC9uWpdRUMnyf8HD90c (72KB)
+  definition.model (5652KB)
+  k2 app administration icon_8Xi6wOtG1X+Y+5cVMGmC2FZ4oBM (2KB)
+  k2 app arrow down (24x24)_hvq7mwz8RFx31hnmo5E_G6v1LaE (2KB)
+  k2 app arrow down (92x92)_HYg+hxTqqF4TXo4rZZUZHuTJluw (3KB)
+  k2 app arrow up (24x24)_ncK_mwvAvnuqrWyOP20BCgXzGi0 (2KB)
+  k2 app arrow up (92x92)_yTXMArtt0NuzGyCAya8Dhdf+ePM (3KB)
+  k2 app export csv 134_9A5dKaByuQqu9SgVQPT8bHXU8jU (2KB)
+  k2 app export csv 268_gCmPQ6euMEarmgWXSsC5rE8sG_A (4KB)
+  k2 app export csv 402_s_UwVka4gbgD1JQXn24TXQG0JvM (6KB)
+  k2 app generic new instance icon_CBDkRyZyFHZ8mJQ7dkvxBeAz88M (4KB)
+  k2 app health green (16x16)_1KXpvLthxvCUwosvo2xkg8s07us (2KB)
+  k2 app health green (50x50)_phXWtf3fdtkq72BlhqERsMVGX_E (2KB)
+  k2 app health orange (16x16)_hOXf2qvyUV5Dq3SxbBTpa4bn5is (2KB)
+  k2 app health orange (50x50)_VXCHUQ6b2o3h_P5JQKYAk6NAAT8 (3KB)
+  k2 app health red (16x16)_sduPltE6O0+ecOK82Q3EmnrGi7U (2KB)
+  k2 app health red (50x50)_n3stAd2sMc9FcB+eEtH3CmiVF84 (2KB)
+  k2 app health undefined (16x16)_U_8014I__16UNEuMaFi6KvPuNwg (2KB)
+  k2 app health undefined (50x50)_Mi_Ov2M3Mc3yg1LkAtbmWVdosD8 (3KB)
+  k2 app k2management icon_gVilzlHTWwtjUFPi3+HDaswJhtA (389KB)
+  k2 app k2viewflow icon_5FmlrIw4tHG+pnZgSuH7lsa9gzY (19KB)
+  k2 app lock closed (24x24)_NTtSQlNmVvPT1B7Ec7ru5igUefE (2KB)
+  k2 app lock closed (92x92)_Oek4BPkyU5bBXR4FNhlqGzQSCbY (3KB)
+  k2 app lock open (24x24)_1moUyDMPNH72zUmGVyYS3nVV9Jc (2KB)
+  k2 app lock open (92x92)_d4VC+IlsjXe6ER+R6VPD6a58zY8 (3KB)
+  k2 app logo generic k2 (64x64)_gsngMQz4KthjniNzPse7Be1hKmU (2KB)
+  k2 app pie chart 134_kSLHDzZkbaU69eCgcI0gMdTCFUM (2KB)
+  k2 app pie chart 268_ciTfjaMcgHdDiTd0p98T+0JFHuo (4KB)
+  k2 app pie chart 402_e_WoWMXElJnnEvKeDJKgwz79F0Q (6KB)
+  k2 app priority high (16x16)_0hOe1l6MglrKN1kTgWXJftvxmbs (1KB)
+  k2 app priority high (50x50)_c4hYSsJU2UaiWshofYztbJSsgZU (2KB)
+  k2 app priority low (16x16)_V9ylJa2XhRbTyQmnf7KntYtVaRc (1KB)
+  k2 app priority low (50x50)_QOFQKkyldsCuNJfxrbqli8R5Dt4 (2KB)
+  k2 app priority medium (16x16)_6voZcCqcaPp3hZ1R6GTHmFD+4BY (1KB)
+  k2 app priority medium (50x50)_aHdFE6TVAL5bXhmZnwDRmhVf0kc (2KB)
+  k2 app priority undefined (16x16)_hKKmhuRLcXh4+gg65ZoVkFul6EU (1KB)
+  k2 app priority undefined (50x50)_flCtX7YwgIiCvZ3t38GIJ99KNGA (2KB)
+  k2 app priority urgent (16x16)_LnGxyI77kXXmcGC7rbpjBMPHjkM (1KB)
+  k2 app priority urgent (50x50)_cnfjgZZPUT8BK1VuCrOMnKJqCek (2KB)
+  k2 app process overview 134_WitglKYALR50DsIG80Ikjq2IH7E (1KB)
+  k2 app process overview 268_tWORudVicdG5YUfStiIp0mJORxI (2KB)
+  k2 app process overview 402_THjXOH4kc9barKC14WMEl00upWI (4KB)
+  k2 app reporting icon_BO8t_7uyXKiXDPMf2QPykMuxTnM (2KB)
+  k2 app sector communications (84x84)_DtASp2m5Lq6OG5jtB6SBcH1FsZA (2KB)
+  k2 app sector customer service (84x84)_F6_H_yChIRl6kjl3vLYLf8ZciDE (3KB)
+  k2 app sector human resources (84x84)_OCrTRkDd8QAu53E7z0myPBrMrp8 (2KB)
+  k2 app sector information technology (84x84)_2nhS9+Xq7VkEahtPC8gEaYBqib4 (2KB)
+  k2 app sector legal (84x84)_yq8gS_vK1GfeJZQ2KZoxpgMRI18 (3KB)
+  k2 app sector marketing (84x84)_1sBls1db6s7R+bt+VyKEkRrmuv8 (3KB)
+  k2 app sector operations (84x84)_dligmiHI2TnkLtewmyiaiW5pFVQ (3KB)
+  k2 app sector sales (84x84)_oTfYui_4Wsv0oKSZdr4YrLi9dUg (2KB)
+  k2 app sector team projects (84x84)_qLWw+9HwPULEwEIQ3X4nrT5Qbqg (6KB)
+  nintex app logo 2018 generic 45_8pb513YM8zV_PrJzU2v3ssI2pcY (1KB)
+  nintex footer_qOF+NXxP_sc_q3HQ55re8gjrkLU (1KB)
+  presence icon_CU0wqhKmVLSinCI2jFyckiB5LT8 (1KB)
+  properties.model (0KB)
+  Registered_Application_com_K2_App_Framework_Core_SmartObject_AppType_k9NPdILil9xjC0834qMqVdFpYWQ (1KB)
+  Registered_Application_Form_com_K2_App_Framework_Core_SmartObject_RegisteredAppFormType_lQT8t9ky+hqzhnwxtBgyi5yXeZ0 (1KB)
+  Segoe UI Light_Br4qPhLoOurTLL1oHocA+3NyJE8 (0KB)
+  validation.model (0KB)
+  vertical divider_D+_CYFYZ5nuqfUwQ4fo9lYfw4nE (0KB)
+  FrameworkGeneric.Workflow_A4GH3Iisqu1GSLbFpPmkPSdQ2+g.Reference (260KB)
+  certificate.hash (0KB)
+  publicKey.xml (1KB)
+
+Saved definition.model (first 2000 chars):
+<?xml version="1.0" encoding="utf-8"?>
+<model id="1" name="App Framework Core" itemtype="2" apiver="9" ns="" excl="False" desc="" nextid="20562" minorApiVer="5">
+  <set id="2" name="Members" itemtype="4" apiver="9" readonly="False" count="105" xmlns="urn:SourceCode/ComponentModel">
+    <ct id="3" name="Core" itemtype="10" apiver="9" ns="urn:SourceCode/Categories?Core#Path.%2Froot%2FApps%2FK2%2FFramework%2F" excl="False" displayname="Core" scope="0" hostversion="5.16.1000.0" flags="4">
+      <tref id="4" name="Category" itemtype="9" apiver="9" required="True" ns="urn:SourceCode/Category" displayname="Category" scope="0" dataType="1" flags="0">
+        <null />
+        <null />
+      </tref>
+      <null xmlns="" />
+      <set id="5" name="Members" itemtype="4" readonly="False" count="2" xmlns="">
+        <prop id="6" name="Id" itemtype="13" ns="urn:SourceCode/Categories?Core#Path.%2Froot%2FApps%2FK2%2FFramework%2F" excl="False" displayname="Id" scope="0" unique="True" modAttr="1">
+          <tref id="7" name="Int32" itemtype="9" required="True" ns="urn:SourceCode/ComponentModel" displayname="Int32" scope="0" dataType="9" flags="0">
+            <null />
+            <null />
+          </tref>
+          <valueref id="9" name="Value" itemtype="6" required="True" type="9" value="164" />
+          <null />
+          <set id="8" name="References" itemtype="4" readonly="False" count="0" />
+        </prop>
+        <prop id="10" name="Description" itemtype="13" ns="urn:SourceCode/Categories?Core#Path.%2Froot%2FApps%2FK2%2FFramework%2F" excl="False" displayname="Description" scope="0" unique="False" modAttr="3">
+          <tref id="11" name="String" itemtype="9" required="True" ns="urn:SourceCode/ComponentModel" displayname="String" scope="0" dataType="18" flags="0">
+            <null />
+            <null />
+          </tref>
+          <valueref id="13" name="Value" itemtype="6" required="True" type="18" value="" />
+          <null />
+          <set id=
+
+=== APPROACH 3: K2 Basic Task Form as simpler template ===
+BTF Model: K2 Basic Task Form, Members: 13
+  [ComplexType] Forms ns=urn:SourceCode/Categories?Forms#Path.%2Froot%2FSystem%2FWorkflow%2F
+  [ComplexType] com.K2.System.Workflow.View.Comments ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.System.Workflow.View.BasicTask ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.System.Workflow.View.Attachments ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.System.Workflow.View.AddComment ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.System.Workflow.View.AddAttachment ns=urn:SourceCode/SmartForms/View
+  [ComplexType] com.K2.System.Workflow.Form.BasicTask ns=urn:SourceCode/SmartForms/Form
+  [ComplexType] Comments ns=urn:SourceCode/Categories?Comments#Path.%2Froot%2FSystem%2FWorkflow%2F
+  [ComplexType] Attachments ns=urn:SourceCode/Categories?Attachments#Path.%2Froot%2FSystem%2FWorkflow%2F
+  [ComplexType] Views ns=urn:SourceCode/Categories?Views#Path.%2Froot%2FSystem%2FWorkflow%2F
+  [ComplexType] Workflow ns=urn:SourceCode/Categories?Workflow#Path.%2Froot%2FSystem%2F
+  [ComplexType] System ns=urn:SourceCode/Categories?System#Path.%2Froot%2F
+  [ComplexType] root ns=urn:SourceCode/Categories?root#Path.%2F
+Saved BTF: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_customwf\Saved_BTF.kspx (177KB)
+
+BTF definition.model (first 3000 chars):
+<?xml version="1.0" encoding="utf-8"?>
+<model id="1" name="K2 Basic Task Form" itemtype="2" apiver="9" ns="" excl="False" desc="" nextid="6094" minorApiVer="5">
+  <set id="2" name="Members" itemtype="4" apiver="9" readonly="False" count="13" xmlns="urn:SourceCode/ComponentModel">
+    <ct id="3" name="Forms" itemtype="10" apiver="9" ns="urn:SourceCode/Categories?Forms#Path.%2Froot%2FSystem%2FWorkflow%2F" excl="False" displayname="Forms" scope="0" hostversion="5.12.0.0" flags="4">
+      <tref id="4" name="Category" itemtype="9" apiver="9" required="True" ns="urn:SourceCode/Category" displayname="Category" scope="0" dataType="1" flags="0">
+        <null />
+        <null />
+      </tref>
+      <null xmlns="" />
+      <set id="5" name="Members" itemtype="4" readonly="False" count="2" xmlns="">
+        <prop id="6" name="Id" itemtype="13" ns="urn:SourceCode/Categories?Forms#Path.%2Froot%2FSystem%2FWorkflow%2F" excl="False" displayname="Id" scope="0" unique="True" modAttr="1">
+          <tref id="7" name="Int32" itemtype="9" required="True" ns="urn:SourceCode/ComponentModel" displayname="Int32" scope="0" dataType="9" flags="0">
+            <null />
+            <null />
+          </tref>
+          <valueref id="9" name="Value" itemtype="6" required="True" type="9" value="158" />
+          <null />
+          <set id="8" name="References" itemtype="4" readonly="False" count="0" />
+        </prop>
+        <prop id="10" name="Description" itemtype="13" ns="urn:SourceCode/Categories?Forms#Path.%2Froot%2FSystem%2FWorkflow%2F" excl="False" displayname="Description" scope="0" unique="False" modAttr="3">
+          <tref id="11" name="String" itemtype="9" required="True" ns="urn:SourceCode/ComponentModel" displayname="String" scope="0" dataType="18" flags="0">
+            <null />
+            <null />
+          </tref>
+          <valueref id="13" name="Value" itemtype="6" required="True" type="18" value="" />
+          <null />
+          <set id="12" name="References" itemtype="4" readonly="False" count="0" />
+        </prop>
+      </set>
+      <set id="14" name="References" itemtype="4" readonly="False" count="1" xmlns="">
+        <tref id="15" name="com.K2.System.Workflow.Form.BasicTask" itemtype="9" required="True" ns="urn:SourceCode/SmartForms/Form" displayname="Basic Task Form" scope="0" dataType="1" flags="0">
+          <null />
+          <tref id="16" name="Form" itemtype="9" required="True" ns="urn:SourceCode/SmartForms" displayname="Form" scope="0" dataType="1" flags="0">
+            <null />
+            <null />
+          </tref>
+        </tref>
+      </set>
+    </ct>
+    <ct id="17" name="com.K2.System.Workflow.View.Comments" itemtype="10" ns="urn:SourceCode/SmartForms/View" excl="False" displayname="Workflow Comments View" scope="0" hostversion="5.12.0.0" flags="4">
+      <tref id="18" name="View" itemtype="9" required="True" ns="urn:SourceCode/SmartForms" displayname="View" scope="0" dataType="1" flags="0">
+
+=== APPROACH 4: Export existing WF via PackageItems ===
+Empty session: Export_20260524023039
+Finding items on server...
+PS>TerminatingError(): "The pipeline has been stopped."
+  QueryItemOptions: SourceCode.ComponentModel.QueryItemOptions
+  Discovery failed: Exception calling "CreateInstance" with "1" argument(s): "No parameterless constructor defined for this object."
+
+  Trying DiscoverItems...
+PS>TerminatingError(): "The pipeline has been stopped."
+  DiscoverItems failed: Exception calling "CreateInstance" with "1" argument(s): "No parameterless constructor defined for this object."
+
+============================================
+  Custom WF Deploy Test Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524023040
+**********************

@@ -1,0 +1,164 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524001005
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+============================================
+  K2 Cmdlet Parameter Discovery
+============================================
+[1] Loading K2 Deployment Snap-in...
+  Snap-in loaded!
+
+============================================
+  CMDLET: New-Package
+============================================
+  Type: Cmdlet
+  Module: SourceCode.Deployment.PowerShell
+  Parameters:
+    [REQUIRED] String FileName
+      Aliases: FN
+    [optional] String InputFileName
+      Aliases: IFN
+    [optional] String Description
+      Aliases: DESC
+    [optional] SwitchParameter ExcludeDependencies
+      Aliases: EXD
+    [optional] String ConnectionString
+      Aliases: CN
+    [optional] SwitchParameter OutputLog
+      Aliases: LOG
+    [optional] SwitchParameter WhatIf
+      Aliases: wi
+    [optional] SwitchParameter Confirm
+      Aliases: cf
+
+  Help:
+    Synopsis: 
+New-Package [-FileName] <string> [[-InputFileName] <string>] [[-Description] <string>] [-ExcludeDependencies] [[-ConnectionString] <string>] [-OutputLog] [-WhatIf] [-Confirm] [<CommonParameters>]
+
+============================================
+  CMDLET: Send-Deploy-Package
+============================================
+  Type: Cmdlet
+  Module: SourceCode.Deployment.PowerShell
+  Parameters:
+    [REQUIRED] String FileName
+    [optional] String ConfigFile
+    [optional] String ConnectionString
+    [optional] SwitchParameter NoAnalyze
+    [REQUIRED] String K2Host
+    [REQUIRED] UInt32 Port
+    [REQUIRED] Boolean Integrated
+    [REQUIRED] Boolean IsPrimaryLogin
+    [optional] String SecurityLabel
+    [optional] String Username
+    [optional] String Password
+    [optional] String WindowsDomain
+    [optional] SwitchParameter WhatIf
+      Aliases: wi
+    [optional] SwitchParameter Confirm
+      Aliases: cf
+
+  Help:
+    Synopsis: 
+Send-Deploy-Package [-FileName] <string> [[-ConfigFile] <string>] [[-ConnectionString] <string>] [-NoAnalyze] [-WhatIf] [-Confirm] [<CommonParameters>]
+
+Send-Deploy-Package [-FileName] <string> [[-ConfigFile] <string>] [-K2Host] <string> [-Port] <uint32> [-Integrated] <bool> [-IsPrimaryLogin] <bool> [[-SecurityLabel] <string>] [[-Username] <string>] [[-Password] <string>] [[-WindowsDomain] <string>] [-NoAnalyze] [-WhatIf] [-Confirm] [<CommonParameters>]
+
+============================================
+  CMDLET: Send-Refresh-Package
+============================================
+  Type: Cmdlet
+  Module: SourceCode.Deployment.PowerShell
+  Parameters:
+    [REQUIRED] String SourceFileName
+    [REQUIRED] String TargetFileName
+    [optional] String ConnectionString
+    [optional] SwitchParameter WhatIf
+      Aliases: wi
+    [optional] SwitchParameter Confirm
+      Aliases: cf
+
+  Help:
+    Synopsis: 
+Send-Refresh-Package [-TargetFileName] <string> [[-ConnectionString] <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
+
+============================================
+  CMDLET: Write-DeploymentConfig
+============================================
+  Type: Cmdlet
+  Module: SourceCode.Deployment.PowerShell
+  Parameters:
+    [REQUIRED] String InputFile
+    [REQUIRED] String OutputFile
+    [optional] String ConnectionString
+    [optional] SwitchParameter WhatIf
+      Aliases: wi
+    [optional] SwitchParameter Confirm
+      Aliases: cf
+
+  Help:
+    Synopsis: 
+Write-DeploymentConfig [-InputFile] <string> [-OutputFile] <string> [[-ConnectionString] <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
+
+============================================
+  CMDLET: Write-PackageConfig
+============================================
+  Type: Cmdlet
+  Module: SourceCode.Deployment.PowerShell
+  Parameters:
+    [REQUIRED] String InputFile
+    [REQUIRED] String OutputFile
+    [optional] String ConnectionString
+    [optional] SwitchParameter WhatIf
+      Aliases: wi
+    [optional] SwitchParameter Confirm
+      Aliases: cf
+
+  Help:
+    Synopsis: 
+Write-PackageConfig [-InputFile] <string> [-OutputFile] <string> [[-ConnectionString] <string>] [-WhatIf] [-Confirm] [<CommonParameters>]
+
+============================================
+  .kspx File Structure Analysis
+============================================
+  Analyzing: C:\Program Files\K2\Setup\K2 Basic Task Form.kspx
+  Size: 177KB
+  Contents:
+    DIR:  Signature
+    FILE: changesets.model (61KB)
+    FILE: com.K2.System.Workflow.Form_cJm2+hJWA_3fggM2Jy2yv15C1cI.BasicTask (122KB)
+    FILE: com.K2.System.Workflow.View_+jIGYG_0vCZIjYGQj0Vg3HW19c4.BasicTask (75KB)
+    FILE: com.K2.System.Workflow.View_5NxTJK7SDED3_nP3DJcCKcNClwY.Attachments (48KB)
+    FILE: com.K2.System.Workflow.View_cC9Ar9o95qLN2TkI75A1DPbrlDw.Comments (45KB)
+    FILE: com.K2.System.Workflow.View_GCxrlNLUbwDqltLO6BTGxnBs7Wo.AddAttachment (30KB)
+    FILE: com.K2.System.Workflow.View_quhdFJElZdShqjtFQ2y2g9E6zFU.AddComment (29KB)
+    FILE: definition.model (1601KB)
+    FILE: properties.model (0KB)
+    FILE: validation.model (0KB)
+    FILE: Signature\certificate.hash (0KB)
+    FILE: Signature\publicKey.xml (1KB)
+
+  --- publicKey.xml (first 30 lines) ---
+    <RSAKeyValue><Modulus>s1Et04dYqQ5V4r2QysVQzwnRTeIwjsP7b7ZX27jjoh0TXJuIuF2NI3f/9arBIIOdCsiLvTqGKacSnFg2h54sJDVXW3ZChujOXsivl1hYb8jdhYB/Grq0ko+UDilgkt0aC9Nudi8nPxXyAdn2e/QIQRo8TWXpiWezZsLk7XBunhkbdnihUEKxd+jqQdnWOKU+WH8gGuF5vf++jfgJoGra7l+LlPOPAsUdpqZNsXCmi0ZmoJ86v/nvR5SULj3QsBK6tzBPB9/E1hY6z8nLHMPQMEvxXOqLdd5MxJk5rYv9hHS9nARvq+HcYyWNvDZZ457fHYTtRS4efr1qjVaaCUptUpUg6YsBfZK7ujdkwrBVUv8RywSE/fS1DBvK+F55M6yl/OgK3mioRAy2dgF4qQ8f7p9KmMbdKjluDvPoq3rsVM38whI2J+5Y/JDARpIxYOihUHOKCegCw78HZm/w/BifbKTZ4uN35DqoagmbEMzHErg8uU/jZVkQA14nPIHO9MbB</Modulus><Exponent>AQAB</Exponent></RSAKeyValue>
+
+============================================
+  Discovery Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524001005
+**********************

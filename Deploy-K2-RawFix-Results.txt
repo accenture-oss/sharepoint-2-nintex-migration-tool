@@ -1,0 +1,98 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524034713
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-RawFix-Results.txt
+============================================
+  K2 Deploy - Raw KPRX Fix
+============================================
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+KPRX: 413507 bytes
+
+[1] Raw identity replacement...
+  Current Guid: ea967986828548748c22d0a748a376e6
+  Current Name: TestKprxWF
+
+  Context after </Views>:
+  </Views><Guid>65aaa9ae4e5b4d8b839d9edf44eea93a</Guid><Name>TestKprxWF</Name><DisplayName>TestKprxWF</DisplayName><ExtenderNamespace>65aaa9ae4e5b4d8b839d9edf44eea93a</ExtenderNamespace><ExceptionGuid>3477db0d-75ed-4d19-9f2f-99d5ca312199</ExceptionGuid><DefaultExecutionLayer>Default</DefaultExecutionLayer><CurrentExecutionLayer>Default</CurrentExecutionLayer><CurrentView>ShapesView</CurrentView><CategoryPath>Workflow</CategoryPath><DeployToCategory>1</DeployToCategory></Process>
+
+  After replacement context:
+  </Views><Guid>8593df02-5293-476a-9c3d-5807ec8abe92</Guid><Name>SPD_Migrated_Approval</Name><DisplayName>SPD Migrated Approval Workflow</DisplayName><ExtenderNamespace>65aaa9ae4e5b4d8b839d9edf44eea93a</ExtenderNamespace><ExceptionGuid>3477db0d-75ed-4d19-9f2f-99d5ca312199</ExceptionGuid><DefaultExecutionLayer>Default</DefaultExecutionLayer><CurrentExecutionLayer>Default</CurrentExecutionLayer><CurrentView>ShapesView</CurrentView><CategoryPath>SPD Migration</CategoryPath><DeployToCategory>1</Deploy
+
+  Modified KPRX: 413547 bytes (original: 413507)
+
+[2] Building .kspx...
+True
+  Skipped: FrameworkGeneric.Workflow_A4GH3Iisqu1GSLbFpPmkPSdQ2+g.Reference
+  Added: SPDMigratedApproval.Workflow (404KB)
+  Package: 721KB
+
+[3] Write-DeploymentConfig + Deploy-Package...
+  Config generated!
+PS C:\Shared\SPtoNintex-Migration-Tool> TerminatingError(Deploy-Package): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: I/O error occurred."
+  Error: I/O error occurred.
+
+[4] Direct Deploy-Package...
+WARNING: No configuration file found for this Deployment Package.
+WARNING: Session created with NoAnalyze Option set to 'True'. This option deploys ALL objects to the server.
+>> TerminatingError(Deploy-Package): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: I/O error occurred."
+  Error: I/O error occurred.
+
+[5] Processes:
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+  Total: 11
+**********************
+Windows PowerShell transcript end
+End time: 20260524034733
+**********************

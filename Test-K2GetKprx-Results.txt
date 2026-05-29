@@ -1,0 +1,328 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524014225
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Test-K2GetKprx-Results.txt
+============================================
+  K2 KPRX Format Study + Deploy Test
+============================================
+[STEP 1] Connecting to K2 Management Server...
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  Connected!
+  11 processes:
+  ProcSetID=7 ProcID=7 V1 [] com.K2.System.AppWizard\AppCatalog.Error.Workflow
+  ProcSetID=5 ProcID=5 V1 [] com.K2.System.AppWizard\Application.AdministratorRequest.Workflow
+  ProcSetID=3 ProcID=3 V1 [] com.K2.System.AppWizard\Application.Deletion.Workflow
+  ProcSetID=4 ProcID=4 V1 [] com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow
+  ProcSetID=6 ProcID=6 V1 [] com.K2.System.AppWizard\Application.Generation.Workflow
+  ProcSetID=9 ProcID=9 V1 [] DocApproval\DocApproval.Workflow.Approval
+  ProcSetID=1 ProcID=14 V2 [] Framework Core\FrameworkGeneric.Workflow.Reference
+  ProcSetID=1 ProcID=1 V1 [] Framework Core\FrameworkGeneric.Workflow.Reference
+  ProcSetID=2 ProcID=2 V1 [] Framework Extension\GeneralNotification.Workflow.SendNotification
+  ProcSetID=10 ProcID=11 V2 [] NintexPOC5 Contacts\Contacts Workflow
+  ProcSetID=10 ProcID=10 V1 [] NintexPOC5 Contacts\Contacts Workflow
+  ProcSetID=8 ProcID=8 V1 [] Webhook Subscriptions\SubscriptionRenewal
+  ProcSetID=11 ProcID=13 V2 [] Workflow\TestKprxWF
+  ProcSetID=11 ProcID=12 V1 [] Workflow\TestKprxWF
+
+[STEP 2] Extracting KPRX from existing processes...
+  KPRX: com.K2.System.AppWizard\AppCatalog.Error.Workflow -> 1083584 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.SmartObjectFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Properties Type="SourceCode.Workflow.Design.SmartFormatProperties" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Locals><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Authoring.K2Field" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Parts><ValueTypePart Type="SourceCode.Workflow.Design.ValueTypePart" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>5dfe7d693d14457eab88a026f97c9ef9</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><Value><![CDATA[list]]></Value></ValueTypePart></Parts><Guid>3e7818f25c814afaba3443a44484cb26</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType></Value><Guid>2ce9f7bda572438586e2e5c1f6e0c72f</Guid><Name>MethodType</Name></Value><Guid>a8c3fd7dcb4648559d046fe273a7b093</Guid><Key>MethodType</Key></PersistableObjectDictionaryEntry><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutr
+  --- KPRX END ---
+  SOURCE: com.K2.System.AppWizard\AppCatalog.Error.Workflow -> 144859 bytes
+  DETAILS: Activities=6, DataFields=9
+    Activity: Start [ID=84]
+    Activity: Create Reference [ID=85]
+    Activity: Loop [ID=86]
+    Activity: Send Email [ID=87]
+    Activity: End [ID=88]
+    Activity: SmartObject Method [ID=89]
+    DataField: For Each Result =  [7]
+    DataField: For Each Index =  [5]
+    DataField: InstanceID =  [5]
+    DataField: UserFQN =  [7]
+    DataField: UserEmail =  [7]
+    DataField: UserDisplayName =  [7]
+    DataField: Message =  [7]
+    DataField: Detail =  [7]
+    DataField: Trace =  [7]
+  KPRX: com.K2.System.AppWizard\Application.AdministratorRequest.Workflow -> 872434 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.SmartObjectFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Properties Type="SourceCode.Workflow.Design.SmartFormatProperties" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Locals><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Authoring.K2Field" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Parts><ValueTypePart Type="SourceCode.Workflow.Design.ValueTypePart" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>cace92917552460b8a51a130d340d2ac</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><Value><![CDATA[SmartObject Service Functions]]></Value></ValueTypePart></Parts><Guid>fed69eb1bab34eff9285428cd6288bb6</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType></Value><Guid>dfb2b913d3684bf89d81f367fa974601</Guid><Name>DisplayName</Name></Value><Guid>4c4a42fff6c74a41b0385fe975663062</Guid><Key>DisplayName</Key></PersistableObjectDictionaryEntry><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Ver
+  --- KPRX END ---
+  SOURCE: com.K2.System.AppWizard\Application.AdministratorRequest.Workflow -> 117523 bytes
+  DETAILS: Activities=8, DataFields=5
+    Activity: Start [ID=53]
+    Activity: SmartObject Method [ID=54]
+    Activity: Loop [ID=55]
+    Activity: Set Variables [ID=56]
+    Activity: Set Variables 1 [ID=57]
+    Activity: Send Email [ID=58]
+    Activity: End [ID=59]
+    Activity: Set Folio [ID=60]
+    DataField: AdminEmailList =  [7]
+    DataField: For Each Result =  [7]
+    DataField: For Each Index =  [5]
+    DataField: TempAdminEmailList =  [7]
+    DataField: Reason =  [7]
+  KPRX: com.K2.System.AppWizard\Application.Deletion.Workflow -> 3396253 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.SmartObjectFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Properties Type="SourceCode.Workflow.Design.SmartFormatProperties" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Locals><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Authoring.K2Field" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Parts><ValueTypePart Type="SourceCode.Workflow.Design.ValueTypePart" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>9551266c979b41e6b2b2e7f10bea7f4e</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><Value><![CDATA[d8b4fa9f-27ad-471e-9077-3625ac264113]]></Value></ValueTypePart></Parts><Guid>94286f3f9a784ca4b3156e675b14c684</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType></Value><Guid>87d3441dbed14c359f492cd4ae05277d</Guid><Name>Guid</Name></Value><Guid>27c34bf45f654bd3968ec3ade1697c6a</Guid><Key>Guid</Key></PersistableObjectDictionaryEntry><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.
+  --- KPRX END ---
+  SOURCE: com.K2.System.AppWizard\Application.Deletion.Workflow -> 344588 bytes
+  DETAILS: Activities=19, DataFields=9
+    Activity: Start [ID=13]
+    Activity: SmartObject Method [ID=14]
+    Activity: Decision [ID=15]
+    Activity: SmartObject Method 1 [ID=16]
+    Activity: SmartObject Method 2 [ID=17]
+    Activity: Decision 1 [ID=18]
+    Activity: Task [ID=19]
+    Activity: Decision 2 [ID=20]
+    Activity: SmartObject Method 3 [ID=21]
+    Activity: End [ID=22]
+    Activity: SmartObject Method 4 [ID=23]
+    Activity: Decision 3 [ID=24]
+    Activity: SmartObject Method 5 [ID=25]
+    Activity: Decision 4 [ID=26]
+    Activity: Set Data Fields [ID=27]
+    Activity: Send Email [ID=28]
+    Activity: End 1 [ID=29]
+    Activity: Task 1 [ID=30]
+    Activity: Decision 5 [ID=31]
+    DataField: AdminApprovalRequired =  [7]
+    DataField: AdministratorID =  [7]
+    DataField: App Name =  [7]
+    DataField: CategoryID =  [5]
+    DataField: CategoryPath =  [7]
+    DataField: Error Detail =  [7]
+    DataField: Error Message =  [7]
+    DataField: Error Trace =  [7]
+    DataField: InstanceID =  [7]
+  KPRX: com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow -> 3089528 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.SmartObjectFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Properties Type="SourceCode.Workflow.Design.SmartFormatProperties" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Locals><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Authoring.K2Field" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Parts><ValueTypePart Type="SourceCode.Workflow.Design.ValueTypePart" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>e01758b2bb354f829ce22192586e126c</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><Value><![CDATA[d8b4fa9f-27ad-471e-9077-3625ac264113]]></Value></ValueTypePart></Parts><Guid>1a4b016cc2734e56bccce2641d9d389f</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType></Value><Guid>47768e17477b43cf8aa5fb930d3561f5</Guid><Name>Guid</Name></Value><Guid>e905991495924bfaaad0f660d3639151</Guid><Key>Guid</Key></PersistableObjectDictionaryEntry><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.
+  --- KPRX END ---
+  SOURCE: com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow -> 319915 bytes
+  DETAILS: Activities=21, DataFields=8
+    Activity: Start [ID=32]
+    Activity: SmartObject Method [ID=33]
+    Activity: Decision [ID=34]
+    Activity: Decision 1 [ID=35]
+    Activity: SmartObject Method 1 [ID=36]
+    Activity: Task [ID=37]
+    Activity: Decision 2 [ID=38]
+    Activity: SmartObject Method 2 [ID=39]
+    Activity: End [ID=40]
+    Activity: SmartObject Method 3 [ID=41]
+    Activity: Decision 3 [ID=42]
+    Activity: SmartObject Method 4 [ID=43]
+    Activity: Decision 4 [ID=44]
+    Activity: SmartObject Method 5 [ID=45]
+    Activity: Decision 5 [ID=46]
+    Activity: SmartObject Method 6 [ID=47]
+    Activity: Send Email [ID=48]
+    Activity: End 1 [ID=49]
+    Activity: Set Data Fields [ID=50]
+    Activity: Task 1 [ID=51]
+    Activity: Decision 6 [ID=52]
+    DataField: AdminApprovalRequired =  [7]
+    DataField: AdministratorID =  [7]
+    DataField: AppName =  [7]
+    DataField: CategoryID =  [5]
+    DataField: Error Detail =  [7]
+    DataField: Error Message =  [7]
+    DataField: Error Trace =  [7]
+    DataField: InstanceID =  [7]
+  KPRX: com.K2.System.AppWizard\Application.Generation.Workflow -> 6483944 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.SmartObjectFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Properties Type="SourceCode.Workflow.Design.SmartFormatProperties" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Locals><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Authoring.K2Field" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Parts><ValueTypePart Type="SourceCode.Workflow.Design.ValueTypePart" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>d9769c476e41412499cc8c4c0f889dc3</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><Value><![CDATA[d8b4fa9f-27ad-471e-9077-3625ac264113]]></Value></ValueTypePart></Parts><Guid>047f6a54838d49fdb0c3d64a9f04ed85</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType></Value><Guid>33a2eb80c6da450cad749b22a37bdbfb</Guid><Name>Guid</Name></Value><Guid>6ce547a6998042aeb58a0e1a7ac20526</Guid><Key>Guid</Key></PersistableObjectDictionaryEntry><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.
+  --- KPRX END ---
+  SOURCE: com.K2.System.AppWizard\Application.Generation.Workflow -> 596580 bytes
+  DETAILS: Activities=23, DataFields=14
+    Activity: Start [ID=61]
+    Activity: App Wizard Header [ID=62]
+    Activity: Decision [ID=63]
+    Activity: Task [ID=64]
+    Activity: SmartObject Method [ID=65]
+    Activity: Decision 1 [ID=66]
+    Activity: Decision 2 [ID=67]
+    Activity: Task 1 [ID=68]
+    Activity: App Wizard Header 3 [ID=69]
+    Activity: Decision 3 [ID=70]
+    Activity: Task 4 [ID=71]
+    Activity: App Wizard Header 1 [ID=72]
+    Activity: App Wizard Header 2 [ID=73]
+    Activity: Decision 5 [ID=74]
+    Activity: Task 3 [ID=75]
+    Activity: Decision 6 [ID=76]
+    Activity: SmartObject Method 1 [ID=77]
+    Activity: Decision 7 [ID=78]
+    Activity: App Wizard Header 4 [ID=79]
+    Activity: End [ID=80]
+    Activity: End 1 [ID=81]
+    Activity: End 2 [ID=82]
+    Activity: Decision 4 [ID=83]
+    DataField: InstanceID =  [7]
+    DataField: ApplicationID =  [7]
+    DataField: Administrator Check =  [7]
+    DataField: Application Builder ID =  [7]
+    DataField: ApprovalRequired =  [1]
+    DataField: CategoryID =  [5]
+    DataField: Error Detail =  [7]
+    DataField: Error Message =  [7]
+    DataField: Error Trace =  [7]
+    DataField: Landing Form Name =  [7]
+    DataField: PDF ID =  [7]
+    DataField: Registration Form Name =  [7]
+    DataField: Service Account Check =  [1]
+    DataField: Reject Reason =  [7]
+  KPRX: DocApproval\DocApproval.Workflow.Approval -> 2683761 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.SmartObjectFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Properties Type="SourceCode.Workflow.Design.SmartFormatProperties" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Locals><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Authoring.K2Field" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Parts><ValueTypePart Type="SourceCode.Workflow.Design.ValueTypePart" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>dd08e744556542bbb9fba6db348e2690</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><Value><![CDATA[SmartObject Service Functions]]></Value></ValueTypePart></Parts><Guid>0c36b50d76bd44d8818fca1f748f9f95</Guid></Value><Guid>c28020ae96b54bb3b137ed33072863a3</Guid><Name>DisplayName</Name></Value><Guid>ca484dbd9e9d44c487c93a888f7e9abe</Guid><Key>DisplayName</Key></PersistableObjectDictionaryEntry><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" As
+  --- KPRX END ---
+  SOURCE: DocApproval\DocApproval.Workflow.Approval -> 284962 bytes
+  DETAILS: Activities=13, DataFields=1
+    Activity: Start [ID=94]
+    Activity: CreateHeaderReference [ID=95]
+    Activity: Initialize [ID=96]
+    Activity: ReviewRequest [ID=97]
+    Activity: ReviewRequestDecision [ID=98]
+    Activity: ReworkRequest [ID=99]
+    Activity: ReworkRequestDecision [ID=100]
+    Activity: Approved [ID=101]
+    Activity: Declined [ID=102]
+    Activity: Canceled [ID=103]
+    Activity: EndApproved [ID=104]
+    Activity: EndDeclined [ID=105]
+    Activity: EndCanceled [ID=106]
+    DataField: InstanceID =  [7]
+  KPRX: Framework Core\FrameworkGeneric.Workflow.Reference -> 266344 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.ArtifactLibraryFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>9d9a865ec47148ec890f9e1874cb0632</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><FieldName>From Address</FieldName><FieldTypeId>2E9E9157-E34A-4891-AB65-03BDCBFC2CB8</FieldTypeId></Property><Guid>fe0984da0c674c489befd3d49bff790c</Guid><Name>e2215de1e99f328414f21553322e9430</Name><DisplayName>e2215de1e99f328414f21553322e9430</DisplayName></ProcessDependency></Dependencies><References><AssemblyReference><Guid>282305578e954a65b6deebc3f2768a69</Guid><ItemName>Reference</ItemName><ItemInclude>System</ItemInclude><AssemblyName>System</AssemblyName></AssemblyReference><AssemblyReference><Guid>aedd51fc4cf2476c944e13c2b2eac5f8</Guid><ItemName>Reference</ItemName><ItemInclude>Microsoft.CSharp</ItemInclude><AssemblyName>Microsoft.CSharp</AssemblyName></AssemblyReference><AssemblyReference><Guid>fb7455c6d7084ffe8b9353e129b7af53</Guid><ItemName>Reference</ItemName><ItemInclude>System.Activities</ItemInclude><AssemblyName>System.Activities</AssemblyName></AssemblyReference><AssemblyReference><Guid>72b38d9617c34c26b0aba8e236966b42</Guid><ItemName>Reference</ItemName><ItemInclude>System.Core</ItemInclude><AssemblyName>System.Core</AssemblyName></AssemblyReference><AssemblyReference><Guid>fe1af0523be8420a94940fd49cf5dc3e</Guid><ItemName>Reference</ItemName><ItemInclude>System.ServiceModel</ItemInclude><AssemblyName>System.ServiceModel</AssemblyName></AssemblyReference><AssemblyReference><Guid>3fcc4a89a8064b8ea8f2aed2d4197b42</Guid><ItemName>Reference</ItemName><ItemInclude>System.ServiceMo
+  --- KPRX END ---
+  SOURCE: Framework Core\FrameworkGeneric.Workflow.Reference -> 66846 bytes
+  DETAILS: Activities=4, DataFields=1
+    Activity: Start [ID=122]
+    Activity: Task [ID=123]
+    Activity: Decision [ID=124]
+    Activity: End [ID=125]
+    DataField: InstanceID =  [7]
+  KPRX: Framework Extension\GeneralNotification.Workflow.SendNotification -> 1237123 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.SmartObjectFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Properties Type="SourceCode.Workflow.Design.SmartFormatProperties" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Locals><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Authoring.K2Field" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Parts><ValueTypePart Type="SourceCode.Workflow.Design.ValueTypePart" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>4f9b022c99fe4517aa577f295062ab93</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><Value><![CDATA[list]]></Value></ValueTypePart></Parts><Guid>02dc03995d924c2b8687e7f86336fa06</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType></Value><Guid>ea9e8e9f5d8f4b5e9db725710bda79a8</Guid><Name>MethodType</Name></Value><Guid>ecd9e0cec43f452e9357f11340dfae3f</Guid><Key>MethodType</Key></PersistableObjectDictionaryEntry><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutr
+  --- KPRX END ---
+  SOURCE: Framework Extension\GeneralNotification.Workflow.SendNotification -> 163186 bytes
+  DETAILS: Activities=8, DataFields=6
+    Activity: Start [ID=5]
+    Activity: Loop [ID=6]
+    Activity: Send Email [ID=7]
+    Activity: SmartObject Method [ID=8]
+    Activity: Loop 1 [ID=9]
+    Activity: SmartObject Method 1 [ID=10]
+    Activity: End [ID=11]
+    Activity: Create Reference 1 [ID=12]
+    DataField: DetailID =  [7]
+    DataField: InstanceID =  [7]
+    DataField: For Each Result =  [7]
+    DataField: For Each Index =  [5]
+    DataField: For Each Result 1 =  [7]
+    DataField: For Each Index 1 =  [5]
+  KPRX: NintexPOC5 Contacts\Contacts Workflow -> 429026 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.SmartObjectFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Properties Type="SourceCode.Workflow.Design.SmartFormatProperties" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Locals><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Authoring.K2Field" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Parts><ValueTypePart Type="SourceCode.Workflow.Design.ValueTypePart" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>5a4fbfa8f43d4e569ae2ddc9d1bcfc35</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><Value><![CDATA[Contacts]]></Value></ValueTypePart></Parts><Guid>0ab63c6a5fcc440db5ebf34feae2dfa8</Guid></Value><Guid>d6f453ca777e459e97ef9caee89e63dd</Guid><Name>DisplayName</Name></Value><Guid>f64323234f9148bdba4faa12bd6f50de</Guid><Key>DisplayName</Key></PersistableObjectDictionaryEntry><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Wo
+  --- KPRX END ---
+  SOURCE: NintexPOC5 Contacts\Contacts Workflow -> 81211 bytes
+  DETAILS: Activities=6, DataFields=1
+    Activity: Start [ID=110]
+    Activity: End [ID=111]
+    Activity: Task [ID=112]
+    Activity: Decision [ID=113]
+    Activity: Send Email [ID=114]
+    Activity: Send Email 1 [ID=115]
+    DataField: FullName =  [7]
+  KPRX: Webhook Subscriptions\SubscriptionRenewal -> 553419 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.SmartObjectFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Properties Type="SourceCode.Workflow.Design.SmartFormatProperties" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Locals><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Authoring.K2Field" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Parts><ValueTypePart Type="SourceCode.Workflow.Design.ValueTypePart" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>dce4502986664e24a85986ca00381612</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><Value><![CDATA[d8b4fa9f-27ad-471e-9077-3625ac264113]]></Value></ValueTypePart></Parts><Guid>993146155b0744769d92bfe49c84b411</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType></Value><Guid>f38daf3d33334a6294824a2cdcaee074</Guid><Name>Guid</Name></Value><Guid>edeb9c284a01426db1abcdb8c28e25f4</Guid><Key>Guid</Key></PersistableObjectDictionaryEntry><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.
+  --- KPRX END ---
+  SOURCE: Webhook Subscriptions\SubscriptionRenewal -> 85562 bytes
+  DETAILS: Activities=4, DataFields=1
+    Activity: Start [ID=90]
+    Activity: Timer [ID=91]
+    Activity: End [ID=92]
+    Activity: SharePoint Integration Helper Methods [ID=93]
+    DataField: FeatureStatus =  [7]
+  KPRX: Workflow\TestKprxWF -> 413507 bytes
+  --- KPRX START (first 2000 chars) ---
+﻿<?xml version="1.0" encoding="utf-8"?><Process Type="SourceCode.Workflow.Design.DefaultProcess" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" Version="4"><Dependencies><ProcessDependency><Property Type="SourceCode.Workflow.Design.SmartObjectFieldPart" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Properties Type="SourceCode.Workflow.Design.SmartFormatProperties" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Locals><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assembly="SourceCode.Workflow.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Authoring.K2Field" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Parts><ValueTypePart Type="SourceCode.Workflow.Design.ValueTypePart" Assembly="SourceCode.Workflow.Authoring, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Guid>ea967986828548748c22d0a748a376e6</Guid><ValueType>System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</ValueType><Value><![CDATA[NewHireRecords Attachments]]></Value></ValueTypePart></Parts><Guid>29300933ade441ebaea26c91441648bc</Guid></Value><Guid>4fc7ea93b889440988bb9ae9d81dd312</Guid><Name>DisplayName</Name></Value><Guid>0a203a4046c14e52abb7011b869919f3</Guid><Key>DisplayName</Key></PersistableObjectDictionaryEntry><PersistableObjectDictionaryEntry Type="SourceCode.Framework.PersistableObjectDictionaryEntry" Assembly="SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d"><Value Type="SourceCode.Workflow.Design.Local" Assem
+  --- KPRX END ---
+  SOURCE: Workflow\TestKprxWF -> 79649 bytes
+  DETAILS: Activities=3, DataFields=0
+    Activity: Start [ID=119]
+    Activity: Create List Item [ID=120]
+    Activity: End [ID=121]
+
+[STEP 3] Verifying Deploy-Package cmdlet...
+  Deploy-Package cmdlet found!
+  Deploy-Package synopsis: 
+Deploy-Package [-FileName] <string> [[-ConfigFile] <string>] [[-ConnectionString] <string>] [-NoAnalyze] [-WhatIf] [-Confirm] [<CommonParameters>]
+
+Deploy-Package [-FileName] <string> [[-ConfigFile] <string>] [-K2Host] <string> [-Port] <uint32> [-Integrated] <bool> [-IsPrimaryLogin] <bool> [[-SecurityLabel] <string>] [[-Username] <string>] [[-Password] <string>] [[-WindowsDomain] <string>] [-NoAnalyze] [-WhatIf] [-Confirm] [<CommonParameters>]
+
+[STEP 4] Testing New-Package with Write-PackageConfig output...
+  Config file: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_kprx_study\test_package_config.xml
+  New-Package SUCCESS! File: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_kprx_study\test_package.kspx (1KB)
+  Deploying generated package...
+WARNING: No configuration file found for this Deployment Package.
+WARNING: Session created with NoAnalyze Option set to 'True'. This option deploys ALL objects to the server.
+Deploy-Package : This package was created on a version that is no longer supported on this target environment.
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2GetKprx.ps1:161 char:5
++     Deploy-Package -FileName $testKspxFile -K2Host $K2Server -Port $K ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Deploy-Package], InvalidPackageException
+    + FullyQualifiedErrorId : 0,SourceCode.Deployment.PowerShell.DeployPackage
+Deploy-Package : This package was created on a version that is no longer supported on this target environment.
+At C:\Shared\SPtoNintex-Migration-Tool\Test-K2GetKprx.ps1:161 char:5
++     Deploy-Package -FileName $testKspxFile -K2Host $K2Server -Port $K ...
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Deploy-Package], InvalidPackageException
+    + FullyQualifiedErrorId : 0,SourceCode.Deployment.PowerShell.DeployPackage
+
+  DEPLOY SUCCESS!
+
+============================================
+  KPRX Study Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524014227
+**********************

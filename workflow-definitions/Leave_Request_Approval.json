@@ -1,0 +1,84 @@
+{
+    "name": "Leave_Request_Approval",
+    "displayName": "Leave Request Approval",
+    "description": "Migrated from SharePoint Designer. Routes leave requests through manager approval with email notifications.",
+    "smartObject": "Leave_Requests",
+
+    "dataFields": [
+        { "name": "RequestTitle",    "type": "Text" },
+        { "name": "Requester",       "type": "Text" },
+        { "name": "StartDate",       "type": "DateTime" },
+        { "name": "EndDate",         "type": "DateTime" },
+        { "name": "LeaveType",       "type": "Text" },
+        { "name": "Status",          "type": "Text", "initialValue": "Pending" },
+        { "name": "ApproverComments","type": "Text" },
+        { "name": "DaysRequested",   "type": "Number" }
+    ],
+
+    "steps": [
+        {
+            "name": "SubmitRequest",
+            "displayName": "Submit Leave Request",
+            "description": "Employee submits the leave request form",
+            "type": "task",
+            "durationMinutes": 30,
+            "outcomes": ["Submitted"],
+            "dataFields": []
+        },
+        {
+            "name": "ManagerApproval",
+            "displayName": "Manager Approval",
+            "description": "Direct manager reviews and approves/rejects the request",
+            "type": "task",
+            "priority": 2,
+            "durationMinutes": 1440,
+            "outcomes": ["Approved", "Rejected"],
+            "dataFields": []
+        },
+        {
+            "name": "NotifyApproved",
+            "displayName": "Send Approval Notification",
+            "description": "Email notification sent to requester on approval",
+            "type": "system",
+            "durationMinutes": 1,
+            "outcomes": [],
+            "dataFields": []
+        },
+        {
+            "name": "NotifyRejected",
+            "displayName": "Send Rejection Notification",
+            "description": "Email notification sent to requester on rejection",
+            "type": "system",
+            "durationMinutes": 1,
+            "outcomes": [],
+            "dataFields": []
+        },
+        {
+            "name": "UpdateApproved",
+            "displayName": "Update Status - Approved",
+            "description": "Update SmartObject status to Approved",
+            "type": "system",
+            "durationMinutes": 1,
+            "outcomes": [],
+            "dataFields": []
+        },
+        {
+            "name": "UpdateRejected",
+            "displayName": "Update Status - Rejected",
+            "description": "Update SmartObject status to Rejected",
+            "type": "system",
+            "durationMinutes": 1,
+            "outcomes": [],
+            "dataFields": []
+        }
+    ],
+
+    "connections": [
+        { "from": "Start",           "to": "SubmitRequest",   "label": "New Request" },
+        { "from": "SubmitRequest",    "to": "ManagerApproval", "label": "Submitted" },
+        { "from": "ManagerApproval",  "to": "NotifyApproved",  "label": "Approved" },
+        { "from": "ManagerApproval",  "to": "NotifyRejected",  "label": "Rejected" },
+        { "from": "NotifyApproved",   "to": "UpdateApproved",  "label": "" },
+        { "from": "NotifyRejected",   "to": "UpdateRejected",  "label": "" }
+    ]
+}

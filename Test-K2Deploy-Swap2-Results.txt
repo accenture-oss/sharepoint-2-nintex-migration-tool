@@ -1,0 +1,190 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524023945
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Swap2-Results.txt
+============================================
+  K2 Workflow KPRX Swap Deploy v2
+============================================
+[1] Getting TestKprxWF KPRX...
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  KPRX: 413507 bytes
+
+[2] Creating template...
+True
+  Template: 868KB
+
+[3] Extracting and modifying template...
+  Finding workflow file...
+  FOUND: com.K2.App.Framework.Core.ItemView_kZ31VU6A4nwBils3rw1guUdOB9s.WorkflowReport (78KB)
+  FOUND: FrameworkGeneric.Workflow_A4GH3Iisqu1GSLbFpPmkPSdQ2+g.Reference (260KB)
+  ERROR: Workflow file not found!
+    app generated icon (32)_R2JPISfAqcROrfHANPs9zXazD+g
+    changesets.model
+    com.K2.App.Framework.Core.Form_d4Qri+cXvWai5bFInJeGPscfwuk.RegisterFramework
+    com.K2.App.Framework.Core.Form_R4A+dZPqZ5qcdyvUrS7jDbhgscs.ReadonlyReviewSubmitted
+    com.K2.App.Framework.Core.Form_zywfRBZAlo+kklSKQzK+LkWk7lU.SelectRegisteredApplication
+    com.K2.App.Framework.Core.ItemView_+_+HWte_74cjYQjUJnoG2e9lyy8.FormInfo
+    com.K2.App.Framework.Core.ItemView_63cD4vp_20KBV12P9enSnUoHgO8.WorkspaceRegistration
+    com.K2.App.Framework.Core.ItemView_8hvc1XnldpbCFJ4IRViUUBdc5jw.ActionBarSubmit
+    com.K2.App.Framework.Core.ItemView_9ptqf28mYDm0HeWELJqBOd3kDKk.StatusBar
+    com.K2.App.Framework.Core.ItemView_aO090rxDrSuaegGYHuNi5EuRaP0.DeploymentMessage
+    com.K2.App.Framework.Core.ItemView_cutvvOcHDS6HyHG6XEL2zy+mmLc.DeploymentConfiguration
+    com.K2.App.Framework.Core.ItemView_HgTNyQzGNpggQOp9K0iNIKgx2C8.ActionBarReview
+    com.K2.App.Framework.Core.ItemView_iRMLmXu5LAvBFSRr1lsPnzctL6c.FormHeaderFull
+    com.K2.App.Framework.Core.ItemView_JxGryd023pD89j+LdgrA48gZ678.ImagePalette
+    com.K2.App.Framework.Core.ItemView_kZ31VU6A4nwBils3rw1guUdOB9s.WorkflowReport
+    com.K2.App.Framework.Core.ItemView_LmGLhkhZYUu9IFoNW2R2st_WpiE.FormFooter
+    com.K2.App.Framework.Core.ItemView_lrj3LMJ4PQRcbwhzLJHnC0bQ9Pw.RegisteredApplication
+    com.K2.App.Framework.Core.ItemView_Qgf9quZRNY1gHejobZKREqvKem4.FormBehaviour
+    com.K2.App.Framework.Core.ItemView_qjKSO5LHyNI1rIXRWwvLEtuuDck.AppsFavorite
+    com.K2.App.Framework.Core.ItemView_wiSU23tVMB9pUmWNVK1ZNsfETyg.VersionRegistration
+    com.K2.App.Framework.Core.ItemView_XiLcAjH2OQzr5Hp7R_FoaP09xvs.ProcessOverviewReport
+    com.K2.App.Framework.Core.ItemView_YKbc2c+dDKJHbgiqSKf4316mPZY.Navigation
+    com.K2.App.Framework.Core.ItemView_yL+xsxT0HkNtREmKpsFOAs8qZMM.FormHeaderThin
+    com.K2.App.Framework.Core.ListView_3GdAMbnbR7N0t0SV30rUoS_BRqE.RegisteredApplicationFormSpecific
+    com_K2_App_Framework_Core_SmartObject_AppSettingGroup_IB+eG2uNWSre0KEuLHdYNk0uJZ4
+    com_K2_App_Framework_Core_SmartObject_AppType_l+A1fk260HdS8VvGcR+JAkaOuHU
+    com_K2_App_Framework_Core_SmartObject_RegisteredAppFormType_knaOZIcYZ3efRB13C+COMgwxy0U
+    com_K2_App_Framework_Core_SmartObject_RegisteredAppForm_i7R9zsYrs83Hc6z1YSgUPNrBVrc
+    com_K2_App_Framework_Core_SmartObject_RegisteredApp_rC4DTsBEWPptAmFNx_CrZYaTtWQ
+    com_K2_App_Framework_Core_SmartObject_VersionDetail_SORWzAt3bC9uWpdRUMnyf8HD90c
+    definition.model
+    k2 app administration icon_8Xi6wOtG1X+Y+5cVMGmC2FZ4oBM
+    k2 app arrow down (24x24)_hvq7mwz8RFx31hnmo5E_G6v1LaE
+    k2 app arrow down (92x92)_HYg+hxTqqF4TXo4rZZUZHuTJluw
+    k2 app arrow up (24x24)_ncK_mwvAvnuqrWyOP20BCgXzGi0
+    k2 app arrow up (92x92)_yTXMArtt0NuzGyCAya8Dhdf+ePM
+    k2 app export csv 134_9A5dKaByuQqu9SgVQPT8bHXU8jU
+    k2 app export csv 268_gCmPQ6euMEarmgWXSsC5rE8sG_A
+    k2 app export csv 402_s_UwVka4gbgD1JQXn24TXQG0JvM
+    k2 app generic new instance icon_CBDkRyZyFHZ8mJQ7dkvxBeAz88M
+    k2 app health green (16x16)_1KXpvLthxvCUwosvo2xkg8s07us
+    k2 app health green (50x50)_phXWtf3fdtkq72BlhqERsMVGX_E
+    k2 app health orange (16x16)_hOXf2qvyUV5Dq3SxbBTpa4bn5is
+    k2 app health orange (50x50)_VXCHUQ6b2o3h_P5JQKYAk6NAAT8
+    k2 app health red (16x16)_sduPltE6O0+ecOK82Q3EmnrGi7U
+    k2 app health red (50x50)_n3stAd2sMc9FcB+eEtH3CmiVF84
+    k2 app health undefined (16x16)_U_8014I__16UNEuMaFi6KvPuNwg
+    k2 app health undefined (50x50)_Mi_Ov2M3Mc3yg1LkAtbmWVdosD8
+    k2 app k2management icon_gVilzlHTWwtjUFPi3+HDaswJhtA
+    k2 app k2viewflow icon_5FmlrIw4tHG+pnZgSuH7lsa9gzY
+    k2 app lock closed (24x24)_NTtSQlNmVvPT1B7Ec7ru5igUefE
+    k2 app lock closed (92x92)_Oek4BPkyU5bBXR4FNhlqGzQSCbY
+    k2 app lock open (24x24)_1moUyDMPNH72zUmGVyYS3nVV9Jc
+    k2 app lock open (92x92)_d4VC+IlsjXe6ER+R6VPD6a58zY8
+    k2 app logo generic k2 (64x64)_gsngMQz4KthjniNzPse7Be1hKmU
+    k2 app pie chart 134_kSLHDzZkbaU69eCgcI0gMdTCFUM
+    k2 app pie chart 268_ciTfjaMcgHdDiTd0p98T+0JFHuo
+    k2 app pie chart 402_e_WoWMXElJnnEvKeDJKgwz79F0Q
+    k2 app priority high (16x16)_0hOe1l6MglrKN1kTgWXJftvxmbs
+    k2 app priority high (50x50)_c4hYSsJU2UaiWshofYztbJSsgZU
+    k2 app priority low (16x16)_V9ylJa2XhRbTyQmnf7KntYtVaRc
+    k2 app priority low (50x50)_QOFQKkyldsCuNJfxrbqli8R5Dt4
+    k2 app priority medium (16x16)_6voZcCqcaPp3hZ1R6GTHmFD+4BY
+    k2 app priority medium (50x50)_aHdFE6TVAL5bXhmZnwDRmhVf0kc
+    k2 app priority undefined (16x16)_hKKmhuRLcXh4+gg65ZoVkFul6EU
+    k2 app priority undefined (50x50)_flCtX7YwgIiCvZ3t38GIJ99KNGA
+    k2 app priority urgent (16x16)_LnGxyI77kXXmcGC7rbpjBMPHjkM
+    k2 app priority urgent (50x50)_cnfjgZZPUT8BK1VuCrOMnKJqCek
+    k2 app process overview 134_WitglKYALR50DsIG80Ikjq2IH7E
+    k2 app process overview 268_tWORudVicdG5YUfStiIp0mJORxI
+    k2 app process overview 402_THjXOH4kc9barKC14WMEl00upWI
+    k2 app reporting icon_BO8t_7uyXKiXDPMf2QPykMuxTnM
+    k2 app sector communications (84x84)_DtASp2m5Lq6OG5jtB6SBcH1FsZA
+    k2 app sector customer service (84x84)_F6_H_yChIRl6kjl3vLYLf8ZciDE
+    k2 app sector human resources (84x84)_OCrTRkDd8QAu53E7z0myPBrMrp8
+    k2 app sector information technology (84x84)_2nhS9+Xq7VkEahtPC8gEaYBqib4
+    k2 app sector legal (84x84)_yq8gS_vK1GfeJZQ2KZoxpgMRI18
+    k2 app sector marketing (84x84)_1sBls1db6s7R+bt+VyKEkRrmuv8
+    k2 app sector operations (84x84)_dligmiHI2TnkLtewmyiaiW5pFVQ
+    k2 app sector sales (84x84)_oTfYui_4Wsv0oKSZdr4YrLi9dUg
+    k2 app sector team projects (84x84)_qLWw+9HwPULEwEIQ3X4nrT5Qbqg
+    nintex app logo 2018 generic 45_8pb513YM8zV_PrJzU2v3ssI2pcY
+    nintex footer_qOF+NXxP_sc_q3HQ55re8gjrkLU
+    presence icon_CU0wqhKmVLSinCI2jFyckiB5LT8
+    properties.model
+    Registered_Application_com_K2_App_Framework_Core_SmartObject_AppType_k9NPdILil9xjC0834qMqVdFpYWQ
+    Registered_Application_Form_com_K2_App_Framework_Core_SmartObject_RegisteredAppFormType_lQT8t9ky+hqzhnwxtBgyi5yXeZ0
+    Segoe UI Light_Br4qPhLoOurTLL1oHocA+3NyJE8
+    validation.model
+    vertical divider_D+_CYFYZ5nuqfUwQ4fo9lYfw4nE
+  File references in definition.model:
+  Updated definition.model
+  Wrote new WF: SPD_Migration_TestKprxWF_MIGRATED.SPDWorkflow (404KB)
+
+  File references AFTER modification:
+
+[4] Re-packaging...
+  Created: 750KB
+
+[5] Deploying via PDM...
+  Model: SPD Migration Package v2, Members: 105
+  WF: Workflows ns=urn:SourceCode/Categories?Workflows#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2F
+  WF: Framework_Core ns=urn:SourceCode/Categories?Framework_Core#Path.%2Froot%2FApps%2FK2%2FFramework%2FCore%2FWorkflows%2F
+  WF: SPD Migration\SPDMigratedWF ns=urn:SourceCode/Workflows
+
+  DEPLOYED: 104 items (0 failed)
+
+[6] Verifying...
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  All processes on K2:
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+
+============================================
+  Swap Deploy v2 Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524024002
+**********************

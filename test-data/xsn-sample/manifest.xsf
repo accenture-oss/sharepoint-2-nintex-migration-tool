@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?mso-infoPathSolution name="LeaveRequest" solutionVersion="1.0.0.1" productVersion="15.0.0" PIVersion="1.0.0.0" href="https://sp.contoso.com/sites/hr/Lists/LeaveRequests/Forms/LeaveRequest.xsn"?>
+<xDocumentClass xmlns="http://schemas.microsoft.com/office/infopath/2003/solutionDefinition"
+                name="LeaveRequest"
+                description="Employee Leave Request Form"
+                solutionVersion="1.0.0.1">
+
+  <views default="View 1">
+    <view name="View 1" caption="Leave Request Form" filename="view1.xsl">
+    </view>
+    <view name="Print View" caption="Print Version" filename="print.xsl">
+    </view>
+  </views>
+
+  <dataConnections>
+    <dataConnection name="GetManagerInfo" initOnLoad="yes">
+    </dataConnection>
+    <dataConnection name="SubmitToSP" initOnLoad="no">
+    </dataConnection>
+  </dataConnections>
+
+  <submit caption="Submit" disableMenuItem="no" onAfterSubmit="close" showStatusDialog="yes">
+  </submit>
+
+</xDocumentClass>

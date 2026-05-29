@@ -1,0 +1,176 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524025720
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-Studio-Results.txt
+============================================
+  K2 Deploy via K2Studio Config + CLI Tools
+============================================
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+KPRX saved: 413507 bytes
+
+=== APPROACH A: K2Studio Config ===
+K2Studio.exe.config contents:
+<?xml version="1.0" encoding="utf-16"?>
+<configuration>
+  <configSections>
+    <section name="sourcecode.configuration" type="SourceCode.Configuration.ConfigurationManager, SourceCode.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=16a2c5aaaa1b130d" />
+  </configSections>
+  <startup useLegacyV2RuntimeActivationPolicy="true">
+    <supportedRuntime version="v4.0" />
+  </startup>
+  <appSettings>
+    <add key="HighestSupportedTargetFramework" value="4.5" />
+    <add key="DefaultTargetFramework" value="4.0" />
+  </appSettings>
+  <sourcecode.configuration managerConfigFile="C:\Program Files\K2\Configuration\ConfigurationManager.config" productPath="C:\Program Files\K2\Bin" templateConfigFile="" />
+  <connectionStrings>
+    <add name="HostServer" connectionString="Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=NINTEX-SP-POC;Port=5555" providerName="K2FIVE" />
+  </connectionStrings>
+</configuration>
+
+SourceCode.Workflow.Design.dll.config:
+<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+    <configSections>
+    </configSections>
+</configuration>
+
+K2StudioConfigurationManager.config:
+<?xml version="1.0"?>
+<K2StudioConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Templates>
+    <Template>
+      <Name>Blank</Name>
+      <Guides>Blank,GettingStartedConcepts</Guides>
+    </Template>
+    <Template>
+      <Name>InfoPath</Name>
+      <Guides>InfoPath,GettingStartedConcepts</Guides>
+    </Template>
+    <Template>
+      <Name>SharePoint</Name>
+      <Guides>SharePoint,GettingStartedConcepts</Guides>
+    </Template>
+    <Template>
+      <Name>Events</Name>
+      <Guides>Events,GettingStartedConcepts</Guides>
+    </Template>
+  </Templates>
+  <IntroGuide>
+    <Name>Getting Started</Name>
+    <Guides>GettingStarted,GettingStartedConcepts</Guides>
+  </IntroGuide>
+</K2StudioConfiguration>
+
+=== APPROACH B: DeployPackage.exe CLI ===
+DeployPackage.exe.config:
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <startup useLegacyV2RuntimeActivationPolicy="true">
+    <supportedRuntime version="v4.0" />
+    <requiredRuntime version="v4.0.20506" />
+  </startup>
+  <runtime>
+    <enforceFIPSPolicy enabled="false"/>
+  </runtime>
+</configuration>
+
+Trying DeployPackage.exe /?
+  DeployPackage Utility
+  Add SnapIn
+  Loaded P&D snapin
+  Create runspace
+  Error: Error while deploying package: System.IndexOutOfRangeException: Index was outside the bounds of the array.
+     at DeployPackage.Program.Main(String[] args)
+  Deploy package utility done.
+
+Trying DeployPackage.exe (no args)
+  DeployPackage Utility
+  Add SnapIn
+  Loaded P&D snapin
+  Create runspace
+  Error: Error while deploying package: System.IndexOutOfRangeException: Index was outside the bounds of the array.
+     at DeployPackage.Program.Main(String[] args)
+  Deploy package utility done.
+
+=== APPROACH C: AppDeployment CLIs ===
+AppDeployment.exe /?
+
+SourceCode.AppDeployment.exe /?
+
+=== APPROACH D: Compile in K2Studio dir ===
+Compiling to K2Studio dir...
+  Microsoft (R) Visual C# Compiler version 4.8.9236.0
+
+  for C# 5
+  Copyright (C) Microsoft Corporation. All rights reserved.
+
+
+
+  This compiler is provided as part of the Microsoft (R) .NET Framework, but only supports language versions up to C# 5, which is no longer the latest version. For compilers that support newer versions of the C# programming language, see http://go.microsoft.com/fwlink/?LinkID=533240
+
+  c:\Program Files\K2\K2Studio\CSCB1EC921958A34BE38DA62BA6F95D8D23.TMP: error CS1567: Error generating Win32 resource: Access is denied.
+  warning CS1610: Unable to delete temporary file 'c:\Program Files\K2\K2Studio\CSCB1EC921958A34BE38DA62BA6F95D8D23.TMP' used for default Win32 resource -- The system cannot find the file specified.
+
+=== VERIFICATION ===
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+
+============================================
+  K2 Studio Deploy Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524025728
+**********************

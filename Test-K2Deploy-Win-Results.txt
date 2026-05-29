@@ -1,0 +1,524 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524022202
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Test-K2Deploy-Win-Results.txt
+============================================
+  K2 WINNING Deploy Test
+============================================
+Loaded 148 assemblies
+
+=== TEST 1: Deploy .kspx via session.Deploy() ===
+True
+PDM Connected!
+Session: Deploy1_20260524022226, Model=App Framework Core, Members=105
+Setting NoAnalyze via SetOption...
+Calling Deploy()...
+DEPLOY() SUCCEEDED!
+DeploymentResults: SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult SourceCode.ComponentModel.DeploymentResult
+  Count = 104
+
+=== TEST 2: Find SyncState enum ===
+SyncState-like enums:
+  Windows.Foundation.Diagnostics.CausalitySynchronousWork in mscorlib
+    CompletionNotification
+    ProgressNotification
+    Execution
+  Windows.Foundation.Diagnostics.AsyncCausalityStatus in mscorlib
+    Started
+    Completed
+    Canceled
+    Error
+  System.Threading.SynchronizationContextProperties in mscorlib
+    None
+    RequireWaitNotification
+  System.Threading.Tasks.AsyncCausalityStatus in mscorlib
+    Started
+    Completed
+    Canceled
+    Error
+  System.Threading.Tasks.CausalitySynchronousWork in mscorlib
+    CompletionNotification
+    ProgressNotification
+    Execution
+  System.Threading.Tasks.AsyncCausalityTracer+Loggers in mscorlib
+    CausalityTracer
+    ETW
+  System.Net.Sockets.AsyncEventBits in System
+    FdNone
+    FdRead
+    FdWrite
+    FdOob
+    FdAccept
+    FdConnect
+    FdClose
+    FdQos
+    FdGroupQos
+    FdRoutingInterfaceChange
+    FdAddressListChange
+    FdAllEvents
+  System.Net.Sockets.AsyncEventBitsPos in System
+    FdReadBit
+    FdWriteBit
+    FdOobBit
+    FdAcceptBit
+    FdConnectBit
+    FdCloseBit
+    FdQosBit
+    FdGroupQosBit
+    FdRoutingInterfaceChangeBit
+    FdAddressListChangeBit
+    FdMaxEvents
+  System.Net.Sockets.SocketAsyncOperation in System
+    None
+    Accept
+    Connect
+    Disconnect
+    Receive
+    ReceiveFrom
+    ReceiveMessageFrom
+    Send
+    SendPackets
+    SendTo
+  System.Net.Sockets.SocketAsyncEventArgs+PinState in System
+    None
+    NoBuffer
+    SingleAcceptBuffer
+    SingleBuffer
+    MultipleBuffer
+    SendPackets
+  System.Net.Sockets.MultipleConnectAsync+State in System
+    NotStarted
+    DnsQuery
+    ConnectAttempt
+    Completed
+    Canceled
+  System.Net.WebSockets.WebSocketHttpListenerDuplexStream+HttpListenerAsyncEventArgs+HttpListenerAsyncOperation in System
+    None
+    Receive
+    Send
+  MS.Internal.Data.AsyncRequestStatus in PresentationFramework
+    Waiting
+    Working
+    Completed
+    Cancelled
+    Failed
+  System.Windows.Documents.PageContentAsyncResult+GetPageStatus in PresentationFramework
+    Loading
+    Cancelled
+    Finished
+  MS.Internal.SynchronizedInputStates in PresentationCore
+    NoOpportunity
+    HadOpportunity
+    Handled
+    Discarded
+  System.Xml.XmlDictionaryWriter+WriteValueFastAsyncResult+Operation in System.Runtime.Serialization
+    Read
+    Write
+    Complete
+  System.Xml.XmlDictionaryWriter+WriteValueAsyncResult+Operation in System.Runtime.Serialization
+    Read
+    Write
+  System.Windows.Automation.SynchronizedInputType in UIAutomationTypes
+    KeyUp
+    KeyDown
+    MouseLeftButtonUp
+    MouseLeftButtonDown
+    MouseRightButtonUp
+    MouseRightButtonDown
+  System.Windows.Automation.AsyncContentLoadedState in UIAutomationTypes
+    Beginning
+    Progress
+    Completed
+  System.DirectoryServices.DirectorySynchronizationOptions in System.DirectoryServices
+    None
+    ObjectSecurity
+    ParentsFirst
+    PublicDataOnly
+    IncrementalValues
+  System.DirectoryServices.ActiveDirectory.SyncFromAllServersOptions in System.DirectoryServices
+    None
+    AbortIfServerUnavailable
+    SyncAdjacentServerOnly
+    CheckServerAlivenessOnly
+    SkipInitialCheck
+    PushChangeOutward
+    CrossSite
+  System.DirectoryServices.ActiveDirectory.SyncFromAllServersEvent in System.DirectoryServices
+    Error
+    SyncStarted
+    SyncCompleted
+    Finished
+  System.DirectoryServices.ActiveDirectory.SyncFromAllServersErrorCategory in System.DirectoryServices
+    ErrorContactingServer
+    ErrorReplicating
+    ServerUnreachable
+  System.Transactions.TransactionScopeAsyncFlowOption in System.Transactions
+    Suppress
+    Enabled
+  Windows.Foundation.AsyncStatus in Windows.Foundation
+    Started
+    Completed
+    Canceled
+    Error
+  Windows.Foundation.Diagnostics.CausalitySynchronousWork in Windows.Foundation
+    CompletionNotification
+    ProgressNotification
+    Execution
+  System.Runtime.AsyncCompletionResult in System.ServiceModel.Internals
+    Queued
+    Completed
+  System.Runtime.AsyncEventArgs+OperationState in System.ServiceModel.Internals
+    Created
+    PendingCompletion
+    CompletedSynchronously
+    CompletedAsynchronously
+  System.Runtime.Fx+Tag+SynchronizationKind in System.ServiceModel.Internals
+    LockStatement
+    MonitorWait
+    MonitorExplicit
+    InterlockedNoSpin
+    InterlockedWithSpin
+    FromFieldType
+  System.Web.Util.SynchronizationContextMode in System.Web
+    Normal
+    Legacy
+  System.Web.Configuration.AsyncPreloadModeFlags in System.Web
+    None
+    Form
+    FormMultiPart
+    AllFormTypes
+    NonForm
+    All
+  Microsoft.SharePoint.Administration.SPEnterpriseContentTypeSyncTrigger in Microsoft.SharePoint.Client
+    UserTriggeredForRefresh
+    RefreshECTsOnSiteRestore
+    RefreshStaleContentType
+    AddCopyContentTypeAsync
+    BackfillContentTypesUsage
+  Microsoft.SharePoint.Client.EventReceiverSynchronization in Microsoft.SharePoint.Client
+    DefaultSynchronization
+    Synchronous
+    Asynchronous
+  Microsoft.SharePoint.Client.FlowSynchronizationStatus in Microsoft.SharePoint.Client
+    Success
+    NotFound
+    Forbidden
+    TimeOut
+    UnexpectedError
+    BadRequest
+    Suspended
+    Running
+  Microsoft.SharePoint.Client.VisualizationAppSynchronizationStatus in Microsoft.SharePoint.Client
+    Success
+    NotFound
+    Forbidden
+    TimeOut
+    UnexpectedError
+    BadRequest
+    Suspended
+    JobFinish
+  _RPC_ASYNC_EVENT in SourceCode.HostClientAPI
+  SourceCode.Threading.OperationSyncOption in SourceCode
+    Sync
+    Async
+  SourceCode.EnvironmentSettings.Client.SyncStatusTypes in SourceCode.EnvironmentSettings.Client
+    NullOp
+    ServerItemNewer
+    LocalItemAdded
+    LocalItemDeleted
+    LocalItemNewer
+    ServerItemDeleted
+    PermissionDenied
+    Synchronized
+  SourceCode.EnvironmentSettings.Client.SyncConflictActions in SourceCode.EnvironmentSettings.Client
+    NullOp
+    Ignore
+    KeepServerThisInstance
+    KeepServerAllInstances
+    KeepLocalThisInstance
+    KeepLocalAllInstances
+  SourceCode.Workflow.Client.AsyncType in SourceCode.Workflow.Client
+    Empty
+    Escalation
+    StartActivity
+    WakeWorklistItem
+    DestQueueProcInst
+    ProcessEscalation
+    EventEscalation
+    WorkListShare
+    ProcRights
+    RunProcInst
+  Windows.ApplicationModel.Appointments.AppointmentCalendarSyncStatus in Windows.ApplicationModel
+    Idle
+    Syncing
+    UpToDate
+    AuthenticationError
+    PolicyError
+    UnknownError
+    ManualAccountRemovalRequired
+  Windows.ApplicationModel.Contacts.ContactListSyncStatus in Windows.ApplicationModel
+    Idle
+    Syncing
+    UpToDate
+    AuthenticationError
+    PolicyError
+    UnknownError
+    ManualAccountRemovalRequired
+  Windows.ApplicationModel.Email.EmailMailboxSyncStatus in Windows.ApplicationModel
+    Idle
+    Syncing
+    UpToDate
+    AuthenticationError
+    PolicyError
+    UnknownError
+    ManualAccountRemovalRequired
+  Windows.ApplicationModel.UserDataAccounts.SystemAccess.DeviceAccountSyncScheduleKind in Windows.ApplicationModel
+    Manual
+    Every15Minutes
+    Every30Minutes
+    Every60Minutes
+    Every2Hours
+    Daily
+    AsItemsArrive
+  Windows.ApplicationModel.UserDataTasks.UserDataTaskListSyncStatus in Windows.ApplicationModel
+    Idle
+    Syncing
+    UpToDate
+    AuthenticationError
+    PolicyError
+    UnknownError
+  Windows.Storage.Provider.StorageProviderInSyncPolicy in Windows.Storage
+    Default
+    FileCreationTime
+    FileReadOnlyAttribute
+    FileHiddenAttribute
+    FileSystemAttribute
+    DirectoryCreationTime
+    DirectoryReadOnlyAttribute
+    DirectoryHiddenAttribute
+    DirectorySystemAttribute
+    FileLastWriteTime
+    DirectoryLastWriteTime
+    PreserveInsyncForSyncEngine
+  Windows.Media.Protection.PlayReady.NDStartAsyncOptions in Windows.Media
+    MutualAuthentication
+    WaitForLicenseDescriptor
+  Windows.Security.ExchangeActiveSyncProvisioning.EasDisallowConvenienceLogonResult in Windows.Security
+    NotEvaluated
+    Compliant
+    CanBeCompliant
+    RequestedPolicyIsStricter
+  Windows.Security.ExchangeActiveSyncProvisioning.EasEncryptionProviderType in Windows.Security
+    NotEvaluated
+    WindowsEncryption
+    OtherEncryption
+  Windows.Security.ExchangeActiveSyncProvisioning.EasMaxInactivityTimeLockResult in Windows.Security
+    NotEvaluated
+    Compliant
+    CanBeCompliant
+    RequestedPolicyIsStricter
+    InvalidParameter
+  Windows.Security.ExchangeActiveSyncProvisioning.EasMaxPasswordFailedAttemptsResult in Windows.Security
+    NotEvaluated
+    Compliant
+    CanBeCompliant
+    RequestedPolicyIsStricter
+    InvalidParameter
+  Windows.Security.ExchangeActiveSyncProvisioning.EasMinPasswordComplexCharactersResult in Windows.Security
+    NotEvaluated
+    Compliant
+    CanBeCompliant
+    RequestedPolicyIsStricter
+    RequestedPolicyNotEnforceable
+    InvalidParameter
+    CurrentUserHasBlankPassword
+    AdminsHaveBlankPassword
+    UserCannotChangePassword
+    AdminsCannotChangePassword
+    LocalControlledUsersCannotChangePassword
+    ConnectedAdminsProviderPolicyIsWeak
+    ConnectedUserProviderPolicyIsWeak
+    ChangeConnectedAdminsPassword
+    ChangeConnectedUserPassword
+  Windows.Security.ExchangeActiveSyncProvisioning.EasMinPasswordLengthResult in Windows.Security
+    NotEvaluated
+    Compliant
+    CanBeCompliant
+    RequestedPolicyIsStricter
+    RequestedPolicyNotEnforceable
+    InvalidParameter
+    CurrentUserHasBlankPassword
+    AdminsHaveBlankPassword
+    UserCannotChangePassword
+    AdminsCannotChangePassword
+    LocalControlledUsersCannotChangePassword
+    ConnectedAdminsProviderPolicyIsWeak
+    ConnectedUserProviderPolicyIsWeak
+    ChangeConnectedAdminsPassword
+    ChangeConnectedUserPassword
+  Windows.Security.ExchangeActiveSyncProvisioning.EasPasswordExpirationResult in Windows.Security
+    NotEvaluated
+    Compliant
+    CanBeCompliant
+    RequestedPolicyIsStricter
+    RequestedExpirationIncompatible
+    InvalidParameter
+    UserCannotChangePassword
+    AdminsCannotChangePassword
+    LocalControlledUsersCannotChangePassword
+  Windows.Security.ExchangeActiveSyncProvisioning.EasPasswordHistoryResult in Windows.Security
+    NotEvaluated
+    Compliant
+    CanBeCompliant
+    RequestedPolicyIsStricter
+    InvalidParameter
+  Windows.Security.ExchangeActiveSyncProvisioning.EasRequireEncryptionResult in Windows.Security
+    NotEvaluated
+    Compliant
+    CanBeCompliant
+    NotProvisionedOnAllVolumes
+    DeFixedDataNotSupported
+    FixedDataNotSupported
+    DeHardwareNotCompliant
+    HardwareNotCompliant
+    DeWinReNotConfigured
+    LockNotConfigured
+    DeProtectionSuspended
+    ProtectionSuspended
+    DeOsVolumeNotProtected
+    OsVolumeNotProtected
+    DeProtectionNotYetEnabled
+    ProtectionNotYetEnabled
+    NoFeatureLicense
+    OsNotProtected
+    UnexpectedFailure
+  System.ServiceModel.Channels.AsyncReceiveResult in System.ServiceModel
+    Completed
+    Pending
+  System.ServiceModel.Security.WSTrustChannel+WSTrustChannelAsyncResult+Operations in System.ServiceModel
+    Cancel
+    Issue
+    Renew
+    Validate
+  System.ServiceModel.Channels.ServerSingletonPreambleConnectionReader+CompletePreambleAsyncResult+UpgradeState in System.ServiceModel
+    None
+    VerifyingUpgradeRequest
+    WritingUpgradeAck
+    UpgradeAckSent
+    BeginUpgrade
+    EndUpgrade
+    UpgradeComplete
+    WritingPreambleEnd
+    PreambleEndSent
+  System.ServiceModel.Channels.ReliableChannelBinder`1+ChannelSynchronizer+State in System.ServiceModel
+    Created
+    NoChannel
+    ChannelOpening
+    ChannelOpened
+    ChannelClosing
+    Faulted
+    Closed
+  System.EnterpriseServices.SynchronizationOption in System.EnterpriseServices
+    Disabled
+    NotSupported
+    Supported
+    Required
+    RequiresNew
+  _RPC_ASYNC_EVENT in System.EnterpriseServices
+  System.EnterpriseServices.Thunk.COMAdminSynchronizationOptions in System.EnterpriseServices
+  System.EnterpriseServices.Thunk.tagCSC_SynchronizationConfig in System.EnterpriseServices
+  System.Runtime.TransactedAsyncResult+TransactionSignalState in System.Runtime.DurableInstancing
+    Ready
+    Prepared
+    Completed
+    Abandoned
+  SourceCode.Workflow.Common.Crm.CrmSdk.AsyncOperationState in SourceCode.Workflow.Common.Crm
+    Ready
+    Suspended
+    Locked
+    Completed
+  SourceCode.Workflow.Common.ItemReference.CrmSdk.AsyncOperationState in SourceCode.Workflow.Common.ItemReference
+    Ready
+    Suspended
+    Locked
+    Completed
+Send signature: SourceCode.ComponentModel.Design.SyncState Send(SourceCode.ComponentModel.Design.SyncState state)
+
+=== TEST 3: Clone .kspx, modify and deploy ===
+Original model: App Framework Core
+Modified model: SPD_Migrated_Test_Package
+Deploying modified session...
+CLONE DEPLOY SUCCEEDED!
+  Count = 104
+
+=== TEST 4: Build .kspx with our KPRX inside ===
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+Got KPRX: 413507 bytes
+Built in-memory .kspx: 43109 bytes
+Custom .kspx failed: Exception calling "CreateSession" with "2" argument(s): "The value cannot be cast to SourceCode.ComponentModel.MemberItemBase using value of type SourceCode.ModelReference."
+  Inner: The value cannot be cast to SourceCode.ComponentModel.MemberItemBase using value of type SourceCode.ModelReference.
+
+=== VERIFICATION ===
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+Process sets type: SourceCode.Workflow.Management.ProcessSets
+ProcSet: com.K2.System.AppWizard\AppCatalog.Error.Workflow (ProcSetID=7)
+ProcSet: com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ProcSetID=5)
+ProcSet: com.K2.System.AppWizard\Application.Deletion.Workflow (ProcSetID=3)
+ProcSet: com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ProcSetID=4)
+ProcSet: com.K2.System.AppWizard\Application.Generation.Workflow (ProcSetID=6)
+ProcSet: DocApproval\DocApproval.Workflow.Approval (ProcSetID=9)
+ProcSet: Framework Core\FrameworkGeneric.Workflow.Reference (ProcSetID=1)
+ProcSet: Framework Extension\GeneralNotification.Workflow.SendNotification (ProcSetID=2)
+ProcSet: NintexPOC5 Contacts\Contacts Workflow (ProcSetID=10)
+ProcSet: Webhook Subscriptions\SubscriptionRenewal (ProcSetID=8)
+ProcSet: Workflow\TestKprxWF (ProcSetID=11)
+GetProcSetsCompact failed: Method invocation failed because [SourceCode.Workflow.Management.WorkflowManagementServer] does not contain a method named 'GetProcSetsCompact'.
+
+============================================
+  WINNING Deploy Test Complete!
+============================================
+**********************
+Windows PowerShell transcript end
+End time: 20260524022302
+**********************

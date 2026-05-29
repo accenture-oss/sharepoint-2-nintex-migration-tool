@@ -1,0 +1,224 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524041842
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-ProcessLoad-Results.txt
+============================================
+  K2 Deploy - Process.Load() + Deploy()
+============================================
+[1] Getting KPRX...
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  KPRX saved: C:\Shared\SPtoNintex-Migration-Tool\k2-export\_procload\SPDMigratedApproval.kprx (404KB)
+
+[2] Process class analysis...
+  Type: SourceCode.Workflow.Authoring.Process
+
+  Connection-related properties:
+    String CategoryPath [SET]
+    Boolean DeployToCategory [SET]
+    String ServerFolderPath [GET]
+
+  All methods:
+    Void SetOutputLogger(IEngineProxy logger)
+    DeploymentResults Deploy(DeploymentPackage package)
+    DeploymentPackage CreateDeploymentPackage()
+    Void CreateDeploymentPackage(DeploymentPackage package)
+    Void add_CurrentViewChanged(EventHandler value)
+    Void remove_CurrentViewChanged(EventHandler value)
+    Void add_CurrentExecutionLayerChanged(EventHandler value)
+    Void remove_CurrentExecutionLayerChanged(EventHandler value)
+    ProcessDependencies get_Dependencies()
+    Void Compress(String fileName, Boolean makeSelfExtract)
+    Void Compress(Stream stream, Boolean makeSelfExtract)
+    Void UpdateCustomContextCode(GenerationOptions options)
+    Void UpdateCustomContextCode()
+    StartActivity get_StartActivity()
+    String get_CategoryPath()
+    Void set_CategoryPath(String value)
+    Boolean get_DeployToCategory()
+    Void set_DeployToCategory(Boolean value)
+    String get_Name()
+    Void set_Name(String value)
+    ActivityCollection get_Activities()
+    ExecutionLayerCollection get_ExecutionLayers()
+    SupportedLanguages get_DefaultLanguage()
+    Void set_DefaultLanguage(SupportedLanguages value)
+    EscalationCollection get_Escalations()
+    DataFieldCollection get_DataFields()
+    String get_BusinessOwner()
+    Void set_BusinessOwner(String value)
+    ExceptionRule get_Exception()
+    Void set_Exception(ExceptionRule value)
+    ProcessStartRule get_StartRule()
+    Void set_StartRule(ProcessStartRule value)
+    ProcessFinishRule get_FinishRule()
+    Void set_FinishRule(ProcessFinishRule value)
+    Int32 get_ExpectedDuration()
+    Void set_ExpectedDuration(Int32 value)
+    LineCollection get_Lines()
+    Int32 get_Priority()
+    Void set_Priority(Int32 value)
+    String get_FileName()
+    String get_ServerFolderPath()
+    String get_FullName()
+    String get_FolderPath()
+    String get_ProcSetFolderName()
+    Void set_ProcSetFolderName(String value)
+    IProjectFile get_ProjectFile()
+    Void UnloadExtenderProjects()
+    DeploymentResults Compile()
+    IProjectFolder get_Folder()
+    String get_FullFileName()
+    IProject get_Project()
+    String get_TechnicalOwner()
+    Void set_TechnicalOwner(String value)
+    WorkingHours get_WorkingHours()
+    XmlFieldCollection get_XmlFields()
+    WorkflowDesignerVerbCollection get_Verbs()
+    Void SaveAs(String fileName)
+    Void Save()
+    Void Delete()
+    ObjectLoadException[] get_LoadErrors()
+    Process Load(String fileName)
+    ComponentCollection get_SitedChildren()
+    T Clone()
+    CustomConfigurationSettings get_CustomConfigurationSettings()
+    ExtenderProjectCollection get_ExtenderProjects()
+    ExecutionLayer get_DefaultExecutionLayer()
+    ExecutionLayer get_CurrentExecutionLayer()
+    Void set_CurrentExecutionLayer(ExecutionLayer value)
+    WorkflowView get_CurrentView()
+    Void set_CurrentView(WorkflowView value)
+    ViewCollection get_Views()
+    ExecutableItem[] get_ExecutableItems()
+    WizardDefinition get_WizardDefinition()
+    Void set_WizardDefinition(WizardDefinition value)
+    Object GetService(Type serviceType)
+    ReferenceCollection get_References()
+    Version GetProjectTargetFrameworkVersion()
+    Void add_RepairError(EventHandler`1 value)
+    Void remove_RepairError(EventHandler`1 value)
+    Void CreateExportTask(DeploymentPackage package, Boolean defaultVersion)
+    Void CreateExportTask(DeploymentPackage package, RevisionResult revisionResult, Boolean defaultVersion)
+    Void CreateExportTask(DeploymentPackage package)
+    Void Save(TextWriter writer)
+    DeploymentResults Deploy()
+    String get_MetaData()
+    Void set_MetaData(String value)
+    String get_Description()
+    Void set_Description(String value)
+    Void ValidateName(String name)
+    String get_DisplayName()
+    Void set_DisplayName(String value)
+    Void ValidateDisplayName(String name)
+    Void add_ItemAdding(EventHandler`1 value)
+    Void remove_ItemAdding(EventHandler`1 value)
+    Void add_ItemAdded(EventHandler`1 value)
+    Void remove_ItemAdded(EventHandler`1 value)
+    Void add_ItemRemoving(EventHandler`1 value)
+    Void remove_ItemRemoving(EventHandler`1 value)
+    Void add_ItemRemoved(EventHandler`1 value)
+    Void remove_ItemRemoved(EventHandler`1 value)
+    Void add_AnyItemAdding(EventHandler`1 value)
+    Void remove_AnyItemAdding(EventHandler`1 value)
+    Void add_AnyItemAdded(EventHandler`1 value)
+    Void remove_AnyItemAdded(EventHandler`1 value)
+    Void add_AnyItemRemoving(EventHandler`1 value)
+    Void remove_AnyItemRemoving(EventHandler`1 value)
+    Void add_AnyItemRemoved(EventHandler`1 value)
+    Void remove_AnyItemRemoved(EventHandler`1 value)
+    Void add_AnyItemPropertyChanged(EventHandler`1 value)
+    Void remove_AnyItemPropertyChanged(EventHandler`1 value)
+    Void add_AnyItemPropertyChanging(EventHandler`1 value)
+    Void remove_AnyItemPropertyChanging(EventHandler`1 value)
+    Void add_PropertyChanged(EventHandler`1 value)
+    Void remove_PropertyChanged(EventHandler`1 value)
+    Void add_PropertyChanging(EventHandler`1 value)
+    Void remove_PropertyChanging(EventHandler`1 value)
+    PersistableObject FindChild(Guid guid, Boolean recursive)
+    Void EnableEvents()
+    Boolean get_IsIntLoading()
+    Boolean PropertyChangingEventHooked(String methodType, String methodName)
+    Void DisableEvents()
+    Boolean get_IsLoading()
+    Boolean get_Locked()
+    Void set_Locked(Boolean value)
+    Guid get_Guid()
+    Void set_Guid(Guid value)
+    PersistableContainerObject get_Container()
+    Boolean get_Modified()
+    T FindContainerOfType()
+    ISite get_Site()
+    Void set_Site(ISite value)
+    Void Dispose()
+    Boolean get_IsDisposed()
+    MemoryStream CloneToStream()
+    T CloneInContext(CloningContext context)
+    T CloneInContext(CloningContext context, Guid newGuid)
+    T Clone(Guid newGuid)
+
+[3] Loading KPRX with Process.Load()...
+  Load method: Process Load(String)
+  Load error: Exception calling "Invoke" with "2" argument(s): "Object of type 'System.Management.Automation.PSObject' cannot be converted to type 'System.String'."
+  Inner: Object of type 'System.Management.Automation.PSObject' cannot be converted to type 'System.String'.
+
+[4] Setting server + Deploy()...
+
+[5] Processes:
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+  Total: 11
+**********************
+Windows PowerShell transcript end
+End time: 20260524041842
+**********************

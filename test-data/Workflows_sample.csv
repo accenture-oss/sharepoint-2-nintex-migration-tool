@@ -1,0 +1,26 @@
+WebUrl,WebTitle,ListTitle,ListUrl,WorkflowName,WorkflowType,ActivityCount,ActionCount,ConditionCount,ListItemCount,LastItemCreatedDate,LastModified,Notes
+https://sp.contoso.com/sites/hr,HR Portal,Leave Requests,https://sp.contoso.com/sites/hr/Lists/LeaveRequests,Leave Approval,SP2013,8,4,2,1247,2026-03-15,2026-01-20,
+https://sp.contoso.com/sites/hr,HR Portal,Leave Requests,https://sp.contoso.com/sites/hr/Lists/LeaveRequests,Manager Notification,SP2013,4,3,1,1247,2026-03-15,2025-11-10,
+https://sp.contoso.com/sites/hr,HR Portal,Employee Onboarding,https://sp.contoso.com/sites/hr/Lists/Onboarding,Onboarding Flow,SP2013,15,9,5,523,2026-04-01,2026-02-15,
+https://sp.contoso.com/sites/hr,HR Portal,Exit Checklist,https://sp.contoso.com/sites/hr/Lists/ExitChecklist,Exit Process,SP2010,22,14,8,89,2025-12-20,2025-06-01,
+https://sp.contoso.com/sites/hr/recruitment,Recruitment,Job Applications,https://sp.contoso.com/sites/hr/recruitment/Lists/Applications,Application Review,SP2013,12,7,4,3421,2026-04-20,2026-03-01,
+https://sp.contoso.com/sites/finance,Finance Portal,Invoice Processing,https://sp.contoso.com/sites/finance/Lists/Invoices,Invoice Approval,SP2013,18,12,6,8934,2026-05-01,2026-04-15,
+https://sp.contoso.com/sites/finance,Finance Portal,Invoice Processing,https://sp.contoso.com/sites/finance/Lists/Invoices,Payment Notification,SP2013,5,3,1,8934,2026-05-01,2025-09-20,
+https://sp.contoso.com/sites/finance,Finance Portal,Budget Requests,https://sp.contoso.com/sites/finance/Lists/BudgetRequests,Budget Approval Chain,SP2013,25,16,10,456,2026-03-30,2026-01-05,
+https://sp.contoso.com/sites/finance,Finance Portal,Expense Reports,https://sp.contoso.com/sites/finance/Lists/Expenses,Expense Routing,SP2013,14,8,4,12567,2026-05-15,2026-04-01,
+https://sp.contoso.com/sites/finance/tax,Tax Compliance,Tax Documents,https://sp.contoso.com/sites/finance/tax/Lists/TaxDocs,Tax Review Workflow,SP2010,20,13,7,234,2026-02-28,2025-08-15,Custom code activity
+https://sp.contoso.com/sites/it,IT Operations,Service Requests,https://sp.contoso.com/sites/it/Lists/ServiceRequests,Ticket Routing,SP2013,10,6,3,23456,2026-05-20,2026-05-01,
+https://sp.contoso.com/sites/it,IT Operations,Change Management,https://sp.contoso.com/sites/it/Lists/ChangeManagement,Change Approval,SP2013,28,18,12,1234,2026-05-18,2026-04-20,
+https://sp.contoso.com/sites/it,IT Operations,Asset Tracking,https://sp.contoso.com/sites/it/Lists/Assets,Asset Lifecycle,SP2013,16,10,5,5678,2026-05-10,2026-03-15,
+https://sp.contoso.com/sites/it/security,Security Ops,Incident Reports,https://sp.contoso.com/sites/it/security/Lists/Incidents,Incident Response,SP2013,30,20,15,678,2026-05-22,2026-05-15,Script task
+https://sp.contoso.com/sites/legal,Legal Department,Contract Reviews,https://sp.contoso.com/sites/legal/Lists/Contracts,Contract Approval,SP2013,20,14,8,2345,2026-05-05,2026-03-20,
+https://sp.contoso.com/sites/legal,Legal Department,NDA Tracking,https://sp.contoso.com/sites/legal/Lists/NDAs,NDA Notification,SP2013,6,3,1,890,2026-04-25,2025-10-01,
+https://sp.contoso.com/sites/procurement,Procurement,Purchase Orders,https://sp.contoso.com/sites/procurement/Lists/POs,PO Approval,SP2013,22,15,9,15678,2026-05-21,2026-05-10,
+https://sp.contoso.com/sites/procurement,Procurement,Vendor Management,https://sp.contoso.com/sites/procurement/Lists/Vendors,Vendor Onboarding,SP2013,18,11,6,456,2026-04-30,2026-02-28,
+https://sp.contoso.com/sites/procurement,Procurement,RFP Tracker,https://sp.contoso.com/sites/procurement/Lists/RFPs,RFP Evaluation,SP2010,24,16,10,123,2026-03-15,2025-12-01,Custom code activity
+https://sp.contoso.com/sites/compliance,Compliance,Audit Tasks,https://sp.contoso.com/sites/compliance/Lists/AuditTasks,Audit Assignment,SP2013,12,7,4,567,2026-05-10,2026-04-01,
+https://sp.contoso.com/sites/compliance,Compliance,Policy Review,https://sp.contoso.com/sites/compliance/Lists/Policies,Policy Approval,SP2013,15,9,5,234,2026-03-20,2026-01-15,
+https://sp.contoso.com/sites/compliance,Compliance,Risk Register,https://sp.contoso.com/sites/compliance/Lists/Risks,Risk Escalation,SP2013,20,13,8,345,2026-04-15,2026-03-01,
+https://sp.contoso.com/sites/exec,Executive Office,Board Resolutions,https://sp.contoso.com/sites/exec/Lists/Resolutions,Resolution Routing,SP2013,10,6,3,78,2026-02-28,2025-11-15,
+https://sp.contoso.com/sites/marketing,Marketing,Campaign Briefs,https://sp.contoso.com/sites/marketing/Lists/Campaigns,Brief Approval,SP2013,8,5,2,1234,2026-05-15,2026-04-10,
+https://sp.contoso.com/sites/engineering,Engineering,Design Reviews,https://sp.contoso.com/sites/engineering/Lists/DesignReviews,Design Sign-off,SP2013,14,9,5,567,2026-05-18,2026-04-25,

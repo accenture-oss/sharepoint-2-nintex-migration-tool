@@ -1,0 +1,114 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20260524040712
+Username: SPSEPOC\User1
+RunAs User: SPSEPOC\User1
+Configuration Name: 
+Machine: NINTEX-SP-POC (Microsoft Windows NT 10.0.20348.0)
+Host Application: C:\Windows\system32\WindowsPowerShell\v1.0\PowerShell_ISE.exe
+Process ID: 27280
+PSVersion: 5.1.20348.4294
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.20348.4294
+BuildVersion: 10.0.20348.4294
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+Transcript started, output file is C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-ExactName-Results.txt
+============================================
+  K2 Deploy - Exact Entry Name
+============================================
+
+
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+KPRX: 413507 -> 413534 bytes
+
+[1] Building kspx with exact entry names...
+True
+  UPDATED: definition.model
+  REPLACED: FrameworkGeneric.Workflow_A4GH3Iisqu1GSLbFpPmkPSdQ2+g.Reference (266344 -> 413534 bytes)
+  WF entry name preserved: FrameworkGeneric.Workflow_A4GH3Iisqu1GSLbFpPmkPSdQ2+g.Reference
+  Package: 721KB
+
+[2] Deploy-Package...
+  Config generated
+Deploy-Package : I/O error occurred.
+At C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-ExactName.ps1:134 char:1
++ Deploy-Package -FileName $finalKspx -ConfigFile $deployConfigXml -Con ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (:) [Deploy-Package], IOException
+    + FullyQualifiedErrorId : 0,SourceCode.Deployment.PowerShell.DeployPackage
+Deploy-Package : I/O error occurred.
+At C:\Shared\SPtoNintex-Migration-Tool\Deploy-K2-ExactName.ps1:134 char:1
++ Deploy-Package -FileName $finalKspx -ConfigFile $deployConfigXml -Con ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : WriteError: (:) [Deploy-Package], IOException
+    + FullyQualifiedErrorId : 0,SourceCode.Deployment.PowerShell.DeployPackage
+
+
+  Deploy-Package completed!
+
+[3] Latest K2 event:
+  [05/24/2026 04:07:23] 30010 'App Framework Core' package deployed 	 5/24/2026 4:07:23 AM
+User Account: 	User1
+Success	View	com.K2.App.Framework.Core.ItemView.FormHeaderFull	00:00:00.1306790
+Success	View	com.K2.App.Framework.Core.ItemView.VersionRegistration	00:00:00.1318139
+Success	View	com.K2.App.Framework.Core.ItemView.FormFooter	00:00:00.0745599
+Success	Form	com.K2.App.Framework.Core.Form.RegisterFramework	00:00:00.1003008
+Success	View	com.K2.App.Framework.Core.ItemView.FormHeaderThin	00:00:00.0816154
+Success	View	com.K2.App.Framework.Core.ItemView.RegisteredApplication	00:00:00.1457568
+Success	View	com.K2.App.Framework.Core.ListView.RegisteredApplicationFormSpecific	00:00:00.1245266
+Success	View	com.K2.App.Framework.Core.ItemView.ActionBarSubmit	00:00:00.0995050
+Success	Form	com.K2.App.Framework.C
+  [05/24/2026 04:07:22] 30003 Authorization Failed
+   at SourceCode.SmartObjects.ServiceBroker.Broker.Execute(DacSettings dacSettings, Boolean isList, DataTable bulkInputTable)
+   at SourceCode.SmartObjects.Runtime.SmartObjectClientServer.ExecuteSQLQuery(String query, DacParameterCollection parameterList, ExecuteSQLQueryReaderOptions options)
+   at SourceCode.SmartObjects.Runtime.SmartObjectClientServer.ExecuteSQLQueryReader(String query, DacParameterCollection parameters, Boolean autoAlias, String sessionCookie)
+   at SourceCode.Runtime.Services.SmartObjects.ClientExtensions.InvokeAsServiceAccount[U](Func`1 func)
+   at SourceCode.Runtime.Services.SmartObjects.SmartObjectsDataAccessLayer.<>c__DisplayClass6_0.<GetDataRowCount>b__0(IReliableDbTransaction t)
+   at SourceCode.Data.Dac.ExecuteInTransaction(Ambie
+
+[4] Processes:
+SessionCookie     :
+IsAuthenticated   : False
+Port              : 0
+Host              :
+IsPrimaryLogin    : False
+Integrated        : False
+AuthData          :
+SecurityLabelName :
+LastException     :
+IsConnected       : False
+ServerInfo        :
+
+True
+  com.K2.System.AppWizard\AppCatalog.Error.Workflow (ID=7)
+  com.K2.System.AppWizard\Application.AdministratorRequest.Workflow (ID=5)
+  com.K2.System.AppWizard\Application.Deletion.Workflow (ID=3)
+  com.K2.System.AppWizard\Application.DeletionSmartStarter.Workflow (ID=4)
+  com.K2.System.AppWizard\Application.Generation.Workflow (ID=6)
+  DocApproval\DocApproval.Workflow.Approval (ID=9)
+  Framework Core\FrameworkGeneric.Workflow.Reference (ID=1)
+  Framework Extension\GeneralNotification.Workflow.SendNotification (ID=2)
+  NintexPOC5 Contacts\Contacts Workflow (ID=10)
+  Webhook Subscriptions\SubscriptionRenewal (ID=8)
+  Workflow\TestKprxWF (ID=11)
+  Total: 11
+**********************
+Windows PowerShell transcript end
+End time: 20260524040723
+**********************
