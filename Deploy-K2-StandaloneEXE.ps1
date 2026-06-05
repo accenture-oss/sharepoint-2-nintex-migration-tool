@@ -221,7 +221,7 @@ if (Test-Path $zipKspx) {
             }
         }
         
-        # Try with discovered params ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â common K2 names
+        # Try with discovered params — common K2 names
         $deployed = $false
         $attempts = @(
             { Deploy-Package -FilePath $zipKspx -ConnectionString $connStr -ErrorAction Stop },

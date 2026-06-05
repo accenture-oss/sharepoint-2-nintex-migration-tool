@@ -1,2 +1,2 @@
 # Keep PowerShell scripts with CRLF line endings and preserve BOM
-*.ps1 text eol=crlf
+*.ps1 text eol=crlf 

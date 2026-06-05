@@ -45,7 +45,8 @@ const bpGenerator = new WorkflowBlueprintGenerator();
 const validator = new ValidationEngine();
 const routingGenerator = new RoutingSmartObjectGenerator();
 const xsnParser = new XsnParser();
-
+// Upload SP List Schema JSON (from Export-SPListSchema.ps1)
+let spListSchema = null;
 // ============================================================
 // State Persistence — saves/loads to .migration-state/ JSON files
 // ============================================================
@@ -331,8 +332,6 @@ app.post('/api/discovery/upload', upload.fields([
     }
 });
 
-// Upload SP List Schema JSON (from Export-SPListSchema.ps1)
-let spListSchema = null;
 
 app.post('/api/discovery/upload-schema', uploadJson.single('schemaJson'), (req, res) => {
     try {

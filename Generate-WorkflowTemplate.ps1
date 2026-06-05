@@ -1,4 +1,4 @@
-# ============================================================
+﻿# ============================================================
 #  Generate-WorkflowTemplate.ps1
 #
 #  Strategy A: Generates the Master Workflow Template (.kprx)

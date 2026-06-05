@@ -85,7 +85,7 @@ try {
     Write-Host "[K2 WF] $($process.Activities.Count) activities, $($process.DataFields.Count) data fields" -ForegroundColor Cyan
 
     # =====================================================
-    # Try Deploy() ÃƒÆ’Ã‚Â¢ÃƒÂ¢Ã¢â‚¬Å¡Ã‚Â¬ÃƒÂ¢Ã¢â€šÂ¬Ã‚Â direct deployment
+    # Try Deploy() — direct deployment
     # =====================================================
     Write-Host "[K2 WF] Attempting Process.Deploy()..." -ForegroundColor Cyan
     $deployed = $false
