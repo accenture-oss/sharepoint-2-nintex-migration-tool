@@ -12,6 +12,7 @@ param(
 
 $ErrorActionPreference = "Stop"
 
+<<<<<<< HEAD
 # Load K2 SDK
 # Register an AssemblyResolve handler so that K2 DLL dependencies are resolved
 # from the K2 bin folder instead of failing with "unable to load assembly".
@@ -26,6 +27,11 @@ $onResolve = [System.ResolveEventHandler]{
     return $null
 }
 [System.AppDomain]::CurrentDomain.add_AssemblyResolve($onResolve)
+=======
+# Load K2 SDK — AppendPrivatePath tells .NET to probe $K2DllPath when
+# resolving any dependency, so no event handler or pre-load loop is needed.
+[System.AppDomain]::CurrentDomain.AppendPrivatePath($K2DllPath)
+>>>>>>> fbc4db6 (Nimesh fixed DLL path issue)
 
 $loadErrors = @()
 foreach ($dll in @("SourceCode.Framework.dll","SourceCode.HostClientAPI.dll","SourceCode.SmartObjects.Authoring.dll","SourceCode.SmartObjects.Management.dll")) {
