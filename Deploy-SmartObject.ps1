@@ -13,9 +13,33 @@ param(
 $ErrorActionPreference = "Stop"
 
 # Load K2 SDK
-foreach ($dll in @("SourceCode.HostClientAPI.dll","SourceCode.Framework.dll","SourceCode.SmartObjects.Authoring.dll","SourceCode.SmartObjects.Management.dll")) {
+# Register an AssemblyResolve handler so that K2 DLL dependencies are resolved
+# from the K2 bin folder instead of failing with "unable to load assembly".
+$k2BinCapture = $K2DllPath
+$onResolve = [System.ResolveEventHandler]{
+    param($sender, $e)
+    $asmName = $e.Name.Split(',')[0].Trim()
+    $candidate = Join-Path $k2BinCapture "$asmName.dll"
+    if (Test-Path $candidate) {
+        return [System.Reflection.Assembly]::LoadFrom($candidate)
+    }
+    return $null
+}
+[System.AppDomain]::CurrentDomain.add_AssemblyResolve($onResolve)
+
+$loadErrors = @()
+foreach ($dll in @("SourceCode.Framework.dll","SourceCode.HostClientAPI.dll","SourceCode.SmartObjects.Authoring.dll","SourceCode.SmartObjects.Management.dll")) {
     $p = Join-Path $K2DllPath $dll
-    if (Test-Path $p) { try { Add-Type -Path $p -ErrorAction SilentlyContinue } catch {} }
+    if (Test-Path $p) {
+        try { [System.Reflection.Assembly]::LoadFrom($p) | Out-Null }
+        catch { $loadErrors += "$dll : $($_.Exception.Message)" }
+    } else {
+        $loadErrors += "$dll : file not found at $p"
+    }
+}
+if ($loadErrors.Count -gt 0) {
+    Write-Host ('{"success":false,"error":"K2 SDK load failures: ' + ($loadErrors -join '; ') + '"}')
+    exit 1
 }
 
 # Read SmartObject JSON
