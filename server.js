@@ -920,6 +920,14 @@ app.post('/api/k2/reconcile', async (req, res) => {
         $ErrorActionPreference = "Stop"
         try {
             $k2Bin = "C:\\Program Files\\K2\\Bin"
+            $onResolve = [System.ResolveEventHandler]{
+                param($sender, $e)
+                $asmName = $e.Name.Split(',')[0].Trim()
+                $candidate = Join-Path $k2Bin "$asmName.dll"
+                if (Test-Path $candidate) { return [System.Reflection.Assembly]::LoadFrom($candidate) }
+                return $null
+            }
+            [System.AppDomain]::CurrentDomain.add_AssemblyResolve($onResolve)
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\SourceCode.Framework.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\SourceCode.HostClientAPI.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\SourceCode.SmartObjects.Management.dll") | Out-Null
