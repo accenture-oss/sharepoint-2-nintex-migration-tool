@@ -8,6 +8,8 @@
 // ============================================================
 
 const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
+const path = require('path');
 
 // K2 server configuration
 const K2_CONFIG = {
@@ -15,6 +17,7 @@ const K2_CONFIG = {
     port: 5555,              // Default K2 SmartObject server port
     securityLabel: 'K2',     // Default security label
     integrated: true,        // Windows Integrated auth
+    k2DllPath: 'C:\\Program Files\\K2\\Bin',
     database: 'K2_PROD',
     listener: '75387P_LN01',
     ag: '75387P-AG01',
@@ -30,6 +33,52 @@ class K2DeploymentBridge {
         this.deploymentHistory = [];
         this.isConnected = false;
         this.connectionDetails = null;
+    }
+
+    _ensureLogDir() {
+        const logsDir = path.join(__dirname, '..', 'logs', 'k2');
+        if (!fs.existsSync(logsDir)) {
+            fs.mkdirSync(logsDir, { recursive: true });
+        }
+        return logsDir;
+    }
+
+    _writePowerShellLog(operation, script, result, extra = {}) {
+        const logsDir = this._ensureLogDir();
+        const stamp = new Date().toISOString().replace(/[:.]/g, '-');
+        const file = path.join(logsDir, `${stamp}-${operation}.log`);
+
+        const stdout = result && result.stdout ? result.stdout : '';
+        const stderr = result && result.stderr ? result.stderr : '';
+        const status = result && Object.prototype.hasOwnProperty.call(result, 'status') ? result.status : 'n/a';
+        const signal = result && Object.prototype.hasOwnProperty.call(result, 'signal') ? result.signal : 'n/a';
+        const timedOut = result && Object.prototype.hasOwnProperty.call(result, 'error') && result.error
+            ? (result.error.code === 'ETIMEDOUT' ? 'true' : 'false')
+            : 'false';
+
+        const lines = [
+            `timestamp: ${new Date().toISOString()}`,
+            `operation: ${operation}`,
+            `exitStatus: ${status}`,
+            `signal: ${signal}`,
+            `timedOut: ${timedOut}`,
+            `serverUrl: ${this.config.serverUrl || ''}`,
+            `k2DllPath: ${this.config.k2DllPath || ''}`,
+            extra && extra.note ? `note: ${extra.note}` : ''
+        ].filter(Boolean);
+
+        const content = [
+            lines.join('\n'),
+            '--- SCRIPT ---',
+            script || '',
+            '--- STDOUT ---',
+            stdout,
+            '--- STDERR ---',
+            stderr
+        ].join('\n');
+
+        fs.writeFileSync(file, content, 'utf-8');
+        return file;
     }
 
     /**
@@ -116,18 +165,30 @@ class K2DeploymentBridge {
     /**
      * Run a PowerShell script and return parsed JSON output
      */
-    async _runPowerShell(script) {
+    async _runPowerShell(script, options = {}) {
         const { spawnSync } = require('child_process');
+        const operation = options.operation || 'powershell';
+        const timeoutMs = Number.isFinite(options.timeoutMs) ? options.timeoutMs : 60000;
         const encodedScript = Buffer.from(script, 'utf16le').toString('base64');
         const result = spawnSync('powershell.exe', [
             '-NoProfile', '-NonInteractive', '-EncodedCommand', encodedScript
-        ], { timeout: 60000, encoding: 'utf-8' });
+        ], { timeout: timeoutMs, encoding: 'utf-8' });
 
         const stdout = (result.stdout || '').trim();
         const stderr = (result.stderr || '').trim();
+        const logFile = this._writePowerShellLog(operation, script, result);
 
         console.log('[PS stdout]', stdout.substring(0, 1000));
         if (stderr) console.log('[PS stderr]', stderr.substring(0, 500));
+
+        if (result.error) {
+            throw new Error(`PowerShell launch failure: ${result.error.message}. Log: ${logFile}`);
+        }
+
+        if (typeof result.status === 'number' && result.status !== 0 && !stdout.includes('{')) {
+            const detail = stderr || `PowerShell exited with code ${result.status}`;
+            throw new Error(`PowerShell error: ${detail.substring(0, 500)}. Log: ${logFile}`);
+        }
 
         // Parse JSON from stdout
         const lines = stdout.split('\n');
@@ -135,16 +196,20 @@ class K2DeploymentBridge {
             const line = lines[i].trim();
             if (line.startsWith('{')) {
                 try {
-                    return JSON.parse(line);
+                    const parsed = JSON.parse(line);
+                    if (parsed && typeof parsed === 'object') {
+                        parsed._psLogFile = logFile;
+                    }
+                    return parsed;
                 } catch(e) { /* try next line */ }
             }
         }
 
         // If no JSON in stdout, check if stderr has useful info
         if (stderr) {
-            throw new Error('PowerShell error: ' + stderr.substring(0, 500));
+            throw new Error('PowerShell error: ' + stderr.substring(0, 500) + `. Log: ${logFile}`);
         }
-        throw new Error('No JSON output from PowerShell. stdout: ' + stdout.substring(0, 500));
+        throw new Error('No JSON output from PowerShell. stdout: ' + stdout.substring(0, 500) + `. Log: ${logFile}`);
     }
 
     /**
@@ -217,7 +282,7 @@ class K2DeploymentBridge {
                 const psScript = `& '${scriptPath}' -K2Server '${k2Host}' -K2Port ${this.config.port || 5555} -SmartObjectJsonFile '${tmpJson}' -SodxXmlFile '${tmpSodx}'`;
 
                 try {
-                    const result = await this._runPowerShell(psScript);
+                    const result = await this._runPowerShell(psScript, { operation: 'smartobject-deploy', timeoutMs: 120000 });
                     try { fs.unlinkSync(tmpJson); } catch(e) {}
                     try { fs.unlinkSync(tmpSodx); } catch(e) {}
                     // Check if K2 actually created the SmartObject
@@ -282,6 +347,7 @@ class K2DeploymentBridge {
             config: {
                 serverUrl: this.config.serverUrl || '(not configured)',
                 port: this.config.port,
+                k2DllPath: this.config.k2DllPath,
                 database: this.config.database,
                 listener: this.config.listener,
                 ag: this.config.ag,

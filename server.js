@@ -114,6 +114,7 @@ function restoreState() {
     if (k2Conn && k2Conn.serverUrl) {
         k2Bridge.configure({
             serverUrl: k2Conn.serverUrl, port: k2Conn.port, securityLabel: k2Conn.securityLabel,
+            k2DllPath: k2Conn.k2DllPath,
             sqlServer: k2Conn.sqlServer, sqlCatalog: k2Conn.sqlCatalog,
             sqlUser: k2Conn.sqlUser, sqlPassword: k2Conn.sqlPassword, sqlDomain: k2Conn.sqlDomain
         });
@@ -777,9 +778,9 @@ app.get('/api/smartobjects/log', (req, res) => {
 // ── K2 Server Connection ────────────────────────────────────
 
 app.post('/api/k2/configure', (req, res) => {
-    const { serverUrl, port, securityLabel, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain } = req.body;
+    const { serverUrl, port, securityLabel, k2DllPath, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain } = req.body;
     if (!serverUrl) return res.status(400).json({ error: 'K2 server URL is required' });
-    k2Bridge.configure({ serverUrl, port, securityLabel, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain });
+    k2Bridge.configure({ serverUrl, port, securityLabel, k2DllPath, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain });
     res.json({ success: true, config: k2Bridge.getConnectionInfo() });
 });
 
@@ -914,20 +915,18 @@ app.post('/api/k2/reconcile', async (req, res) => {
 
     const k2Host = k2Bridge.config.serverUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '').split(':')[0];
     const k2Port = k2Bridge.config.port || 5555;
+    const k2DllPath = (k2Bridge.config.k2DllPath || 'C:\\Program Files\\K2\\Bin').replace(/\\/g, '\\\\');
 
     // PowerShell script to list all SmartObjects on K2 server
     const psScript = `
         $ErrorActionPreference = "Stop"
         try {
-            $k2Bin = "C:\\Program Files\\K2\\Bin"
-            $onResolve = [System.ResolveEventHandler]{
-                param($sender, $e)
-                $asmName = $e.Name.Split(',')[0].Trim()
-                $candidate = Join-Path $k2Bin "$asmName.dll"
-                if (Test-Path $candidate) { return [System.Reflection.Assembly]::LoadFrom($candidate) }
-                return $null
+            $k2Bin = "${k2DllPath}"
+            if (-not (Test-Path $k2Bin)) {
+                throw "K2 SDK path not found: $k2Bin"
             }
-            [System.AppDomain]::CurrentDomain.add_AssemblyResolve($onResolve)
+
+            [System.AppDomain]::CurrentDomain.AppendPrivatePath($k2Bin)
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\SourceCode.Framework.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\SourceCode.HostClientAPI.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\SourceCode.SmartObjects.Management.dll") | Out-Null
@@ -966,13 +965,14 @@ app.post('/api/k2/reconcile', async (req, res) => {
     `;
 
     try {
-        const k2Result = await k2Bridge._runPowerShell(psScript);
+        const k2Result = await k2Bridge._runPowerShell(psScript, { operation: 'k2-reconcile-smartobjects', timeoutMs: 120000 });
 
         if (!k2Result.success) {
             return res.json({
                 success: false,
                 error: k2Result.error || 'Failed to query K2 server',
-                reconciled: 0
+                reconciled: 0,
+                logFile: k2Result._psLogFile || null
             });
         }
 
@@ -1025,7 +1025,8 @@ app.post('/api/k2/reconcile', async (req, res) => {
             localSmartObjects: allLocalSOs.length,
             reconciled: updated,
             alreadyCorrect,
-            changes
+            changes,
+            logFile: k2Result._psLogFile || null
         });
 
     } catch (err) {
@@ -1045,12 +1046,17 @@ app.post('/api/k2/reconcile-smartforms', async (req, res) => {
 
     const k2Host = k2Bridge.config.serverUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '').split(':')[0];
     const k2Port = k2Bridge.config.port || 5555;
+    const k2DllPath = (k2Bridge.config.k2DllPath || 'C:\\Program Files\\K2\\Bin').replace(/\\/g, '\\\\');
 
     // PowerShell script to list deployed SmartForms via SourceCode.Forms.Management
     const psScript = `
         $ErrorActionPreference = "Stop"
         try {
-            $k2Bin = "C:\\\\Program Files\\\\K2\\\\Bin"
+            $k2Bin = "${k2DllPath}"
+            if (-not (Test-Path $k2Bin)) {
+                throw "K2 SDK path not found: $k2Bin"
+            }
+            [System.AppDomain]::CurrentDomain.AppendPrivatePath($k2Bin)
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\\\SourceCode.Framework.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\\\SourceCode.HostClientAPI.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\\\SourceCode.Forms.Management.dll") | Out-Null
@@ -1103,13 +1109,14 @@ app.post('/api/k2/reconcile-smartforms', async (req, res) => {
     `;
 
     try {
-        const k2Result = await k2Bridge._runPowerShell(psScript);
+        const k2Result = await k2Bridge._runPowerShell(psScript, { operation: 'k2-reconcile-smartforms', timeoutMs: 120000 });
 
         if (!k2Result.success) {
             return res.json({
                 success: false,
                 error: k2Result.error || 'Failed to query K2 forms',
-                reconciled: 0
+                reconciled: 0,
+                logFile: k2Result._psLogFile || null
             });
         }
 
@@ -1169,7 +1176,8 @@ app.post('/api/k2/reconcile-smartforms', async (req, res) => {
             localSmartForms: allLocalSFs.length,
             reconciled: updated,
             alreadyCorrect,
-            changes
+            changes,
+            logFile: k2Result._psLogFile || null
         });
 
     } catch (err) {
