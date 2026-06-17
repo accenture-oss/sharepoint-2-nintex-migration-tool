@@ -90,7 +90,7 @@ class XsnParser {
             } catch (expandErr) {
                 // Fallback: try PowerShell Expand-Archive (for ZIP-packaged XSN)
                 try {
-                    execSync(`powershell -Command "Expand-Archive -Path '${xsnPath}' -DestinationPath '${extractDir}' -Force"`, {
+                    execSync(`powershell -ExecutionPolicy Bypass -Command "Expand-Archive -Path '${xsnPath}' -DestinationPath '${extractDir}' -Force"`, {
                         timeout: 30000,
                         windowsHide: true,
                         stdio: 'pipe'
@@ -188,7 +188,7 @@ class XsnParser {
         if (inputPath.endsWith('.zip')) {
             xsnDir = path.join(this.tempDir, 'batch');
             fs.mkdirSync(xsnDir, { recursive: true });
-            execSync(`powershell -Command "Expand-Archive -Path '${inputPath}' -DestinationPath '${xsnDir}' -Force"`, {
+            execSync(`powershell -ExecutionPolicy Bypass -Command "Expand-Archive -Path '${inputPath}' -DestinationPath '${xsnDir}' -Force"`, {
                 timeout: 120000, windowsHide: true, stdio: 'pipe'
             });
         }

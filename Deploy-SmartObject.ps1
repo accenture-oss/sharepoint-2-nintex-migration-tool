@@ -7,10 +7,22 @@ param(
     [int]$K2Port = 5555,
     [string]$SmartObjectJsonFile = "",
     [string]$SodxXmlFile = "",
-    [string]$K2DllPath = "C:\Program Files\K2\Bin"
+    [string]$K2DllPath = "C:\Program Files\K2\Bin",
+    [string]$K2User = "",          # Optional: explicit K2 user for on-premises
+    [string]$K2Password = "",      # Optional: explicit K2 password
+    [string]$K2Domain = ""         # Optional: domain for K2 user
 )
 
 $ErrorActionPreference = "Stop"
+
+if ([string]::IsNullOrWhiteSpace($K2DllPath)) {
+    $K2DllPath = "C:\Program Files\K2\Bin"
+}
+
+if (-not (Test-Path $K2DllPath)) {
+    Write-Host ('{"success":false,"error":"K2DllPath not found: ' + $K2DllPath + '"}')
+    exit 1
+}
 
 # Load K2 SDK — AppendPrivatePath tells .NET to probe $K2DllPath when
 # resolving any dependency, so no event handler or pre-load loop is needed.
@@ -20,14 +32,23 @@ $loadErrors = @()
 foreach ($dll in @("SourceCode.Framework.dll","SourceCode.HostClientAPI.dll","SourceCode.SmartObjects.Authoring.dll","SourceCode.SmartObjects.Management.dll")) {
     $p = Join-Path $K2DllPath $dll
     if (Test-Path $p) {
-        try { [System.Reflection.Assembly]::LoadFrom($p) | Out-Null }
+        try {
+            # Bank/distributed environments often copy DLLs from another server.
+            # Windows can mark them with Zone.Identifier (MOTW), causing 0x80131515 on LoadFrom.
+            try { Unblock-File -Path $p -ErrorAction Stop } catch { }
+            [System.Reflection.Assembly]::LoadFrom($p) | Out-Null
+        }
         catch { $loadErrors += "$dll : $($_.Exception.Message)" }
     } else {
         $loadErrors += "$dll : file not found at $p"
     }
 }
 if ($loadErrors.Count -gt 0) {
-    Write-Host ('{"success":false,"error":"K2 SDK load failures: ' + ($loadErrors -join '; ') + '"}')
+    $errorText = 'K2 SDK load failures (K2DllPath=' + $K2DllPath + '): ' + ($loadErrors -join '; ')
+    if ($errorText -match '0x80131515') {
+        $errorText += ' | Hint: DLLs are likely blocked (MOTW). Run: Get-ChildItem "' + $K2DllPath + '\*.dll" | Unblock-File'
+    }
+    Write-Host ('{"success":false,"error":"' + $errorText + '"}')
     exit 1
 }
 
@@ -43,7 +64,19 @@ if ($K2Server -eq "") {
     exit 1
 }
 
-$connStr = "Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=$K2Server;Port=$K2Port"
+# Build connection string for on-premises K2
+# IsPrimaryLogin=True is REQUIRED for SmartObjectManagementServer
+# To avoid browser auth: provide explicit credentials (K2User + K2Password)
+# or rely on Windows Integrated auth if user has K2 permissions
+if ($K2User -and $K2Password) {
+    # Explicit credentials: for service account deployments (no browser popup)
+    $userPart = if ($K2Domain) { "$K2Domain\$K2User" } else { $K2User }
+    $connStr = "Integrated=False;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;UserID=$userPart;Password=$K2Password;Host=$K2Server;Port=$K2Port"
+} else {
+    # Integrated Windows auth (current user) with IsPrimaryLogin=True
+    # Note: May still prompt if user lacks K2 permissions or K2 is configured for Forms auth
+    $connStr = "Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=$K2Server;Port=$K2Port"
+}
 
 try {
     $mgmt = New-Object SourceCode.SmartObjects.Management.SmartObjectManagementServer
@@ -180,6 +213,17 @@ try {
     $fullXml += '<associations />'
     $fullXml += '<extendingobject><objectdata name="' + $soName + '" type="Default" serviceinstanceguid="' + $smartBoxGuid + '"><metadata><display><displayname>' + $soName + '</displayname><description /></display><service>' + $serviceMetaXml + '</service></metadata><properties>' + $extPropsXml + '</properties><methods>' + $extMethodsXml + '</methods></objectdata></extendingobject>'
     $fullXml += '</smartobjectroot>'
+
+    # Check if SmartObject already exists and delete it before publishing (to handle redeploys)
+    $existsAlready = $mgmt.CheckSmartObjectExists($soName)
+    if ($existsAlready) {
+        try {
+            $mgmt.DeleteSmartObject($soName)
+            Write-Host "[INFO] Deleted existing SmartObject '$soName' to allow republish"
+        } catch {
+            Write-Host "[WARN] Could not delete existing SmartObject '$soName': $($_.Exception.Message)"
+        }
+    }
 
     # Publish with category so it appears in K2 Management under Generated > Migration
     $category = "Generated\Migration"

@@ -1,23 +1,80 @@
 param (
     [string]$K2Server = "NINTEX-SP-POC",
     [int]$K2Port = 5555,
-    [string]$SmartObjectJsonFile
+    [string]$SmartObjectJsonFile = "",
+    [string]$K2DllPath = "",
+    [string]$K2User = "",
+    [string]$K2Password = "",
+    [string]$K2Domain = ""
 )
 
+$ErrorActionPreference = "Stop"
+
+if ([string]::IsNullOrWhiteSpace($K2DllPath)) {
+    $K2DllPath = "C:\Program Files\K2\Bin"
+}
+
+if (-not (Test-Path $K2DllPath)) {
+    Write-Host ('{"success":false,"error":"K2DllPath not found: ' + $K2DllPath + '"}')
+    exit 1
+}
+
+[System.AppDomain]::CurrentDomain.AppendPrivatePath($K2DllPath)
+
 try {
-    Add-Type -Path "C:\Program Files\K2\Bin\SourceCode.Forms.Management.dll"
-    Add-Type -Path "C:\Program Files\K2\Bin\SourceCode.HostClientAPI.dll"
-    Add-Type -Path "C:\Program Files\K2\Bin\SourceCode.Framework.dll"
+    # Load K2 DLLs with unblock-file support for bank environments with copied DLLs
+    $dlls = @("SourceCode.Forms.Management.dll", "SourceCode.HostClientAPI.dll", "SourceCode.Framework.dll")
+    $loadErrors = @()
+    foreach ($dll in $dlls) {
+        $p = Join-Path $K2DllPath $dll
+        if (Test-Path $p) {
+            try {
+                try { Unblock-File -Path $p -ErrorAction Stop } catch { }
+                [System.Reflection.Assembly]::LoadFrom($p) | Out-Null
+            } catch {
+                $loadErrors += "$dll : $($_.Exception.Message)"
+            }
+        } else {
+            $loadErrors += "$dll : file not found at $p"
+        }
+    }
+    if ($loadErrors.Count -gt 0) {
+        $errorText = 'K2 Forms SDK load failures (K2DllPath=' + $K2DllPath + '): ' + ($loadErrors -join '; ')
+        if ($errorText -match '0x80131515') {
+            $errorText += ' | Hint: DLLs are likely blocked (MOTW). Run: Get-ChildItem "' + $K2DllPath + '\*.dll" | Unblock-File'
+        }
+        Write-Host ('{"success":false,"error":"' + $errorText + '"}')
+        exit 1
+    }
 
     $soJson = Get-Content $SmartObjectJsonFile -Raw | ConvertFrom-Json
     $soName = $soJson.name -replace '[^a-zA-Z0-9_]', '_'
     $soDisplayName = $soJson.displayName
     $soGuid = $soJson.guid
 
-    # Connect to FormsManager
+    # Connect to FormsManager with optional explicit credentials
     $fm = New-Object SourceCode.Forms.Management.FormsManager
-    $fm.CreateConnection()
-    $fm.Open("Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=$K2Server;Port=$K2Port")
+    $fm.CreateConnection() | Out-Null
+    
+    # Build connection string with explicit credentials if available
+    if ($K2User -and $K2Password) {
+        $connStr = "Integrated=False;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;UserID=$K2Domain\$K2User;Password=$K2Password;Host=$K2Server;Port=$K2Port"
+    } else {
+        $connStr = "Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=$K2Server;Port=$K2Port"
+    }
+    
+    $fm.Open($connStr) | Out-Null
+    
+    # Verify connection is authenticated (especially important for explicit credentials)
+    # For Windows Integrated auth, the connection may appear not fully authenticated until first use,
+    # so we only enforce this check for explicit credential scenarios
+    if ($K2User -and $K2Password) {
+        if (-not $fm.Connection.IsConnected -or -not $fm.Connection.IsAuthenticated) {
+            $error_msg = "K2 Forms API authentication failed with provided credentials. IsConnected=$($fm.Connection.IsConnected), IsAuthenticated=$($fm.Connection.IsAuthenticated), Host=$K2Server, User=$K2Domain\$K2User"
+            Write-Host ('{"success":false,"error":"' + $error_msg + '"}')
+            exit 1
+        }
+    }
 
     # Generate GUIDs
     $viewGuid = [System.Guid]::NewGuid().ToString()
@@ -137,8 +194,10 @@ try {
     $formXml += '<Name>' + $formName + '</Name>'
     $formXml += '<DisplayName>' + $soDisplayName + '</DisplayName>'
     $formXml += '<Controls>'
-    $formXml += '<Control ID="' + $formGuid + '" Type="Form"><Name>' + $formName + '</Name><DisplayName>' + $soDisplayName + '</DisplayName>'
-    $formXml += '<Properties><Property><Name>ControlName</Name><Value>' + $formName + '</Value></Property>'
+    # Avoid control-name collision with the form name itself; K2 creates internal form records for the form name.
+    $formRootControlName = $soName + '_FormRoot'
+    $formXml += '<Control ID="' + $formGuid + '" Type="Form"><Name>' + $formRootControlName + '</Name><DisplayName>' + $soDisplayName + '</DisplayName>'
+    $formXml += '<Properties><Property><Name>ControlName</Name><Value>' + $formRootControlName + '</Value></Property>'
     $formXml += '<Property><Name>IsVisible</Name><Value>true</Value></Property></Properties></Control>'
     $formXml += '<Control ID="' + $panelId + '" Type="Panel"><Name>' + $soDisplayName + '</Name><Properties><Property><Name>ControlName</Name><Value>' + $soDisplayName + '</Value></Property></Properties></Control>'
     $formXml += '<Control ID="' + $areaId + '" Type="Area"><Name>' + $formName + ' Area</Name><Properties><Property><Name>ControlName</Name><Value>' + $formName + ' Area</Value></Property></Properties></Control>'
@@ -157,33 +216,113 @@ try {
     # =====================================================
     $category = "Generated\Migration"
 
-    # Check if views/form already exist and skip
-    $itemViewExists = $fm.CheckViewExists($viewName)
-    $listViewExists = $fm.CheckViewExists($listViewName)
-    $formExists = $fm.CheckFormExists($formName)
+    # Check if views/form already exist and delete them to allow clean redeploy
+    # K2 APIs can resolve by plain name or category-qualified path depending on environment.
+    $itemViewPath = "$category\$viewName"
+    $listViewPath = "$category\$listViewName"
+    $formPath = "$category\$formName"
+
+    $itemViewExists = $fm.CheckViewExists($viewName) -or $fm.CheckViewExists($itemViewPath)
+    $listViewExists = $fm.CheckViewExists($listViewName) -or $fm.CheckViewExists($listViewPath)
+    $formExists = $fm.CheckFormExists($formName) -or $fm.CheckFormExists($formPath)
 
     $results = @()
+    $results += "DIAG: formExists=$formExists (checked '$formName' and '$formPath')"
+    $results += "DIAG: itemViewExists=$itemViewExists (checked '$viewName' and '$itemViewPath')"
+    $results += "DIAG: listViewExists=$listViewExists (checked '$listViewName' and '$listViewPath')"
 
-    if (-not $itemViewExists) {
-        $fm.DeployViews($itemViewXml, $category, $true)
-        $results += "Item View deployed: $viewName"
-    } else {
-        $results += "Item View already exists: $viewName"
+    # Delete existing form first (to allow republish)
+    if ($formExists) {
+        $formDeleted = $false
+
+        try {
+            $fm.DeleteForm($formName)
+            $formDeleted = $true
+            $results += "Deleted existing form: $formName"
+        } catch {
+            $results += "DeleteForm by name failed for '$formName': $($_.Exception.Message)"
+        }
+
+        if (-not $formDeleted) {
+            try {
+                $fm.DeleteForm($formPath)
+                $formDeleted = $true
+                $results += "Deleted existing form by category path: $formPath"
+            } catch {
+                $results += "DeleteForm by path failed for '$formPath': $($_.Exception.Message)"
+            }
+        }
+
+        $formStillExists = $fm.CheckFormExists($formName) -or $fm.CheckFormExists($formPath)
+        if ($formStillExists) {
+            throw "Cannot safely redeploy: existing form still present after delete attempts ('$formName' / '$formPath')."
+        }
     }
 
-    if (-not $listViewExists) {
-        $fm.DeployViews($listViewXml, $category, $true)
-        $results += "List View deployed: $listViewName"
-    } else {
-        $results += "List View already exists: $listViewName"
+    # Delete existing views if they exist
+    if ($itemViewExists) {
+        $itemDeleted = $false
+
+        try {
+            $fm.DeleteView($viewName)
+            $itemDeleted = $true
+            $results += "Deleted existing view: $viewName"
+        } catch {
+            $results += "DeleteView by name failed for '$viewName': $($_.Exception.Message)"
+        }
+
+        if (-not $itemDeleted) {
+            try {
+                $fm.DeleteView($itemViewPath)
+                $itemDeleted = $true
+                $results += "Deleted existing view by category path: $itemViewPath"
+            } catch {
+                $results += "DeleteView by path failed for '$itemViewPath': $($_.Exception.Message)"
+            }
+        }
+
+        $itemStillExists = $fm.CheckViewExists($viewName) -or $fm.CheckViewExists($itemViewPath)
+        if ($itemStillExists) {
+            throw "Cannot safely redeploy: existing item view still present after delete attempts ('$viewName' / '$itemViewPath')."
+        }
     }
 
-    if (-not $formExists) {
-        $fm.DeployForms($formXml, $category, $true)
-        $results += "Form deployed: $formName"
-    } else {
-        $results += "Form already exists: $formName"
+    if ($listViewExists) {
+        $listDeleted = $false
+
+        try {
+            $fm.DeleteView($listViewName)
+            $listDeleted = $true
+            $results += "Deleted existing view: $listViewName"
+        } catch {
+            $results += "DeleteView by name failed for '$listViewName': $($_.Exception.Message)"
+        }
+
+        if (-not $listDeleted) {
+            try {
+                $fm.DeleteView($listViewPath)
+                $listDeleted = $true
+                $results += "Deleted existing view by category path: $listViewPath"
+            } catch {
+                $results += "DeleteView by path failed for '$listViewPath': $($_.Exception.Message)"
+            }
+        }
+
+        $listStillExists = $fm.CheckViewExists($listViewName) -or $fm.CheckViewExists($listViewPath)
+        if ($listStillExists) {
+            throw "Cannot safely redeploy: existing list view still present after delete attempts ('$listViewName' / '$listViewPath')."
+        }
     }
+
+    # Now deploy fresh
+    $fm.DeployViews($itemViewXml, $category, $true)
+    $results += "Item View deployed: $viewName"
+
+    $fm.DeployViews($listViewXml, $category, $true)
+    $results += "List View deployed: $listViewName"
+
+    $fm.DeployForms($formXml, $category, $true)
+    $results += "Form deployed: $formName"
 
     $fm.Dispose()
 
@@ -202,6 +341,7 @@ try {
         "success" = $false
         "error" = "$($_.Exception.Message)"
         "smartObjectName" = $soName
+        "details" = if ($results -and $results.Count -gt 0) { ($results -join "; ") } else { "No diagnostic info captured" }
     }
     Write-Output ($result | ConvertTo-Json -Compress)
 }

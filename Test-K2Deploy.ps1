@@ -162,7 +162,10 @@ foreach ($url in @(
 # 9. Detailed PackageDeployer test
 Write-Host "`n[9] PackageDeployer test:"
 try {
-    Add-Type -Path (Join-Path $k2Bin "SourceCode.Framework.dll")
+    $frameworkDll = Join-Path $k2Bin "SourceCode.Framework.dll"
+    # Unblock file if needed (for distributed environments)
+    try { Unblock-File -Path $frameworkDll -ErrorAction Stop } catch { }
+    Add-Type -Path $frameworkDll
     $deployer = New-Object SourceCode.Framework.Deployment.PackageDeployer
     Write-Host "  PackageDeployer created successfully"
     

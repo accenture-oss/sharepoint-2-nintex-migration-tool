@@ -16,8 +16,11 @@ const K2_CONFIG = {
     serverUrl: '',           // Set via API
     port: 5555,              // Default K2 SmartObject server port
     securityLabel: 'K2',     // Default security label
-    integrated: true,        // Windows Integrated auth
+    integrated: true,        // Windows Integrated auth (set to false for explicit credentials)
     k2DllPath: 'C:\\Program Files\\K2\\Bin',
+    k2User: '',              // Optional: explicit K2 user for on-premises (avoids browser auth)
+    k2Password: '',          // Optional: K2 user password
+    k2Domain: '',            // Optional: domain for K2 user (e.g., 'DOMAIN' for 'DOMAIN\\user')
     database: 'K2_PROD',
     listener: '75387P_LN01',
     ag: '75387P-AG01',
@@ -85,7 +88,17 @@ class K2DeploymentBridge {
      * Configure K2 server connection
      */
     configure(options) {
-        this.config = { ...this.config, ...options };
+        const next = { ...this.config, ...options };
+
+        // Keep resilient defaults when UI/API sends empty strings.
+        if (!next.k2DllPath || !String(next.k2DllPath).trim()) {
+            next.k2DllPath = K2_CONFIG.k2DllPath;
+        }
+        if (!next.port || Number.isNaN(Number(next.port))) {
+            next.port = K2_CONFIG.port;
+        }
+
+        this.config = next;
         this.connectionDetails = null;
         this.isConnected = false;
     }
@@ -171,7 +184,7 @@ class K2DeploymentBridge {
         const timeoutMs = Number.isFinite(options.timeoutMs) ? options.timeoutMs : 60000;
         const encodedScript = Buffer.from(script, 'utf16le').toString('base64');
         const result = spawnSync('powershell.exe', [
-            '-NoProfile', '-NonInteractive', '-EncodedCommand', encodedScript
+            '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass', '-EncodedCommand', encodedScript
         ], { timeout: timeoutMs, encoding: 'utf-8' });
 
         const stdout = (result.stdout || '').trim();
@@ -279,7 +292,29 @@ class K2DeploymentBridge {
                 fs.writeFileSync(tmpJson, JSON.stringify(smartObject), 'utf-8');
                 fs.writeFileSync(tmpSodx, sodxXml, 'utf-8');
 
-                const psScript = `& '${scriptPath}' -K2Server '${k2Host}' -K2Port ${this.config.port || 5555} -SmartObjectJsonFile '${tmpJson}' -SodxXmlFile '${tmpSodx}'`;
+                // Build PowerShell parameters with optional on-premises credentials
+                const psParams = [
+                    `-K2Server '${k2Host}'`,
+                    `-K2Port ${this.config.port || 5555}`,
+                    `-SmartObjectJsonFile '${tmpJson}'`,
+                    `-SodxXmlFile '${tmpSodx}'`
+                ];
+                
+                // Only pass k2DllPath if explicitly set (avoid passing empty string)
+                if (this.config.k2DllPath && String(this.config.k2DllPath).trim()) {
+                    psParams.push(`-K2DllPath '${this.config.k2DllPath}'`);
+                }
+                
+                // Add explicit credentials if provided (on-premises)
+                if (this.config.k2User && this.config.k2Password) {
+                    psParams.push(`-K2User '${this.config.k2User}'`);
+                    psParams.push(`-K2Password '${this.config.k2Password}'`);
+                    if (this.config.k2Domain) {
+                        psParams.push(`-K2Domain '${this.config.k2Domain}'`);
+                    }
+                }
+                
+                const psScript = `& '${scriptPath}' ${psParams.join(' ')}`;
 
                 try {
                     const result = await this._runPowerShell(psScript, { operation: 'smartobject-deploy', timeoutMs: 120000 });

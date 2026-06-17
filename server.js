@@ -778,9 +778,9 @@ app.get('/api/smartobjects/log', (req, res) => {
 // ── K2 Server Connection ────────────────────────────────────
 
 app.post('/api/k2/configure', (req, res) => {
-    const { serverUrl, port, securityLabel, k2DllPath, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain } = req.body;
+    const { serverUrl, port, securityLabel, k2DllPath, k2User, k2Password, k2Domain, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain } = req.body;
     if (!serverUrl) return res.status(400).json({ error: 'K2 server URL is required' });
-    k2Bridge.configure({ serverUrl, port, securityLabel, k2DllPath, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain });
+    k2Bridge.configure({ serverUrl, port, securityLabel, k2DllPath, k2User, k2Password, k2Domain, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain });
     res.json({ success: true, config: k2Bridge.getConnectionInfo() });
 });
 
@@ -927,6 +927,9 @@ app.post('/api/k2/reconcile', async (req, res) => {
             }
 
             [System.AppDomain]::CurrentDomain.AppendPrivatePath($k2Bin)
+            foreach ($dll in @("SourceCode.Framework.dll","SourceCode.HostClientAPI.dll","SourceCode.SmartObjects.Management.dll")) {
+                try { Unblock-File -Path (Join-Path $k2Bin $dll) -ErrorAction Stop } catch { }
+            }
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\SourceCode.Framework.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\SourceCode.HostClientAPI.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\SourceCode.SmartObjects.Management.dll") | Out-Null
@@ -1047,6 +1050,27 @@ app.post('/api/k2/reconcile-smartforms', async (req, res) => {
     const k2Host = k2Bridge.config.serverUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '').split(':')[0];
     const k2Port = k2Bridge.config.port || 5555;
     const k2DllPath = (k2Bridge.config.k2DllPath || 'C:\\Program Files\\K2\\Bin').replace(/\\/g, '\\\\');
+    const k2User = k2Bridge.config.k2User || '';
+    const k2Password = k2Bridge.config.k2Password || '';
+    const k2Domain = k2Bridge.config.k2Domain || 'DOMAIN';
+
+    // Build compact target set to avoid huge PowerShell output payloads
+    const allLocalSFs = sfGenerator.getAll();
+    const localNameSet = new Set();
+    for (const sf of allLocalSFs) {
+        const candidates = [
+            sf.name,
+            sf.displayName,
+            sf.name ? sf.name.replace(/_/g, ' ') : null
+        ];
+        for (const c of candidates) {
+            if (c && String(c).trim()) {
+                localNameSet.add(String(c).trim().toLowerCase());
+            }
+        }
+    }
+    const localNamesJson = JSON.stringify(Array.from(localNameSet));
+    const localNamesB64 = Buffer.from(localNamesJson, 'utf8').toString('base64');
 
     // PowerShell script to list deployed SmartForms via SourceCode.Forms.Management
     const psScript = `
@@ -1057,54 +1081,86 @@ app.post('/api/k2/reconcile-smartforms', async (req, res) => {
                 throw "K2 SDK path not found: $k2Bin"
             }
             [System.AppDomain]::CurrentDomain.AppendPrivatePath($k2Bin)
+            foreach ($dll in @("SourceCode.Framework.dll","SourceCode.HostClientAPI.dll","SourceCode.Forms.Management.dll")) {
+                try { Unblock-File -Path (Join-Path $k2Bin $dll) -ErrorAction Stop } catch { }
+            }
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\\\SourceCode.Framework.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\\\SourceCode.HostClientAPI.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\\\SourceCode.Forms.Management.dll") | Out-Null
 
-            $connStr = "Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=${k2Host};Port=${k2Port}"
-            $formsMgr = New-Object SourceCode.Forms.Management.FormsManager
-            $formsMgr.CreateConnection()
-            $formsMgr.Connection.Open($connStr)
-
-            $explorer = $formsMgr.GetForms()
-            $formList = New-Object System.Collections.ArrayList
-            foreach ($f in $explorer.Forms) {
-                [void]$formList.Add(@{
-                    "name" = $f.Name
-                    "displayName" = if ($f.DisplayName) { $f.DisplayName } else { $f.Name }
-                })
+            # Build connection string with explicit credentials if available
+            if ("${k2User}" -and "${k2Password}") {
+                $connStr = "Integrated=False;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;UserID=${k2Domain}\\\\${k2User};Password=${k2Password};Host=${k2Host};Port=${k2Port}"
+            } else {
+                $connStr = "Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=${k2Host};Port=${k2Port}"
+            }
+            
+            $targetNames = @{}
+            $targetJson = [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String("${localNamesB64}"))
+            foreach ($n in ($targetJson | ConvertFrom-Json)) {
+                if ($n) { $targetNames[$n] = $true }
             }
 
-            # Also get views
+            $formsMgr = New-Object SourceCode.Forms.Management.FormsManager
+            $formsMgr.CreateConnection() | Out-Null
+            $formsMgr.Connection.Open($connStr) | Out-Null
+            
+            # Verify connection is actually open
+            if (-not $formsMgr.Connection.IsConnected) {
+                throw "Failed to connect to K2 Forms Management API. IsConnected=$($formsMgr.Connection.IsConnected), IsAuthenticated=$($formsMgr.Connection.IsAuthenticated)"
+            }
+
+            $matchedNames = New-Object System.Collections.Generic.HashSet[string]([System.StringComparer]::OrdinalIgnoreCase)
+            $formsScanned = 0
+            $viewsScanned = 0
+
+            $explorer = $formsMgr.GetForms()
+            foreach ($f in $explorer.Forms) {
+                $formsScanned++
+                if ($f.Name) {
+                    $nameLower = $f.Name.ToLowerInvariant()
+                    if ($targetNames.ContainsKey($nameLower)) { [void]$matchedNames.Add($nameLower) }
+                }
+                if ($f.DisplayName) {
+                    $displayLower = $f.DisplayName.ToLowerInvariant()
+                    if ($targetNames.ContainsKey($displayLower)) { [void]$matchedNames.Add($displayLower) }
+                }
+            }
+
+            # Also scan views for matching names
             $viewExplorer = $formsMgr.GetViews()
-            $viewList = New-Object System.Collections.ArrayList
             foreach ($v in $viewExplorer.Views) {
-                [void]$viewList.Add(@{
-                    "name" = $v.Name
-                    "displayName" = if ($v.DisplayName) { $v.DisplayName } else { $v.Name }
-                })
+                $viewsScanned++
+                if ($v.Name) {
+                    $nameLower = $v.Name.ToLowerInvariant()
+                    if ($targetNames.ContainsKey($nameLower)) { [void]$matchedNames.Add($nameLower) }
+                }
+                if ($v.DisplayName) {
+                    $displayLower = $v.DisplayName.ToLowerInvariant()
+                    if ($targetNames.ContainsKey($displayLower)) { [void]$matchedNames.Add($displayLower) }
+                }
             }
 
             $formsMgr.Connection.Close()
 
             $result = @{
                 "success" = $true
-                "forms" = @($formList)
-                "views" = @($viewList)
-                "formCount" = $formList.Count
-                "viewCount" = $viewList.Count
+                "matchedNames" = @($matchedNames)
+                "matchedCount" = $matchedNames.Count
+                "formCount" = $formsScanned
+                "viewCount" = $viewsScanned
             }
-            Write-Host ($result | ConvertTo-Json -Compress -Depth 3)
+            Write-Output ($result | ConvertTo-Json -Compress)
         } catch {
             $result = @{
                 "success" = $false
                 "error" = $_.Exception.Message
-                "forms" = @()
-                "views" = @()
+                "matchedNames" = @()
+                "matchedCount" = 0
                 "formCount" = 0
                 "viewCount" = 0
             }
-            Write-Host ($result | ConvertTo-Json -Compress)
+            Write-Output ($result | ConvertTo-Json -Compress)
         }
     `;
 
@@ -1120,32 +1176,19 @@ app.post('/api/k2/reconcile-smartforms', async (req, res) => {
             });
         }
 
-        // Build lookup sets
-        const deployedFormNames = new Set();
-        if (k2Result.forms && Array.isArray(k2Result.forms)) {
-            k2Result.forms.forEach(f => {
-                deployedFormNames.add(f.name);
-                deployedFormNames.add(f.displayName);
-            });
-        }
-        // Also check views — K2 SmartForms are often found as views
-        if (k2Result.views && Array.isArray(k2Result.views)) {
-            k2Result.views.forEach(v => {
-                deployedFormNames.add(v.name);
-                deployedFormNames.add(v.displayName);
-            });
-        }
-
-        // Reconcile against local SmartForms
-        const allLocalSFs = sfGenerator.getAll();
+        // Reconcile against local SmartForms using compact matched name list
+        const matchedLower = new Set((k2Result.matchedNames || []).map(n => String(n).toLowerCase()));
         let updated = 0;
         let alreadyCorrect = 0;
         const changes = [];
 
         for (const localSF of allLocalSFs) {
-            const existsOnK2 = deployedFormNames.has(localSF.name) ||
-                               deployedFormNames.has(localSF.displayName) ||
-                               deployedFormNames.has(localSF.name.replace(/_/g, ' '));
+            const localCandidates = [
+                localSF.name,
+                localSF.displayName,
+                localSF.name ? localSF.name.replace(/_/g, ' ') : null
+            ].filter(Boolean).map(v => String(v).toLowerCase());
+            const existsOnK2 = localCandidates.some(n => matchedLower.has(n));
 
             if (existsOnK2 && localSF.deploymentStatus !== 'deployed') {
                 sfGenerator.updateDeploymentStatus(localSF.id, 'deployed', {
@@ -1263,7 +1306,27 @@ app.post('/api/smartforms/:id/deploy', async (req, res) => {
         fs.writeFileSync(tmpFile, JSON.stringify(formData), 'utf-8');
 
         const scriptPath = path.join(__dirname, 'Deploy-SmartForm.ps1');
-        const psScript = `& '${scriptPath}' -K2Server '${k2Bridge.config.serverUrl ? k2Bridge.config.serverUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '').split(':')[0] : 'NINTEX-SP-POC'}' -K2Port ${k2Bridge.config.port || 5555} -SmartObjectJsonFile '${tmpFile}'`;
+        const k2Host = k2Bridge.config.serverUrl ? k2Bridge.config.serverUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '').split(':')[0] : 'NINTEX-SP-POC';
+        
+        // Build parameters with optional on-premises credentials
+        const psParams = [
+            `-K2Server '${k2Host}'`,
+            `-K2Port ${k2Bridge.config.port || 5555}`,
+            `-SmartObjectJsonFile '${tmpFile}'`
+        ];
+        
+        if (k2Bridge.config.k2DllPath && String(k2Bridge.config.k2DllPath).trim()) {
+            psParams.push(`-K2DllPath '${k2Bridge.config.k2DllPath}'`);
+        }
+        if (k2Bridge.config.k2User && k2Bridge.config.k2Password) {
+            psParams.push(`-K2User '${k2Bridge.config.k2User}'`);
+            psParams.push(`-K2Password '${k2Bridge.config.k2Password}'`);
+            if (k2Bridge.config.k2Domain) {
+                psParams.push(`-K2Domain '${k2Bridge.config.k2Domain}'`);
+            }
+        }
+        
+        const psScript = `& '${scriptPath}' ${psParams.join(' ')}`;
 
         const result = await k2Bridge._runPowerShell(psScript);
         try { fs.unlinkSync(tmpFile); } catch(e) {}
@@ -1321,7 +1384,27 @@ app.post('/api/smartforms/deploy-all', async (req, res) => {
             fs.writeFileSync(tmpFile, JSON.stringify(formData), 'utf-8');
 
             const scriptPath = path.join(__dirname, 'Deploy-SmartForm.ps1');
-            const psScript = `& '${scriptPath}' -K2Server '${k2Bridge.config.serverUrl ? k2Bridge.config.serverUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '').split(':')[0] : 'NINTEX-SP-POC'}' -K2Port ${k2Bridge.config.port || 5555} -SmartObjectJsonFile '${tmpFile}'`;
+            const k2Host = k2Bridge.config.serverUrl ? k2Bridge.config.serverUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '').split(':')[0] : 'NINTEX-SP-POC';
+            
+            // Build parameters with optional on-premises credentials
+            const psParams = [
+                `-K2Server '${k2Host}'`,
+                `-K2Port ${k2Bridge.config.port || 5555}`,
+                `-SmartObjectJsonFile '${tmpFile}'`
+            ];
+            
+            if (k2Bridge.config.k2DllPath && String(k2Bridge.config.k2DllPath).trim()) {
+                psParams.push(`-K2DllPath '${k2Bridge.config.k2DllPath}'`);
+            }
+            if (k2Bridge.config.k2User && k2Bridge.config.k2Password) {
+                psParams.push(`-K2User '${k2Bridge.config.k2User}'`);
+                psParams.push(`-K2Password '${k2Bridge.config.k2Password}'`);
+                if (k2Bridge.config.k2Domain) {
+                    psParams.push(`-K2Domain '${k2Bridge.config.k2Domain}'`);
+                }
+            }
+            
+            const psScript = `& '${scriptPath}' ${psParams.join(' ')}`;
 
             const result = await k2Bridge._runPowerShell(psScript);
             try { fs.unlinkSync(tmpFile); } catch(e) {}
@@ -1368,6 +1451,13 @@ app.post('/api/k2/workflow-templates', async (req, res) => {
         $ErrorActionPreference = "Stop"
         try {
             $k2Bin = "C:\\\\Program Files\\\\K2\\\\Bin"
+            if (-not (Test-Path $k2Bin)) {
+                throw "K2 SDK path not found: $k2Bin"
+            }
+            [System.AppDomain]::CurrentDomain.AppendPrivatePath($k2Bin)
+            foreach ($dll in @("SourceCode.Framework.dll","SourceCode.HostClientAPI.dll","SourceCode.Workflow.Management.dll")) {
+                try { Unblock-File -Path (Join-Path $k2Bin $dll) -ErrorAction Stop } catch { }
+            }
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\\\SourceCode.Framework.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\\\SourceCode.HostClientAPI.dll") | Out-Null
             [System.Reflection.Assembly]::LoadFrom("$k2Bin\\\\SourceCode.Workflow.Management.dll") | Out-Null
@@ -1754,7 +1844,26 @@ app.post('/api/blueprints/:id/deploy', async (req, res) => {
         const k2Port = k2Bridge.config.port || 5555;
 
         const scriptPath = path.join(__dirname, 'Deploy-Workflow.ps1');
-        const psScript = `& '${scriptPath}' -K2Server '${k2Host}' -K2Port ${k2Port} -WorkflowJsonFile '${tmpFile}'`;
+        
+        // Build parameters with optional on-premises credentials
+        const psParams = [
+            `-K2Server '${k2Host}'`,
+            `-K2Port ${k2Port}`,
+            `-WorkflowJsonFile '${tmpFile}'`
+        ];
+        
+        if (k2Bridge.config.k2DllPath && String(k2Bridge.config.k2DllPath).trim()) {
+            psParams.push(`-K2DllPath '${k2Bridge.config.k2DllPath}'`);
+        }
+        if (k2Bridge.config.k2User && k2Bridge.config.k2Password) {
+            psParams.push(`-K2User '${k2Bridge.config.k2User}'`);
+            psParams.push(`-K2Password '${k2Bridge.config.k2Password}'`);
+            if (k2Bridge.config.k2Domain) {
+                psParams.push(`-K2Domain '${k2Bridge.config.k2Domain}'`);
+            }
+        }
+        
+        const psScript = `& '${scriptPath}' ${psParams.join(' ')}`;
         const encodedScript = Buffer.from(psScript, 'utf16le').toString('base64');
 
         console.log(`[WF DEPLOY] Deploying "${wfDef.displayName}" (${wfDef.steps.length} activities, ${wfDef.connections.length} lines)...`);
@@ -1878,7 +1987,26 @@ app.post('/api/blueprints/deploy-all', async (req, res) => {
                 ? k2Bridge.config.serverUrl.replace(/^https?:\/\//, '').replace(/\/+$/, '').split(':')[0]
                 : 'NINTEX-SP-POC';
             const scriptPath = path.join(__dirname, 'Deploy-Workflow.ps1');
-            const psScript = `& '${scriptPath}' -K2Server '${k2Host}' -K2Port ${k2Bridge.config.port || 5555} -WorkflowJsonFile '${tmpFile}'`;
+            
+            // Build parameters with optional on-premises credentials
+            const psParams = [
+                `-K2Server '${k2Host}'`,
+                `-K2Port ${k2Bridge.config.port || 5555}`,
+                `-WorkflowJsonFile '${tmpFile}'`
+            ];
+            
+            if (k2Bridge.config.k2DllPath && String(k2Bridge.config.k2DllPath).trim()) {
+                psParams.push(`-K2DllPath '${k2Bridge.config.k2DllPath}'`);
+            }
+            if (k2Bridge.config.k2User && k2Bridge.config.k2Password) {
+                psParams.push(`-K2User '${k2Bridge.config.k2User}'`);
+                psParams.push(`-K2Password '${k2Bridge.config.k2Password}'`);
+                if (k2Bridge.config.k2Domain) {
+                    psParams.push(`-K2Domain '${k2Bridge.config.k2Domain}'`);
+                }
+            }
+            
+            const psScript = `& '${scriptPath}' ${psParams.join(' ')}`;
             const encodedScript = Buffer.from(psScript, 'utf16le').toString('base64');
 
             console.log(`[WF BATCH] Deploying "${wfDef.displayName}" (${wfDef.steps.length} steps)...`);

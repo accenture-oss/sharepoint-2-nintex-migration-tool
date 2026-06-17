@@ -1,12 +1,27 @@
 param (
     [string]$K2Server = "localhost",
     [int]$K2Port = 5555,
-    [string]$WorkflowJsonFile
+    [string]$WorkflowJsonFile = "",
+    [string]$K2DllPath = "",
+    [string]$K2User = "",
+    [string]$K2Password = "",
+    [string]$K2Domain = ""
 )
 
-try {
-    $k2Bin = "C:\Program Files\K2\Bin"
+$ErrorActionPreference = "Stop"
 
+if ([string]::IsNullOrWhiteSpace($K2DllPath)) {
+    $K2DllPath = "C:\Program Files\K2\Bin"
+}
+
+if (-not (Test-Path $K2DllPath)) {
+    Write-Host ('{"success":false,"error":"K2DllPath not found: ' + $K2DllPath + '"}')
+    exit 1
+}
+
+[System.AppDomain]::CurrentDomain.AppendPrivatePath($K2DllPath)
+
+try {
     # Load workflow definition JSON
     $wfJson = Get-Content $WorkflowJsonFile -Raw | ConvertFrom-Json
     $wfName = $wfJson.name
@@ -15,8 +30,8 @@ try {
 
     Write-Host "[K2 WF] Deploying: $wfDisplayName ($($wfJson.steps.Count) steps)" -ForegroundColor Cyan
 
-    # Load K2 SDK assemblies
-    foreach ($dll in @(
+    # Load K2 SDK assemblies with unblock-file support for bank environments
+    $dlls = @(
         "SourceCode.Framework.dll",
         "SourceCode.HostClientAPI.dll",
         "SourceCode.Workflow.Authoring.dll",
@@ -24,13 +39,36 @@ try {
         "SourceCode.Workflow.Management.dll",
         "SourceCode.Deployment.Management.dll",
         "SourceCode.EnvironmentSettings.Client.dll"
-    )) {
-        $p = Join-Path $k2Bin $dll
-        if (Test-Path $p) { [System.Reflection.Assembly]::LoadFrom($p) | Out-Null }
+    )
+    $loadErrors = @()
+    foreach ($dll in $dlls) {
+        $p = Join-Path $K2DllPath $dll
+        if (Test-Path $p) {
+            try {
+                try { Unblock-File -Path $p -ErrorAction Stop } catch { }
+                [System.Reflection.Assembly]::LoadFrom($p) | Out-Null
+            } catch {
+                $loadErrors += "$dll : $($_.Exception.Message)"
+            }
+        }
+    }
+    if ($loadErrors.Count -gt 0) {
+        $errorText = 'K2 Workflow SDK load failures (K2DllPath=' + $K2DllPath + '): ' + ($loadErrors -join '; ')
+        if ($errorText -match '0x80131515') {
+            $errorText += ' | Hint: DLLs are likely blocked (MOTW). Run: Get-ChildItem "' + $K2DllPath + '\*.dll" | Unblock-File'
+        }
+        Write-Host ('{"success":false,"error":"' + $errorText + '"}')
+        exit 1
     }
     Write-Host "[K2 WF] SDK loaded" -ForegroundColor Green
 
-    $connStr = "Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=$K2Server;Port=$K2Port"
+    # Build connection string
+    if ($K2User -and $K2Password) {
+        $userPart = if ($K2Domain) { "$K2Domain\$K2User" } else { $K2User }
+        $connStr = "Integrated=False;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;UserID=$userPart;Password=$K2Password;Host=$K2Server;Port=$K2Port"
+    } else {
+        $connStr = "Integrated=True;IsPrimaryLogin=True;Authenticate=True;EncryptedPassword=False;Host=$K2Server;Port=$K2Port"
+    }
 
     # =====================================================
     # Build process using DefaultProcess (concrete subclass)
