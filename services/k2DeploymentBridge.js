@@ -1,6 +1,10 @@
 // ============================================================
 // SPD → K2 Five Migration Pipeline — K2 Deployment Bridge
-// Handles SmartObject deployment to K2 Five server
+// Handles SmartObject + Workflow deployment to K2 Five server
+//
+// SmartObjects: Direct SDK deployment via Deploy-SmartObject.ps1
+// Workflows:    KPRX generation → KSPX assembly → Deploy-Kspx.ps1
+//               (ported from colleague's Nintex Forms Generator)
 //
 // Target: K2 Five 5.8 FP26 (5.0009.1026.0)
 // Server: Windows Server 2022 Standard 21H2 20348.4893
@@ -10,6 +14,8 @@
 const { v4: uuidv4 } = require('uuid');
 const fs = require('fs');
 const path = require('path');
+const { generateKprx, blueprintToWorkflowIR } = require('./kprxEmitter');
+const { assemble, writeAssemblyToDisk, createKspxArchive } = require('./kspxAssembler');
 
 // K2 server configuration
 const K2_CONFIG = {
@@ -299,6 +305,10 @@ class K2DeploymentBridge {
                     `-SmartObjectJsonFile '${tmpJson}'`,
                     `-SodxXmlFile '${tmpSodx}'`
                 ];
+
+                // Broker type: SmartBox (default) or SharePoint
+                const brokerType = this.config.brokerType || 'SmartBox';
+                psParams.push(`-BrokerType '${brokerType}'`);
                 
                 // Only pass k2DllPath if explicitly set (avoid passing empty string)
                 if (this.config.k2DllPath && String(this.config.k2DllPath).trim()) {
@@ -383,6 +393,7 @@ class K2DeploymentBridge {
                 serverUrl: this.config.serverUrl || '(not configured)',
                 port: this.config.port,
                 k2DllPath: this.config.k2DllPath,
+                brokerType: this.config.brokerType || 'SmartBox',
                 database: this.config.database,
                 listener: this.config.listener,
                 ag: this.config.ag,
@@ -421,6 +432,283 @@ class K2DeploymentBridge {
         } finally {
             step.completedAt = new Date().toISOString();
         }
+    }
+
+    // ══════════════════════════════════════════════════════════
+    // KSPX Workflow Deployment Pipeline
+    // Ported from colleague's Nintex Forms Generator approach
+    // ══════════════════════════════════════════════════════════
+
+    /**
+     * Deploy a pre-built .kspx package to the K2 server.
+     *
+     * @param {string} kspxFilePath     - Path to the .kspx file
+     * @param {string} envConfigPath    - Path to EnvironmentConfig.xml
+     * @param {Object} options          - { dryRun, category }
+     * @returns {Object}                 - Deployment result
+     */
+    async deployWorkflowKspx(kspxFilePath, envConfigPath, options = {}) {
+        const startTime = Date.now();
+
+        if (!this.config.serverUrl) {
+            return { success: false, error: 'K2 server URL not configured' };
+        }
+
+        const k2Host = this.config.serverUrl
+            .replace(/^https?:\/\//, '')
+            .replace(/\/+$/, '')
+            .split(':')[0];
+
+        const scriptPath = path.join(__dirname, '..', 'Deploy-Kspx.ps1');
+
+        // Build PowerShell parameters
+        const psParams = [
+            `-KspxFile '${kspxFilePath}'`,
+            `-EnvironmentConfig '${envConfigPath}'`,
+            `-TargetK2 '${k2Host}'`,
+            `-Port ${this.config.port || 5555}`
+        ];
+
+        if (options.dryRun) {
+            psParams.push('-DryRun');
+        }
+
+        if (options.category) {
+            psParams.push(`-Category '${options.category}'`);
+        }
+
+        if (this.config.k2DllPath && String(this.config.k2DllPath).trim()) {
+            psParams.push(`-K2DllPath '${this.config.k2DllPath}'`);
+        }
+
+        if (this.config.k2User && this.config.k2Password) {
+            psParams.push(`-K2User '${this.config.k2User}'`);
+            psParams.push(`-K2Password '${this.config.k2Password}'`);
+            if (this.config.k2Domain) {
+                psParams.push(`-K2Domain '${this.config.k2Domain}'`);
+            }
+        }
+
+        const psScript = `& '${scriptPath}' ${psParams.join(' ')}`;
+
+        try {
+            const result = await this._runPowerShell(psScript, {
+                operation: 'kspx-deploy',
+                timeoutMs: 180000  // 3 minutes for large packages
+            });
+
+            const deployEntry = {
+                id: `kspx-deploy-${uuidv4().slice(0, 8)}`,
+                type: 'kspx-workflow',
+                kspxFile: kspxFilePath,
+                target: `${k2Host}:${this.config.port || 5555}`,
+                dryRun: options.dryRun || false,
+                result,
+                durationMs: Date.now() - startTime,
+                timestamp: new Date().toISOString()
+            };
+
+            this.deploymentHistory.push(deployEntry);
+            return { success: true, ...deployEntry };
+
+        } catch (err) {
+            console.error('[KSPX Deploy Error]', err.message);
+            return {
+                success: false,
+                error: err.message,
+                durationMs: Date.now() - startTime
+            };
+        }
+    }
+
+    /**
+     * Harvest (export) existing K2 artifacts from the server into a .kspx package.
+     *
+     * @param {string} category  - K2 category to export (e.g. 'Workflow/Generated')
+     * @param {string} outFile   - Output .kspx file path
+     * @returns {Object}          - Harvest result
+     */
+    async harvestKspx(category, outFile) {
+        if (!this.config.serverUrl) {
+            return { success: false, error: 'K2 server URL not configured' };
+        }
+
+        const k2Host = this.config.serverUrl
+            .replace(/^https?:\/\//, '')
+            .replace(/\/+$/, '')
+            .split(':')[0];
+
+        const scriptPath = path.join(__dirname, '..', 'Harvest-Kspx.ps1');
+
+        const psParams = [
+            `-K2Server '${k2Host}'`,
+            `-Port ${this.config.port || 5555}`,
+            `-Category '${category}'`,
+            `-OutFile '${outFile}'`
+        ];
+
+        if (this.config.k2DllPath && String(this.config.k2DllPath).trim()) {
+            psParams.push(`-K2DllPath '${this.config.k2DllPath}'`);
+        }
+
+        const psScript = `& '${scriptPath}' ${psParams.join(' ')}`;
+
+        try {
+            const result = await this._runPowerShell(psScript, {
+                operation: 'kspx-harvest',
+                timeoutMs: 120000
+            });
+
+            return { success: true, ...result, outFile };
+        } catch (err) {
+            console.error('[KSPX Harvest Error]', err.message);
+            return { success: false, error: err.message };
+        }
+    }
+
+    /**
+     * Full E2E workflow deployment: Blueprint → KPRX → KSPX → Deploy.
+     * This is the main automation method that replaces manual K2 Designer work.
+     *
+     * @param {Object} blueprint       - Workflow blueprint from workflowBlueprintGenerator
+     * @param {Object} options
+     *   {
+     *     siteName: string,         - SharePoint site name for category
+     *     listTitle: string,        - SharePoint list title
+     *     webUrl: string,           - SharePoint web URL
+     *     smartObjectName: string,  - Target SmartObject name
+     *     dryRun: boolean           - If true, only analyze (no deploy)
+     *   }
+     * @param {Function} onProgress  - Optional progress callback(step, total, message)
+     * @returns {Object}              - Full deployment result
+     */
+    async generateAndDeployWorkflow(blueprint, options = {}, onProgress) {
+        const startTime = Date.now();
+        const deploymentId = `wf-deploy-${uuidv4().slice(0, 8)}`;
+
+        const deployment = {
+            id: deploymentId,
+            workflowName: blueprint.workflowName || blueprint.name,
+            status: 'generating',
+            steps: [],
+            startedAt: new Date().toISOString(),
+            completedAt: null,
+            error: null
+        };
+
+        this.deploymentQueue.push(deployment);
+
+        try {
+            // ── Step 1: Convert blueprint to workflow IR ────────
+            if (onProgress) onProgress(1, 5, 'Converting blueprint to workflow IR...');
+            const ir = await this._step(deployment, 'blueprint_to_ir', 'Convert Blueprint → IR', async () => {
+                return blueprintToWorkflowIR(blueprint, {
+                    listTitle: options.listTitle || blueprint.listTitle,
+                    webUrl: options.webUrl || blueprint.webUrl,
+                    smartObjectName: options.smartObjectName
+                });
+            });
+
+            // ── Step 2: Generate KPRX XML ──────────────────────
+            if (onProgress) onProgress(2, 5, 'Generating KPRX process XML...');
+            const kprxXml = await this._step(deployment, 'generate_kprx', 'Generate KPRX XML', async () => {
+                return generateKprx(ir.result);
+            });
+
+            // ── Step 3: Assemble KSPX package ──────────────────
+            if (onProgress) onProgress(3, 5, 'Assembling KSPX package...');
+            const kspxResult = await this._step(deployment, 'assemble_kspx', 'Assemble KSPX Package', async () => {
+                const projName = options.siteName
+                    ? `${options.siteName}_${blueprint.workflowName || 'Workflow'}`
+                    : blueprint.workflowName || 'K2_Migration';
+
+                const assemblyOpts = {
+                    projectName: projName,
+                    category: `Workflow/Generated/${options.siteName || 'Default'}`,
+                    targetEnvironment: options.targetEnvironment || 'Development',
+                    k2Server: this.config.serverUrl
+                        ? this.config.serverUrl.replace(/^https?:\/\//, '').split(':')[0]
+                        : 'localhost',
+                    k2Port: this.config.port || 5555,
+                    sharepointUrl: options.webUrl || ''
+                };
+
+                const workflowDefs = [{
+                    name: blueprint.workflowName || blueprint.name,
+                    kprxXml: kprxXml.result
+                }];
+
+                const result = assemble(assemblyOpts, workflowDefs);
+
+                // Write to disk and create archive
+                const os = require('os');
+                const outDir = path.join(os.tmpdir(), `k2_kspx_${deploymentId}`);
+                writeAssemblyToDisk(result, outDir);
+
+                const kspxPath = path.join(os.tmpdir(), `${projName}_${Date.now()}.kspx`);
+                await createKspxArchive(result, kspxPath);
+
+                return {
+                    kspxPath,
+                    outDir,
+                    summary: result.summary,
+                    totalFiles: result.totalFiles
+                };
+            });
+
+            // ── Step 4: Deploy KSPX to K2 ──────────────────────
+            if (onProgress) onProgress(4, 5, options.dryRun ? 'Analyzing deployment (dry run)...' : 'Deploying KSPX to K2...');
+
+            const deployResult = await this._step(deployment, 'deploy_kspx', 'Deploy KSPX Package', async () => {
+                const envConfigPath = path.join(
+                    path.dirname(kspxResult.result.kspxPath),
+                    'EnvironmentConfig.xml'
+                );
+
+                // Write the env config adjacent to the kspx
+                const envConfigContent = require('./kspxAssembler').emitEnvironmentConfig({
+                    targetEnvironment: options.targetEnvironment || 'Development',
+                    k2Server: this.config.serverUrl
+                        ? this.config.serverUrl.replace(/^https?:\/\//, '').split(':')[0]
+                        : 'localhost',
+                    k2Port: this.config.port || 5555,
+                    sharepointUrl: options.webUrl || ''
+                });
+                fs.writeFileSync(envConfigPath, envConfigContent, 'utf8');
+
+                return await this.deployWorkflowKspx(
+                    kspxResult.result.kspxPath,
+                    envConfigPath,
+                    {
+                        dryRun: options.dryRun || false,
+                        category: `Workflow/Generated/${options.siteName || 'Default'}`
+                    }
+                );
+            });
+
+            // ── Step 5: Cleanup & finalize ─────────────────────
+            if (onProgress) onProgress(5, 5, 'Deployment complete.');
+            deployment.status = deployResult.result.success ? 'deployed' : 'failed';
+            deployment.completedAt = new Date().toISOString();
+
+            // Save KPRX to k2-export for reference
+            const exportDir = path.join(__dirname, '..', 'k2-export');
+            if (!fs.existsSync(exportDir)) fs.mkdirSync(exportDir, { recursive: true });
+            const kprxPath = path.join(exportDir, `${blueprint.workflowName || 'workflow'}.kprx`);
+            fs.writeFileSync(kprxPath, kprxXml.result, 'utf8');
+
+        } catch (err) {
+            deployment.status = 'failed';
+            deployment.error = err.message;
+            deployment.completedAt = new Date().toISOString();
+            console.error(`[K2 WF DEPLOY ERROR] ${blueprint.workflowName}: ${err.message}`);
+            if (onProgress) onProgress(0, 5, `Deployment failed: ${err.message}`);
+        }
+
+        deployment.durationMs = Date.now() - startTime;
+        this.deploymentHistory.push({ ...deployment });
+
+        return deployment;
     }
 }
 

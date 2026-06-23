@@ -4,7 +4,8 @@
 param(
     [string]$SiteUrl = "",
     [string]$OutputPath = ".\sp_list_schema.json",
-    [string]$ListTitle = ""
+    [string]$ListTitle = "",
+    [System.Management.Automation.PSCredential]$Credential
 )
 
 if ($SiteUrl -eq "") {
@@ -17,7 +18,21 @@ function Invoke-SPRest($Endpoint) {
     $url = $SiteUrl + "/_api/" + $Endpoint
     $hdrs = @{}
     $hdrs["Accept"] = "application/json;odata=verbose"
-    $resp = Invoke-RestMethod -Uri $url -Method Get -UseDefaultCredentials -Headers $hdrs -ContentType "application/json"
+    
+    $params = @{
+        Uri         = $url
+        Method      = "Get"
+        Headers     = $hdrs
+        ContentType = "application/json"
+    }
+    
+    if ($Credential) {
+        $params["Credential"] = $Credential
+    } else {
+        $params["UseDefaultCredentials"] = $true
+    }
+    
+    $resp = Invoke-RestMethod @params
     return $resp.d
 }
 
@@ -29,7 +44,15 @@ try {
     Write-Host "Connected: $($web.Title)"
 }
 catch {
-    Write-Host "Connection failed: $($_.Exception.Message)"
+    Write-Host "Connection failed: $($_.Exception.Message)" -ForegroundColor Red
+    
+    if ($_.Exception.Message -match "401|Unauthorized") {
+        Write-Host ""
+        Write-Host "TIP: Pass credentials explicitly:" -ForegroundColor Yellow
+        Write-Host '  $cred = Get-Credential' -ForegroundColor Cyan
+        Write-Host '  .\Export-SPListSchema.ps1 -SiteUrl "https://..." -Credential $cred' -ForegroundColor Cyan
+    }
+    
     exit 1
 }
 

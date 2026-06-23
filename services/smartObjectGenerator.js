@@ -187,6 +187,89 @@ class SmartObjectGenerator {
     }
 
     /**
+     * Generate SmartObjects directly from SP List Schema JSON
+     * Used when CSVs are empty (no workflows/InfoPath forms on the site)
+     * but we have the list structure from Export-SPListSchema.ps1
+     *
+     * @param {Object} schema - Schema JSON from Export-SPListSchema.ps1
+     * @returns {Object} Generation summary
+     */
+    generateFromSchema(schema) {
+        this.smartObjects.clear();
+        this.generationLog = [];
+        this.realSchema = schema;  // Also set as real schema for property generation
+
+        let generated = 0;
+        let errors = 0;
+
+        for (const list of schema.lists) {
+            try {
+                const soName = this._sanitizeName(list.listTitle);
+                const soGuid = uuidv4();
+
+                // Generate properties from real schema fields
+                const properties = this._generatePropertiesFromRealSchema(list);
+                const methods = this._generateMethods(properties);
+
+                const so = {
+                    id: `so-${soGuid.slice(0, 8)}`,
+                    guid: soGuid,
+                    name: soName,
+                    displayName: list.listTitle,
+                    listTitle: list.listTitle,
+                    webUrl: list.webUrl || schema.siteUrl,
+                    complexity: list.fieldCount > 20 ? 'complex' : (list.fieldCount > 10 ? 'medium' : 'simple'),
+                    sourceItems: [{ id: list.listId, name: list.listTitle, type: 'list' }],
+                    properties,
+                    methods,
+                    serviceBroker: 'SharePoint 2013 Broker',
+                    serviceInstance: `SP_${soName}`,
+                    backingTable: null, // SP Broker — no SQL table, data stays in SP list
+                    deploymentStatus: 'pending',
+                    deploymentDetails: {},
+                    generatedAt: new Date().toISOString(),
+                    metadata: {
+                        sourceSystem: `SharePoint (${schema.siteUrl})`,
+                        targetSystem: 'K2 Five 5.8 FP26',
+                        migrationBatch: `batch-${Date.now()}`,
+                        generationSource: 'schema-direct',
+                        listItemCount: list.itemCount
+                    }
+                };
+
+                this.smartObjects.set(so.id, so);
+                generated++;
+                this.generationLog.push({
+                    timestamp: new Date().toISOString(),
+                    level: 'info',
+                    smartObjectId: so.id,
+                    message: `Generated SmartObject "${so.name}" from schema — ${so.properties.length} properties, ${so.methods.length} methods (${list.itemCount} items in SP list)`
+                });
+            } catch (err) {
+                errors++;
+                this.generationLog.push({
+                    timestamp: new Date().toISOString(),
+                    level: 'error',
+                    listTitle: list.listTitle,
+                    message: `Failed to generate from schema: ${err.message}`
+                });
+            }
+        }
+
+        this.lastGenerationTimestamp = new Date().toISOString();
+
+        return {
+            generated,
+            errors,
+            totalLists: schema.lists.length,
+            totalProperties: Array.from(this.smartObjects.values()).reduce((sum, so) => sum + so.properties.length, 0),
+            totalMethods: Array.from(this.smartObjects.values()).reduce((sum, so) => sum + so.methods.length, 0),
+            source: 'schema-direct',
+            timestamp: this.lastGenerationTimestamp
+        };
+    }
+
+    /**
      * Get all generated SmartObjects
      */
     getAll() {
@@ -196,12 +279,14 @@ class SmartObjectGenerator {
             displayName: so.displayName,
             listTitle: so.listTitle,
             webUrl: so.webUrl,
-            propertyCount: so.properties.length,
-            methodCount: so.methods.length,
+            propertyCount: (so.properties || []).length,
+            methodCount: (so.methods || []).length,
             complexity: so.complexity,
             deploymentStatus: so.deploymentStatus,
-            hasBlockedFields: so.properties.some(p => p.autoMap === 'blocked'),
+            hasBlockedFields: (so.properties || []).some(p => p.autoMap === 'blocked'),
             serviceBroker: so.serviceBroker,
+            brokerType: so.brokerType || 'SmartBox',
+            serviceInstance: so.serviceInstance,
             generatedAt: so.generatedAt
         }));
     }
@@ -272,17 +357,81 @@ class SmartObjectGenerator {
         const failed = all.filter(s => s.deploymentStatus === 'failed').length;
         const deploying = all.filter(s => s.deploymentStatus === 'deploying').length;
 
+        const discovered = all.filter(s => s.deploymentStatus === 'discovered').length;
+
         return {
             total: all.length,
             deployed,
             pending,
             failed,
             deploying,
-            totalProperties: all.reduce((s, o) => s + o.properties.length, 0),
-            totalMethods: all.reduce((s, o) => s + o.methods.length, 0),
-            blockedFields: all.reduce((s, o) => s + o.properties.filter(p => p.autoMap === 'blocked').length, 0),
+            discovered,
+            totalProperties: all.reduce((s, o) => s + (o.properties || []).length, 0),
+            totalMethods: all.reduce((s, o) => s + (o.methods || []).length, 0),
+            blockedFields: all.reduce((s, o) => s + (o.properties || []).filter(p => p.autoMap === 'blocked').length, 0),
             lastGeneration: this.lastGenerationTimestamp
         };
+    }
+
+    /**
+     * Add a pre-existing SmartObject discovered from K2's SP2013 Broker.
+     * These SOs already exist on K2 — no deployment needed.
+     */
+    addDiscoveredSmartObject(dso) {
+        const id = dso.id || `dso-${(dso.guid || Date.now().toString(36)).slice(0, 8)}`;
+        const existing = Array.from(this.smartObjects.values()).find(
+            s => s.name === dso.name
+        );
+        if (existing) {
+            // Update existing entry with discovered status
+            existing.deploymentStatus = 'discovered';
+            existing.brokerType = 'SharePoint';
+            existing.methods = dso.methods || existing.methods;
+            existing.properties = dso.properties || existing.properties;
+            existing.serviceInstance = dso.serviceInstance || existing.serviceInstance;
+            return existing;
+        }
+
+        const so = {
+            id,
+            guid: dso.guid || '',
+            name: dso.name,
+            displayName: dso.displayName || dso.name,
+            listTitle: dso.listTitle || '',
+            webUrl: dso.webUrl || '',
+            complexity: 'simple',
+            sourceItems: [],
+            properties: dso.properties || [],
+            methods: dso.methods || [],
+            serviceBroker: 'SharePoint 2013 Broker',
+            serviceInstance: dso.serviceInstance || '',
+            serviceInstanceGuid: dso.serviceInstanceGuid || '',
+            brokerType: 'SharePoint',
+            backingTable: null,
+            deploymentStatus: 'discovered',
+            deploymentDetails: { source: 'k2-discovery' },
+            generatedAt: new Date().toISOString(),
+            loadMethod: dso.loadMethod || 'GetListItemByID',
+            createMethod: dso.createMethod || 'CreateListItem',
+            updateMethod: dso.updateMethod || 'UpdateListItem',
+            deleteMethod: dso.deleteMethod || 'DeleteListItem',
+            listMethod: dso.listMethod || 'GetListItems',
+            metadata: {
+                sourceSystem: 'K2 SP2013 Broker (auto-generated)',
+                targetSystem: 'K2 Five 5.8 FP26',
+                discoveredAt: new Date().toISOString()
+            }
+        };
+
+        this.smartObjects.set(id, so);
+        this.generationLog.push({
+            timestamp: new Date().toISOString(),
+            level: 'info',
+            smartObjectId: id,
+            message: `Discovered existing SP broker SmartObject: ${so.name} (${(so.properties || []).length} props, ${(so.methods || []).length} methods)`
+        });
+
+        return so;
     }
 
 

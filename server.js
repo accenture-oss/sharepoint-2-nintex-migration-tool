@@ -727,18 +727,27 @@ app.get('/api/routing/log', (req, res) => {
 // API Routes — Phase 3: SmartObject Generation & Deployment
 // ============================================================
 
-// Generate SmartObject definitions from analysis results
+// Generate SmartObject definitions from analysis results OR schema JSON
 app.post('/api/smartobjects/generate', (req, res) => {
     const results = analysis.getResults({ pageSize: 10000 });
-    if (!results.items || results.items.length === 0) {
-        return res.status(400).json({
-            error: 'No analysis results available. Run analysis first.'
-        });
+
+    // Path 1: Generate from analysis results (CSV-based discovery)
+    if (results.items && results.items.length > 0) {
+        const summary = soGenerator.generate(results.items);
+        saveAllState();
+        return res.json({ success: true, summary, source: 'analysis' });
     }
 
-    const summary = soGenerator.generate(results.items);
-    saveAllState();
-    res.json({ success: true, summary });
+    // Path 2: Generate directly from schema JSON (no CSVs needed)
+    if (spListSchema && spListSchema.lists && spListSchema.lists.length > 0) {
+        const summary = soGenerator.generateFromSchema(spListSchema);
+        saveAllState();
+        return res.json({ success: true, summary, source: 'schema' });
+    }
+
+    return res.status(400).json({
+        error: 'No data available. Either upload discovery CSVs + run analysis, or upload a SP List Schema JSON.'
+    });
 });
 
 // List all generated SmartObjects
@@ -778,9 +787,9 @@ app.get('/api/smartobjects/log', (req, res) => {
 // ── K2 Server Connection ────────────────────────────────────
 
 app.post('/api/k2/configure', (req, res) => {
-    const { serverUrl, port, securityLabel, k2DllPath, k2User, k2Password, k2Domain, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain } = req.body;
+    const { serverUrl, port, securityLabel, k2DllPath, k2User, k2Password, k2Domain, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain, brokerType } = req.body;
     if (!serverUrl) return res.status(400).json({ error: 'K2 server URL is required' });
-    k2Bridge.configure({ serverUrl, port, securityLabel, k2DllPath, k2User, k2Password, k2Domain, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain });
+    k2Bridge.configure({ serverUrl, port, securityLabel, k2DllPath, k2User, k2Password, k2Domain, sqlServer, sqlCatalog, sqlUser, sqlPassword, sqlDomain, brokerType: brokerType || 'SmartBox' });
     res.json({ success: true, config: k2Bridge.getConnectionInfo() });
 });
 
@@ -898,6 +907,221 @@ app.post('/api/smartobjects/deploy-all', async (req, res) => {
         failed: results.length - deployed,
         results
     });
+});
+
+// ── SP Broker: Discover Lists on a SharePoint Site ──────────
+app.post('/api/sp-broker/discover-lists', async (req, res) => {
+    try {
+        const { siteUrl } = req.body;
+        if (!siteUrl) return res.status(400).json({ error: 'siteUrl is required' });
+
+        const result = await k2Bridge._runPowerShell(
+            `& '${path.join(__dirname, 'Discover-SPLists.ps1')}' ` +
+            `-SiteUrl '${siteUrl}' ` +
+            (k2Bridge.config.k2User ? `-K2User '${k2Bridge.config.k2User}' ` : '') +
+            (k2Bridge.config.k2Password ? `-K2Password '${k2Bridge.config.k2Password}' ` : '') +
+            (k2Bridge.config.k2Domain ? `-K2Domain '${k2Bridge.config.k2Domain}'` : '')
+        );
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+// ── SP Broker: Deploy Forms for a SharePoint List ───────────
+app.post('/api/sp-broker/deploy-forms', async (req, res) => {
+    try {
+        const { siteUrl, siteTitle, listId, listTitle } = req.body;
+        if (!siteUrl || !listId || !listTitle) {
+            return res.status(400).json({ error: 'siteUrl, listId, and listTitle are required' });
+        }
+
+        const k2Host = (k2Bridge.config.serverUrl || '')
+            .replace(/^https?:\/\//, '').replace(/\/+$/, '').split(':')[0] || 'k2nintexsppoc';
+
+        // Build the JSON file for Deploy-SmartForm.ps1
+        const formData = {
+            name: listTitle,
+            displayName: listTitle,
+            brokerType: 'SharePoint',
+            listTitle,
+            listId,
+            siteTitle: siteTitle || (() => {
+                const m = siteUrl.match(/\/sites\/([^/]+)/);
+                return m ? m[1] : '';
+            })(),
+            webUrl: siteUrl,
+            properties: [] // Not needed for SP broker — GenerateArtifacts handles everything
+        };
+
+        const fs = require('fs');
+        const os = require('os');
+        const tmpFile = path.join(os.tmpdir(), `k2broker_${listTitle.replace(/[^a-zA-Z0-9]/g, '_')}_${Date.now()}.json`);
+        fs.writeFileSync(tmpFile, JSON.stringify(formData), 'utf-8');
+
+        const psParams = [
+            `-K2Server '${k2Host}'`,
+            `-K2Port ${k2Bridge.config.port || 5555}`,
+            `-SmartObjectJsonFile '${tmpFile}'`
+        ];
+        if (k2Bridge.config.k2DllPath && String(k2Bridge.config.k2DllPath).trim()) {
+            psParams.push(`-K2DllPath '${k2Bridge.config.k2DllPath}'`);
+        }
+        if (k2Bridge.config.k2User && k2Bridge.config.k2Password) {
+            psParams.push(`-K2User '${k2Bridge.config.k2User}'`);
+            psParams.push(`-K2Password '${k2Bridge.config.k2Password}'`);
+            if (k2Bridge.config.k2Domain) {
+                psParams.push(`-K2Domain '${k2Bridge.config.k2Domain}'`);
+            }
+        }
+
+        const scriptPath = path.join(__dirname, 'Deploy-SmartForm.ps1');
+        const result = await k2Bridge._runPowerShell(`& '${scriptPath}' ${psParams.join(' ')}`);
+        try { fs.unlinkSync(tmpFile); } catch(e) {}
+
+        res.json(result);
+    } catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+
+// ── K2 SmartObject Discovery (SP2013 Broker) ────────────────
+
+// Discover existing auto-generated SmartObjects from K2's SP2013 Broker
+// Instead of deploying new SOs, we discover what K2 already created
+app.post('/api/k2/discover-smartobjects', async (req, res) => {
+    try {
+        const { spawnSync } = require('child_process');
+        const path = require('path');
+        const os = require('os');
+        const fs = require('fs');
+
+        const siteFilter = req.body.siteFilter || '';
+        const scriptPath = path.join(__dirname, 'Discover-K2SmartObjects.ps1');
+
+        const k2Host = (k2Bridge.config.serverUrl || '')
+            .replace(/^https?:\/\//, '')
+            .replace(/\/+$/, '')
+            .split(':')[0];
+
+        if (!k2Host) {
+            return res.status(400).json({ success: false, error: 'K2 server not configured' });
+        }
+
+        const psParams = [
+            `-K2Server '${k2Host}'`,
+            `-K2Port ${k2Bridge.config.port || 5555}`
+        ];
+
+        if (k2Bridge.config.k2User && k2Bridge.config.k2Password) {
+            psParams.push(`-K2User '${k2Bridge.config.k2User}'`);
+            psParams.push(`-K2Password '${k2Bridge.config.k2Password}'`);
+            if (k2Bridge.config.k2Domain) {
+                psParams.push(`-K2Domain '${k2Bridge.config.k2Domain}'`);
+            }
+        }
+
+        if (k2Bridge.config.k2DllPath) {
+            psParams.push(`-K2DllPath '${k2Bridge.config.k2DllPath}'`);
+        }
+
+        if (siteFilter) {
+            psParams.push(`-SiteFilter '${siteFilter}'`);
+        }
+
+        const cmd = `& '${scriptPath}' ${psParams.join(' ')}`;
+        console.log(`[K2 DISCOVER] Running: powershell ${cmd.substring(0, 100)}...`);
+
+        const result = spawnSync('powershell.exe', [
+            '-NoProfile', '-NonInteractive', '-ExecutionPolicy', 'Bypass',
+            '-Command', cmd
+        ], { encoding: 'utf-8', timeout: 120000 });
+
+        const stdout = (result.stdout || '').trim();
+        const stderr = (result.stderr || '').trim();
+
+        // Log
+        const logDir = path.join(__dirname, 'logs', 'k2');
+        if (!fs.existsSync(logDir)) fs.mkdirSync(logDir, { recursive: true });
+        fs.writeFileSync(
+            path.join(logDir, `${new Date().toISOString().replace(/[:]/g, '-')}-discover.log`),
+            `CMD: ${cmd}\n\nSTDOUT:\n${stdout}\n\nSTDERR:\n${stderr}\n`,
+            'utf-8'
+        );
+
+        if (result.status !== 0 && !stdout) {
+            console.error(`[K2 DISCOVER ERROR] ${stderr.substring(0, 300)}`);
+            return res.status(500).json({ success: false, error: stderr.substring(0, 500) });
+        }
+
+        // Parse JSON result
+        let psResult;
+        try {
+            // Find JSON in stdout (skip any Write-Host noise)
+            const jsonMatch = stdout.match(/\{[\s\S]*\}/);
+            if (!jsonMatch) throw new Error('No JSON in output');
+            psResult = JSON.parse(jsonMatch[0]);
+        } catch (parseErr) {
+            return res.status(500).json({ success: false, error: 'Failed to parse discovery result', raw: stdout.substring(0, 500) });
+        }
+
+        if (!psResult.success) {
+            return res.json(psResult);
+        }
+
+        // Inject discovered SmartObjects into the generator as pre-existing
+        const discoveredSOs = psResult.smartObjects || [];
+        discoveredSOs.forEach(dso => {
+            soGenerator.addDiscoveredSmartObject({
+                name: dso.name,
+                displayName: dso.displayName || dso.name,
+                guid: dso.guid,
+                listTitle: dso.listTitle || dso.serviceObject,
+                serviceInstance: dso.serviceInstance,
+                serviceInstanceGuid: dso.serviceInstanceGuid,
+                brokerType: 'SharePoint',
+                deploymentStatus: 'discovered',
+                properties: (dso.properties || []).map(p => ({
+                    name: p.name,
+                    type: p.type,
+                    k2Type: p.type
+                })),
+                methods: dso.methods || [],
+                propertyCount: dso.propertyCount || 0,
+                methodCount: dso.methodCount || 0,
+                loadMethod: (dso.methods || []).find(m => m.name === 'GetListItemByID')?.name || 'Read',
+                createMethod: (dso.methods || []).find(m => m.name === 'CreateListItem')?.name || 'Create',
+                updateMethod: (dso.methods || []).find(m => m.name === 'UpdateListItem')?.name || 'Update',
+                deleteMethod: (dso.methods || []).find(m => m.name === 'DeleteListItem')?.name || 'Delete',
+                listMethod: (dso.methods || []).find(m => m.name === 'GetListItems')?.name || 'GetList'
+            });
+        });
+
+        saveAllState();
+
+        console.log(`[K2 DISCOVER] Found ${discoveredSOs.length} SP broker SmartObjects (of ${psResult.totalSmartObjects} total)`);
+
+        res.json({
+            success: true,
+            totalOnServer: psResult.totalSmartObjects,
+            discovered: discoveredSOs.length,
+            siteFilter: psResult.siteFilter,
+            smartObjects: discoveredSOs.map(d => ({
+                name: d.name,
+                displayName: d.displayName,
+                listTitle: d.listTitle,
+                serviceInstance: d.serviceInstance,
+                propertyCount: d.propertyCount,
+                methodCount: d.methodCount,
+                methods: (d.methods || []).map(m => m.name)
+            }))
+        });
+
+    } catch (err) {
+        console.error('[K2 DISCOVER ERROR]', err);
+        res.status(500).json({ success: false, error: err.message });
+    }
 });
 
 // Deployment history
@@ -1241,13 +1465,14 @@ app.post('/api/smartforms/generate', (req, res) => {
     const allSOs = soGenerator.getAll();
     if (allSOs.length === 0) {
         return res.status(400).json({
-            error: 'No SmartObjects available. Generate SmartObjects first.'
+            error: 'No SmartObjects available. Run "Discover from K2" or "Generate" first.'
         });
     }
 
-    // Get full SO definitions
+    // Get full SO definitions (includes both generated and discovered)
     const soFull = allSOs.map(so => soGenerator.getById(so.id)).filter(Boolean);
-    const summary = sfGenerator.generate(soFull);
+    const defaultBrokerType = k2Bridge.getConnectionInfo().config?.brokerType || 'SmartBox';
+    const summary = sfGenerator.generate(soFull, { brokerType: defaultBrokerType });
     res.json({ success: true, summary });
 });
 
@@ -1282,21 +1507,74 @@ app.post('/api/smartforms/:id/deploy', async (req, res) => {
 
     try {
         // Build JSON with properties for Deploy-SmartForm.ps1
+        // Use Item or Edit view (NOT ListView which only has a DataGrid, not field controls)
+        const fieldView = sf.views && sf.views.find(v => v.type === 'item' || v.type === 'edit');
+        // Look up the linked SmartObject for accurate data types
+        const linkedSO = sf.smartObjectId ? soGenerator.getById(sf.smartObjectId) : null;
+        const soPropsMap = new Map();
+        if (linkedSO && linkedSO.properties) {
+            linkedSO.properties.forEach(p => soPropsMap.set(p.name, p));
+        }
+
+        const brokerType = sf.brokerType || k2Bridge.getConnectionInfo().config?.brokerType || 'SmartBox';
+
         const formData = {
             name: sf.smartObjectName || sf.name.replace(/ Form$/, '').replace(/ /g, '_'),
             displayName: sf.displayName || sf.name.replace(/ Form$/, ''),
             guid: sf.smartObjectId || sf.id,
-            properties: (sf.views && sf.views[0] && sf.views[0].controls)
-                ? sf.views[0].controls.filter(c => c.type !== 'Button').map(c => ({
-                    name: (c.boundProperty || c.name || '').replace(/[^a-zA-Z0-9_]/g, '_'),
-                    displayName: c.label || c.name || c.boundProperty || '',
-                    soType: c.dataType || 'Text'
-                }))
-                : (sf.properties || []).map(p => ({
+            brokerType,
+            // For SP broker discovered SOs, use the full K2-registered name (e.g. nintex_sp_poc___...Lists_GDDDemo11June)
+            // This is what the form's DataSource binds to at runtime
+            smartObjectName: linkedSO ? linkedSO.name : sf.smartObjectName,
+            smartObjectGuid: linkedSO ? linkedSO.guid : null,
+            listTitle: linkedSO ? linkedSO.listTitle : null,
+            // List ID from SO's sourceItems (SP list GUID)
+            listId: (linkedSO && linkedSO.sourceItems && linkedSO.sourceItems[0]) ? linkedSO.sourceItems[0].id : null,
+            // Site title extracted from webUrl
+            siteTitle: (() => {
+                const url = (linkedSO && linkedSO.webUrl) || '';
+                const m = url.match(/\/sites\/([^/]+)/);
+                return m ? m[1] : '';
+            })(),
+            // Reconstruct SP web URL from SO name if not stored
+            // e.g. nintex_sp_poc___sites___nintexpoc6_Lists_X → http://nintex-sp-poc/sites/nintexpoc6
+            webUrl: (linkedSO && linkedSO.webUrl) ? linkedSO.webUrl : (() => {
+                const soN = (linkedSO ? linkedSO.name : sf.smartObjectName) || '';
+                const parts = soN.replace(/_Lists_.*$/, '').replace(/___/g, '/').replace(/_/g, '-');
+                return parts ? `http://${parts}` : null;
+            })(),
+            properties: (fieldView && fieldView.controls)
+                ? fieldView.controls
+                    .filter(c => c.controlType !== 'Button' && !c.isLabel && c.dataField)
+                    .map(c => {
+                        const soProp = soPropsMap.get(c.dataField);
+                        return {
+                            name: (c.dataField || c.name || '').replace(/[^a-zA-Z0-9_]/g, '_'),
+                            displayName: c.displayName || c.name || c.dataField || '',
+                            soType: (soProp && soProp.k2Type) || 'Text'
+                        };
+                    })
+                : (linkedSO && linkedSO.properties || []).map(p => ({
                     name: p.name || p,
                     displayName: p.displayName || p.name || p,
-                    soType: p.soType || 'Text'
+                    soType: p.k2Type || p.soType || 'Text'
+                })),
+            // Include view rules so PS1 can wire data source bindings
+            views: (sf.views || []).map(v => ({
+                name: v.name,
+                type: v.type,
+                rules: (v.rules || []).map(r => ({
+                    name: r.name,
+                    event: r.event,
+                    method: r.smartObjectMethod || null,
+                    actions: (r.actions || []).map(a => ({
+                        type: a.type,
+                        method: a.method || a.methodIfTrue || null,
+                        methodIfTrue: a.methodIfTrue || null,
+                        methodIfFalse: a.methodIfFalse || null
+                    }))
                 }))
+            }))
         };
 
         const fs = require('fs');
@@ -1364,17 +1642,34 @@ app.post('/api/smartforms/deploy-all', async (req, res) => {
             const sf = sfGenerator.getById(sfSummary.id);
             sfGenerator.updateDeploymentStatus(sfSummary.id, 'deploying');
 
+            // Use Item or Edit view (NOT ListView) for field controls
+            const fieldView = sf.views && sf.views.find(v => v.type === 'item' || v.type === 'edit');
+            const linkedSO = sf.smartObjectId ? soGenerator.getById(sf.smartObjectId) : null;
+            const soPropsMap = new Map();
+            if (linkedSO && linkedSO.properties) {
+                linkedSO.properties.forEach(p => soPropsMap.set(p.name, p));
+            }
+
             const formData = {
                 name: sf.smartObjectName || sf.name.replace(/ Form$/, '').replace(/ /g, '_'),
                 displayName: sf.displayName || sf.name.replace(/ Form$/, ''),
                 guid: sf.smartObjectId || sf.id,
-                properties: (sf.views && sf.views[0] && sf.views[0].controls)
-                    ? sf.views[0].controls.filter(c => c.type !== 'Button').map(c => ({
-                        name: (c.boundProperty || c.name || '').replace(/[^a-zA-Z0-9_]/g, '_'),
-                        displayName: c.label || c.name || c.boundProperty || '',
-                        soType: c.dataType || 'Text'
+                properties: (fieldView && fieldView.controls)
+                    ? fieldView.controls
+                        .filter(c => c.controlType !== 'Button' && !c.isLabel && c.dataField)
+                        .map(c => {
+                            const soProp = soPropsMap.get(c.dataField);
+                            return {
+                                name: (c.dataField || c.name || '').replace(/[^a-zA-Z0-9_]/g, '_'),
+                                displayName: c.displayName || c.name || c.dataField || '',
+                                soType: (soProp && soProp.k2Type) || 'Text'
+                            };
+                        })
+                    : (linkedSO && linkedSO.properties || []).map(p => ({
+                        name: p.name || p,
+                        displayName: p.displayName || p.name || p,
+                        soType: p.k2Type || p.soType || 'Text'
                     }))
-                    : []
             };
 
             const fs = require('fs');
@@ -2051,6 +2346,238 @@ app.post('/api/blueprints/deploy-all', async (req, res) => {
     }
 
     res.json({ success: true, deployed, failed, total: pending.length, results });
+});
+
+// ============================================================
+// API Routes — KSPX Workflow Deployment Pipeline
+// Uses KPRX emitter + KSPX assembler (ported from Nintex POC)
+// ============================================================
+
+const { generateKprx, blueprintToWorkflowIR } = require('./services/kprxEmitter');
+const { assemble, writeAssemblyToDisk, createKspxArchive, emitEnvironmentConfig } = require('./services/kspxAssembler');
+
+// Generate KPRX XML from a blueprint
+app.post('/api/kspx/generate-kprx/:blueprintId', async (req, res) => {
+    const bp = bpGenerator.getById(req.params.blueprintId);
+    if (!bp) return res.status(404).json({ error: 'Blueprint not found' });
+
+    try {
+        const ir = blueprintToWorkflowIR(bp, {
+            listTitle: req.body.listTitle || bp.listTitle,
+            webUrl: req.body.webUrl || bp.webUrl,
+            smartObjectName: req.body.smartObjectName
+        });
+
+        const kprxXml = generateKprx(ir);
+
+        // Save to k2-export directory
+        const exportDir = path.join(__dirname, 'k2-export');
+        if (!fs.existsSync(exportDir)) fs.mkdirSync(exportDir, { recursive: true });
+        const kprxPath = path.join(exportDir, `${bp.workflowName || 'workflow'}.kprx`);
+        fs.writeFileSync(kprxPath, kprxXml, 'utf8');
+
+        res.json({
+            success: true,
+            workflowName: bp.workflowName,
+            kprxPath,
+            kprxXmlLength: kprxXml.length,
+            ir: {
+                name: ir.name,
+                activityCount: ir.activities.length,
+                variableCount: ir.variables.length,
+                associationCount: ir.associations.length,
+                band: ir.band
+            }
+        });
+    } catch (err) {
+        console.error('[KPRX Gen Error]', err.message);
+        res.json({ success: false, error: err.message });
+    }
+});
+
+// Assemble a KSPX package from one or more blueprints
+app.post('/api/kspx/assemble', async (req, res) => {
+    const { blueprintIds, siteName, targetEnvironment } = req.body;
+
+    if (!blueprintIds || blueprintIds.length === 0) {
+        return res.status(400).json({ error: 'No blueprint IDs provided' });
+    }
+
+    try {
+        const workflowDefs = [];
+        const quarantined = [];
+
+        for (const bpId of blueprintIds) {
+            const bp = bpGenerator.getById(bpId);
+            if (!bp) { quarantined.push(`Blueprint ${bpId} not found`); continue; }
+
+            const ir = blueprintToWorkflowIR(bp, {
+                listTitle: bp.listTitle,
+                webUrl: bp.webUrl
+            });
+
+            try {
+                const kprxXml = generateKprx(ir);
+                workflowDefs.push({ name: bp.workflowName || bp.name, kprxXml });
+            } catch (err) {
+                quarantined.push(`${bp.workflowName}: ${err.message}`);
+            }
+        }
+
+        const k2Host = k2Bridge.config.serverUrl
+            ? k2Bridge.config.serverUrl.replace(/^https?:\/\//, '').split(':')[0]
+            : 'localhost';
+
+        const assemblyOpts = {
+            projectName: siteName || 'K2_Migration',
+            category: `Workflow/Generated/${siteName || 'Default'}`,
+            targetEnvironment: targetEnvironment || 'Development',
+            k2Server: k2Host,
+            k2Port: k2Bridge.config.port || 5555,
+            sharepointUrl: req.body.webUrl || ''
+        };
+
+        const result = assemble(assemblyOpts, workflowDefs, [], quarantined);
+
+        // Write to disk
+        const os = require('os');
+        const outDir = path.join(os.tmpdir(), `k2_kspx_${Date.now()}`);
+        writeAssemblyToDisk(result, outDir);
+
+        // Create .kspx archive
+        const kspxPath = path.join(outDir, `${assemblyOpts.projectName}.kspx`);
+        await createKspxArchive(result, kspxPath);
+
+        res.json({
+            success: true,
+            kspxPath,
+            outDir,
+            summary: result.summary,
+            totalFiles: result.totalFiles,
+            quarantined: quarantined
+        });
+    } catch (err) {
+        console.error('[KSPX Assemble Error]', err.message);
+        res.json({ success: false, error: err.message });
+    }
+});
+
+// Deploy a KSPX package to K2
+app.post('/api/kspx/deploy', async (req, res) => {
+    const { kspxPath, dryRun, category } = req.body;
+
+    if (!kspxPath) {
+        return res.status(400).json({ error: 'kspxPath is required' });
+    }
+
+    try {
+        // Generate environment config
+        const os = require('os');
+        const envConfigPath = path.join(os.tmpdir(), `k2_envconfig_${Date.now()}.xml`);
+        const k2Host = k2Bridge.config.serverUrl
+            ? k2Bridge.config.serverUrl.replace(/^https?:\/\//, '').split(':')[0]
+            : 'localhost';
+
+        const envXml = emitEnvironmentConfig({
+            targetEnvironment: req.body.targetEnvironment || 'Development',
+            k2Server: k2Host,
+            k2Port: k2Bridge.config.port || 5555,
+            sharepointUrl: req.body.webUrl || ''
+        });
+        fs.writeFileSync(envConfigPath, envXml, 'utf8');
+
+        const result = await k2Bridge.deployWorkflowKspx(kspxPath, envConfigPath, {
+            dryRun: dryRun || false,
+            category: category || 'Workflow/Generated'
+        });
+
+        // Cleanup temp env config
+        try { fs.unlinkSync(envConfigPath); } catch (e) {}
+
+        res.json(result);
+    } catch (err) {
+        console.error('[KSPX Deploy Error]', err.message);
+        res.json({ success: false, error: err.message });
+    }
+});
+
+// Full E2E: Blueprint → KPRX → KSPX → Deploy (single click)
+app.post('/api/kspx/deploy-workflow/:blueprintId', async (req, res) => {
+    const bp = bpGenerator.getById(req.params.blueprintId);
+    if (!bp) return res.status(404).json({ error: 'Blueprint not found' });
+
+    try {
+        const result = await k2Bridge.generateAndDeployWorkflow(bp, {
+            siteName: req.body.siteName,
+            listTitle: req.body.listTitle || bp.listTitle,
+            webUrl: req.body.webUrl || bp.webUrl,
+            smartObjectName: req.body.smartObjectName,
+            targetEnvironment: req.body.targetEnvironment || 'Development',
+            dryRun: req.body.dryRun || false
+        });
+
+        // Update blueprint status based on deployment result
+        if (result.status === 'deployed') {
+            bpGenerator.updateStatus(bp.id, 'completed');
+        }
+
+        res.json({ success: result.status === 'deployed', deployment: result });
+    } catch (err) {
+        console.error('[E2E WF Deploy Error]', err.message);
+        res.json({ success: false, error: err.message });
+    }
+});
+
+// Deploy ALL pending blueprints via KSPX pipeline
+app.post('/api/kspx/deploy-all', async (req, res) => {
+    const pending = bpGenerator.getAll().filter(bp => bp.status !== 'completed');
+    if (pending.length === 0) {
+        return res.status(400).json({ error: 'No pending blueprints to deploy' });
+    }
+
+    let deployed = 0, failed = 0;
+    const results = [];
+
+    for (const bpSummary of pending) {
+        const bp = bpGenerator.getById(bpSummary.id);
+        if (!bp) { failed++; results.push({ name: bpSummary.workflowName, status: 'not_found' }); continue; }
+
+        try {
+            const result = await k2Bridge.generateAndDeployWorkflow(bp, {
+                siteName: req.body.siteName,
+                listTitle: bp.listTitle,
+                webUrl: bp.webUrl,
+                targetEnvironment: req.body.targetEnvironment || 'Development',
+                dryRun: req.body.dryRun || false
+            });
+
+            if (result.status === 'deployed') {
+                bpGenerator.updateStatus(bp.id, 'completed');
+                deployed++;
+                results.push({ name: bp.workflowName, status: 'deployed', deploymentId: result.id });
+            } else {
+                failed++;
+                results.push({ name: bp.workflowName, status: 'failed', error: result.error });
+            }
+        } catch (err) {
+            failed++;
+            results.push({ name: bpSummary.workflowName, status: 'failed', error: err.message });
+        }
+    }
+
+    res.json({ success: true, deployed, failed, total: pending.length, results });
+});
+
+// Harvest existing K2 artifacts
+app.post('/api/kspx/harvest', async (req, res) => {
+    const { category, outFile } = req.body;
+    if (!category) return res.status(400).json({ error: 'category is required' });
+
+    const os = require('os');
+    const outputPath = outFile || path.join(os.tmpdir(), `k2_harvest_${Date.now()}.kspx`);
+
+    const result = await k2Bridge.harvestKspx(category, outputPath);
+    res.json(result);
 });
 
 // ============================================================

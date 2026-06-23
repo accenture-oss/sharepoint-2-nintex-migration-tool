@@ -778,6 +778,8 @@ async function configureK2() {
     const serverUrl = document.getElementById('k2-server-url').value;
     const port = parseInt(document.getElementById('k2-server-port').value) || 5555;
     const securityLabel = document.getElementById('k2-security-label').value || 'K2';
+    const brokerTypeEl = document.getElementById('k2-broker-type');
+    const brokerType = brokerTypeEl ? brokerTypeEl.value : 'SmartBox';
 
     if (!serverUrl) { showToast('K2 server URL is required', 'error'); return; }
 
@@ -785,11 +787,11 @@ async function configureK2() {
         const res = await fetch(`${API}/api/k2/configure`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ serverUrl, port, securityLabel })
+            body: JSON.stringify({ serverUrl, port, securityLabel, brokerType })
         });
         const data = await res.json();
         if (data.success) {
-            showToast('K2 server configured ✓', 'success');
+            showToast(`K2 server configured ✓ (${brokerType} broker)`, 'success');
             updateK2Status();
         }
     } catch (err) {
@@ -859,6 +861,37 @@ async function generateSmartObjects() {
     }
 }
 
+async function discoverFromK2() {
+    showToast('Discovering existing SmartObjects from K2 SP2013 Broker...', 'info');
+    const btn = document.getElementById('btn-discover-k2');
+    if (btn) { btn.disabled = true; btn.innerHTML = '⏳ Discovering...'; }
+
+    try {
+        const siteFilter = document.getElementById('discover-site-filter')?.value || '';
+        const res = await fetch(`${API}/api/k2/discover-smartobjects`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ siteFilter })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+            if (data.discovered > 0) {
+                showToast(`✓ Discovered ${data.discovered} SP broker SmartObjects (${data.totalOnServer} total on K2)`, 'success');
+            } else {
+                showToast(`No SP broker SmartObjects found matching filter. ${data.totalOnServer} total SOs on server. Try a different site name.`, 'warning');
+            }
+            await loadSmartObjects();
+        } else {
+            showToast('Discovery failed: ' + (data.error || 'Unknown error'), 'error');
+        }
+    } catch (err) {
+        showToast('Discovery failed: ' + err.message, 'error');
+    } finally {
+        if (btn) { btn.disabled = false; btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Discover from K2'; }
+    }
+}
+
 async function loadSmartObjects() {
     try {
         const res = await fetch(`${API}/api/smartobjects`);
@@ -880,11 +913,14 @@ async function loadSmartObjects() {
 function renderSOStats(stats) {
     if (!stats || stats.total === 0) return;
 
+    const discCount = stats.discovered || 0;
+    const genCount = stats.total - discCount;
+
     document.getElementById('so-stats').innerHTML = `
-        <div class="stat-tile"><div class="stat-label">Generated</div><div class="stat-value cyan">${stats.total}</div><div class="stat-sub">${stats.totalMethods} CRUD methods</div></div>
-        <div class="stat-tile"><div class="stat-label">Deployed</div><div class="stat-value emerald">${stats.deployed}</div><div class="stat-sub">${stats.pending} pending | ${stats.failed} failed</div></div>
+        <div class="stat-tile"><div class="stat-label">${discCount > 0 ? 'Discovered' : 'Generated'}</div><div class="stat-value cyan">${stats.total}</div><div class="stat-sub">${discCount > 0 ? discCount + ' from K2 broker' : stats.totalMethods + ' CRUD methods'}</div></div>
+        <div class="stat-tile"><div class="stat-label">${discCount > 0 ? 'Live on K2' : 'Deployed'}</div><div class="stat-value emerald">${stats.deployed + discCount}</div><div class="stat-sub">${stats.pending > 0 ? stats.pending + ' pending' : 'SP2013 broker'}</div></div>
         <div class="stat-tile"><div class="stat-label">Properties</div><div class="stat-value" style="color:var(--accent-blue)">${stats.totalProperties}</div><div class="stat-sub">Across all SmartObjects</div></div>
-        <div class="stat-tile"><div class="stat-label">Blocked Fields</div><div class="stat-value amber">${stats.blockedFields}</div><div class="stat-sub">Need custom Service Broker</div></div>
+        <div class="stat-tile"><div class="stat-label">Methods</div><div class="stat-value purple">${stats.totalMethods}</div><div class="stat-sub">${discCount > 0 ? 'GetListItems, Create...' : 'CRUD operations'}</div></div>
     `;
 }
 
@@ -903,21 +939,25 @@ function renderSOList(smartObjects) {
 
     smartObjects.forEach(so => {
         const statusClass = so.deploymentStatus === 'deployed' ? 'simple' :
+                           so.deploymentStatus === 'discovered' ? 'simple' :
                            so.deploymentStatus === 'deploying' ? 'medium' :
                            so.deploymentStatus === 'failed' ? 'critical' : 'medium';
+        const statusLabel = so.deploymentStatus === 'discovered' ? '✓ live on K2' : so.deploymentStatus;
+        const brokerTag = so.brokerType === 'SharePoint'
+            ? '<span style="font-size:0.6rem; color:var(--accent-cyan); margin-left:4px;">(SP broker)</span>' : '';
 
         html += `<tr class="${selectedSOId === so.id ? 'selected' : ''}" style="cursor:pointer;" onclick="selectSmartObject('${so.id}')">
             <td style="color:var(--text-primary); font-weight:600;">
                 <div style="display:flex;align-items:center;gap:8px;">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="var(--accent-cyan)" stroke-width="2" width="16" height="16"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-                    ${esc(so.displayName)}
+                    ${esc(so.displayName)}${brokerTag}
                 </div>
             </td>
-            <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; font-size:0.75rem;">${esc(so.webUrl || '')}</td>
+            <td style="max-width:200px; overflow:hidden; text-overflow:ellipsis; font-size:0.75rem;">${esc(so.listTitle || so.webUrl || '')}</td>
             <td>${so.propertyCount}</td>
             <td>${so.methodCount}</td>
             <td><span class="badge badge-${so.complexity}">${so.complexity}</span></td>
-            <td><span class="badge badge-${statusClass}">${so.deploymentStatus}</span>${so.hasBlockedFields ? ' <span class="badge badge-blocked" title="Has fields requiring custom Service Broker">⚠</span>' : ''}</td>
+            <td><span class="badge badge-${statusClass}">${statusLabel}</span>${so.hasBlockedFields ? ' <span class="badge badge-blocked" title="Has fields requiring custom Service Broker">⚠</span>' : ''}</td>
             <td>
                 <button class="btn btn-outline btn-sm" onclick="event.stopPropagation(); selectSmartObject('${so.id}')">Preview</button>
                 ${so.deploymentStatus === 'pending' ? `<button class="btn btn-success btn-sm" onclick="event.stopPropagation(); deploySingleSO('${so.id}')">Deploy</button>` : ''}
@@ -1121,6 +1161,179 @@ async function reconcileSmartFormsWithK2() {
         btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg> Reconcile with K2';
         setTimeout(() => { statusEl.style.display = 'none'; }, 30000);
     }
+}
+
+// ── SP Broker: 1-Click Form Deploy ──────────────────────────
+
+let spBrokerLists = [];
+let spBrokerSiteUrl = '';
+let spBrokerSiteTitle = '';
+
+async function spBrokerDiscoverLists() {
+    const siteUrl = document.getElementById('sp-broker-site-url').value.trim();
+    if (!siteUrl) { showToast('Enter a SharePoint Site URL', 'error'); return; }
+
+    const btn = document.getElementById('btn-sp-discover');
+    const statusEl = document.getElementById('sp-broker-status');
+    const container = document.getElementById('sp-broker-list-container');
+    const badge = document.getElementById('sp-broker-badge');
+
+    btn.disabled = true;
+    btn.textContent = 'Discovering...';
+    statusEl.style.display = 'block';
+    statusEl.style.background = 'rgba(6,182,212,0.1)';
+    statusEl.style.color = 'var(--accent-cyan)';
+    statusEl.textContent = `Connecting to ${siteUrl}...`;
+
+    try {
+        const res = await fetch(`${API}/api/sp-broker/discover-lists`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ siteUrl })
+        });
+        const data = await res.json();
+
+        if (data.success && data.lists) {
+            spBrokerLists = data.lists;
+            spBrokerSiteUrl = data.siteUrl || siteUrl;
+            spBrokerSiteTitle = data.siteTitle || '';
+
+            badge.textContent = `${data.lists.length} lists`;
+            badge.style.background = 'var(--accent-emerald)';
+            badge.style.color = '#fff';
+
+            statusEl.style.background = 'rgba(16,185,129,0.1)';
+            statusEl.style.color = 'var(--accent-emerald)';
+            statusEl.textContent = `✓ Found ${data.lists.length} lists on "${data.siteTitle}" (${siteUrl})`;
+
+            document.getElementById('btn-sp-deploy-all').disabled = false;
+            renderSpBrokerLists();
+            showToast(`Discovered ${data.lists.length} lists`, 'success');
+        } else {
+            statusEl.style.background = 'rgba(239,68,68,0.1)';
+            statusEl.style.color = 'var(--accent-red)';
+            statusEl.textContent = '✗ ' + (data.error || 'Discovery failed');
+            container.innerHTML = '';
+            showToast(data.error || 'Discovery failed', 'error');
+        }
+    } catch (err) {
+        statusEl.style.background = 'rgba(239,68,68,0.1)';
+        statusEl.style.color = 'var(--accent-red)';
+        statusEl.textContent = '✗ ' + err.message;
+        showToast('Discovery error: ' + err.message, 'error');
+    }
+
+    btn.disabled = false;
+    btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg> Discover Lists';
+}
+
+function renderSpBrokerLists() {
+    const container = document.getElementById('sp-broker-list-container');
+    if (!spBrokerLists.length) {
+        container.innerHTML = '<div style="padding:1rem; color:var(--text-muted); font-size:0.82rem;">No lists found.</div>';
+        return;
+    }
+
+    let html = `<table class="data-table">
+        <thead><tr>
+            <th>List Name</th><th>Items</th><th>Fields</th><th>Created</th><th>Status</th><th>Action</th>
+        </tr></thead><tbody>`;
+
+    spBrokerLists.forEach((list, idx) => {
+        const statusId = `sp-broker-status-${idx}`;
+        html += `<tr id="sp-broker-row-${idx}">
+            <td style="color:var(--text-primary); font-weight:500;">${esc(list.listTitle)}</td>
+            <td>${list.itemCount}</td>
+            <td>${list.fieldCount >= 0 ? list.fieldCount : '—'}</td>
+            <td style="font-size:0.75rem; color:var(--text-muted);">${list.created || '—'}</td>
+            <td><span class="badge" id="${statusId}" style="font-size:0.68rem;">pending</span></td>
+            <td>
+                <button class="btn btn-primary btn-sm" id="sp-broker-btn-${idx}" onclick="spBrokerDeployForms(${idx})" style="font-size:0.72rem; padding:3px 10px;">
+                    Deploy
+                </button>
+            </td>
+        </tr>`;
+    });
+
+    html += '</tbody></table>';
+    container.innerHTML = html;
+}
+
+async function spBrokerDeployForms(idx) {
+    const list = spBrokerLists[idx];
+    const btn = document.getElementById(`sp-broker-btn-${idx}`);
+    const status = document.getElementById(`sp-broker-status-${idx}`);
+
+    btn.disabled = true;
+    btn.textContent = 'Deploying...';
+    status.textContent = 'deploying';
+    status.style.background = 'var(--accent-amber)';
+    status.style.color = '#000';
+
+    try {
+        const res = await fetch(`${API}/api/sp-broker/deploy-forms`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                siteUrl: spBrokerSiteUrl,
+                siteTitle: spBrokerSiteTitle,
+                listId: list.listId,
+                listTitle: list.listTitle
+            })
+        });
+        const data = await res.json();
+
+        if (data.success) {
+            status.textContent = '✓ deployed';
+            status.style.background = 'var(--accent-emerald)';
+            status.style.color = '#fff';
+            btn.textContent = '✓ Done';
+            btn.classList.remove('btn-primary');
+            btn.classList.add('btn-outline');
+
+            // Show form URLs
+            const row = document.getElementById(`sp-broker-row-${idx}`);
+            if (data.newFormUrl || data.editFormUrl) {
+                const urlHtml = `<tr><td colspan="6" style="padding:0.5rem 1rem; font-size:0.75rem; background:rgba(16,185,129,0.05); border-top: 1px solid var(--border-subtle);">
+                    <strong style="color:var(--accent-emerald);">Forms deployed:</strong>&nbsp;
+                    ${data.newFormUrl ? `<a href="${esc(data.newFormUrl)}" target="_blank" style="color:var(--accent-cyan);">New</a> · ` : ''}
+                    ${data.editFormUrl ? `<a href="${esc(data.editFormUrl)}" target="_blank" style="color:var(--accent-cyan);">Edit</a> · ` : ''}
+                    ${data.displayFormUrl ? `<a href="${esc(data.displayFormUrl)}" target="_blank" style="color:var(--accent-cyan);">Display</a>` : ''}
+                </td></tr>`;
+                row.insertAdjacentHTML('afterend', urlHtml);
+            }
+            showToast(`${list.listTitle}: forms deployed ✓`, 'success');
+        } else {
+            status.textContent = '✗ failed';
+            status.style.background = 'var(--accent-red)';
+            status.style.color = '#fff';
+            btn.textContent = 'Retry';
+            btn.disabled = false;
+            showToast(`${list.listTitle}: ${data.error}`, 'error');
+        }
+    } catch (err) {
+        status.textContent = '✗ error';
+        status.style.background = 'var(--accent-red)';
+        status.style.color = '#fff';
+        btn.textContent = 'Retry';
+        btn.disabled = false;
+        showToast(`${list.listTitle}: ${err.message}`, 'error');
+    }
+}
+
+async function spBrokerDeployAll() {
+    const btn = document.getElementById('btn-sp-deploy-all');
+    btn.disabled = true;
+    btn.textContent = 'Deploying...';
+
+    for (let i = 0; i < spBrokerLists.length; i++) {
+        const status = document.getElementById(`sp-broker-status-${i}`);
+        if (status && status.textContent === '✓ deployed') continue; // skip already deployed
+        await spBrokerDeployForms(i);
+    }
+
+    btn.textContent = '✓ All Deployed';
+    showToast('All lists deployed!', 'success');
 }
 
 async function generateSmartForms() {
@@ -2253,10 +2466,15 @@ async function saveK2Config() {
     const serverUrl = document.getElementById('k2-server-url-conn').value;
     const port = parseInt(document.getElementById('k2-server-port-conn').value) || 5555;
     const securityLabel = document.getElementById('k2-security-label-conn').value || 'K2';
+    const brokerTypeEl = document.getElementById('k2-broker-type-conn');
+    const brokerType = brokerTypeEl ? brokerTypeEl.value : 'SmartBox';
     const sqlServer = document.getElementById('k2-sql-server-conn').value;
     const sqlCatalog = document.getElementById('k2-sql-catalog-conn').value;
     const sqlUser = document.getElementById('k2-sql-user-conn').value;
     const sqlPassword = document.getElementById('k2-sql-pass-conn').value;
+    const k2User = document.getElementById('k2-user-conn').value;
+    const k2Password = document.getElementById('k2-user-pass-conn').value;
+    const k2Domain = document.getElementById('k2-user-domain-conn').value;
 
     if (!serverUrl) { showToast('K2 server URL is required', 'error'); return; }
 
@@ -2264,18 +2482,20 @@ async function saveK2Config() {
         const res = await fetch(`${API}/api/k2/configure`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ serverUrl, port, securityLabel, sqlServer, sqlCatalog, sqlUser, sqlPassword })
+            body: JSON.stringify({ serverUrl, port, securityLabel, brokerType, sqlServer, sqlCatalog, sqlUser, sqlPassword, k2User, k2Password, k2Domain })
         });
         const data = await res.json();
         if (data.success) {
-            showToast('K2 configuration saved ✓', 'success');
+            showToast(`K2 configuration saved ✓ (${brokerType} broker)`, 'success');
             // Also sync to SmartObjects tab fields if they exist
             const soUrl = document.getElementById('k2-server-url');
             const soPort = document.getElementById('k2-server-port');
             const soLabel = document.getElementById('k2-security-label');
+            const soBroker = document.getElementById('k2-broker-type');
             if (soUrl) soUrl.value = serverUrl;
             if (soPort) soPort.value = port;
             if (soLabel) soLabel.value = securityLabel;
+            if (soBroker) soBroker.value = brokerType;
             updateK2ConnBadge(true);
         }
     } catch (err) {
@@ -2366,6 +2586,9 @@ async function loadK2ConnState() {
             if (el('k2-security-label-conn')) el('k2-security-label-conn').value = data.config.securityLabel || 'K2';
             if (el('k2-sql-server-conn')) el('k2-sql-server-conn').value = data.config.sqlServer || '';
             if (el('k2-sql-catalog-conn')) el('k2-sql-catalog-conn').value = data.config.sqlCatalog || 'K2';
+            if (el('k2-user-conn')) el('k2-user-conn').value = data.config.k2User || '';
+            if (el('k2-user-domain-conn')) el('k2-user-domain-conn').value = data.config.k2Domain || '';
+            // Don't restore password for security — user must re-enter after restart
             updateK2ConnBadge(!!data.config.serverUrl);
         }
     } catch (e) { /* ignore on fresh start */ }

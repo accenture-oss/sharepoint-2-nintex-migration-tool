@@ -232,6 +232,19 @@ const RULE_TEMPLATES = {
     ]
 };
 
+// SharePoint 2013 Broker method name mapping
+// SmartBox uses: Create, Save (Update), Delete, Load (Read), GetList
+// SP Broker uses: CreateListItem, UpdateListItem, DeleteListItem, GetListItemByID, GetListItems
+const SP_BROKER_METHOD_MAP = {
+    'GetList': 'GetListItems',
+    'Read': 'GetListItemByID',
+    'Load': 'GetListItemByID',
+    'Create': 'CreateListItem',
+    'Update': 'UpdateListItem',
+    'Save': 'UpdateListItem',
+    'Delete': 'DeleteListItem'
+};
+
 // Validation rule patterns based on property types
 const VALIDATION_PATTERNS = {
     'Text':     { maxLength: 255, pattern: null },
@@ -266,6 +279,8 @@ class SmartFormGenerator {
 
         const soArray = Array.isArray(smartObjects) ? smartObjects : Array.from(smartObjects.values());
         const tierMap = options.tierClassifications || new Map();
+        const brokerType = options.brokerType || 'SmartBox';
+        this._currentBrokerType = brokerType;  // Used by _generateView for method naming
 
         let generated = 0;
         let errors = 0;
@@ -276,6 +291,10 @@ class SmartFormGenerator {
 
         for (const so of soArray) {
             try {
+                // Use per-SO broker type if set (discovered SOs have brokerType='SharePoint')
+                // Otherwise fall back to the global option
+                this._currentBrokerType = so.brokerType || brokerType;
+
                 // Check if this SO has a workflow that needs an approval view
                 const classification = tierMap.get(so.name) || tierMap.get(so.listTitle) || null;
                 const includeApproval = classification &&
@@ -492,6 +511,7 @@ class SmartFormGenerator {
     _generateSmartForm(so, includeApproval = false, tierClassification = null, workflowBinding = null) {
         const sfGuid = uuidv4();
         const sfName = `${so.name}_Form`;
+        const brokerType = this._currentBrokerType || 'SmartBox';
 
         // Generate standard views (list, item, edit)
         const views = [];
@@ -593,6 +613,7 @@ class SmartFormGenerator {
             smartObjectName: so.name,
             smartObjectDisplayName: so.displayName,
             complexity: so.complexity,
+            brokerType,
             views,
             manualConfigItems,
             deploymentStatus: 'pending',
@@ -602,7 +623,8 @@ class SmartFormGenerator {
                 sourceSmartObject: so.guid,
                 sourceLegacyList: so.listTitle,
                 sourceLegacySite: so.webUrl,
-                targetPlatform: 'K2 Five 5.8 FP26'
+                targetPlatform: 'K2 Five 5.8 FP26',
+                brokerType
             }
         };
     }
@@ -731,13 +753,35 @@ class SmartFormGenerator {
             }
         }
 
-        // Generate rules from templates
-        const rules = (RULE_TEMPLATES[viewKey] || []).map(template => ({
-            id: `rule-${uuidv4().slice(0, 6)}`,
-            ...template,
-            viewName: viewTemplate.name,
-            smartObjectMethod: template.actions.find(a => a.method)?.method || null
-        }));
+        // Generate rules from templates, mapping method names for SP Broker
+        const brokerType = this._currentBrokerType || 'SmartBox';
+        const rules = (RULE_TEMPLATES[viewKey] || []).map(template => {
+            // Deep clone template to avoid mutating the constant
+            const cloned = JSON.parse(JSON.stringify(template));
+
+            // Map method names if using SharePoint 2013 Broker
+            if (brokerType === 'SharePoint') {
+                cloned.actions = cloned.actions.map(action => {
+                    if (action.method && SP_BROKER_METHOD_MAP[action.method]) {
+                        action.method = SP_BROKER_METHOD_MAP[action.method];
+                    }
+                    if (action.methodIfTrue && SP_BROKER_METHOD_MAP[action.methodIfTrue]) {
+                        action.methodIfTrue = SP_BROKER_METHOD_MAP[action.methodIfTrue];
+                    }
+                    if (action.methodIfFalse && SP_BROKER_METHOD_MAP[action.methodIfFalse]) {
+                        action.methodIfFalse = SP_BROKER_METHOD_MAP[action.methodIfFalse];
+                    }
+                    return action;
+                });
+            }
+
+            return {
+                id: `rule-${uuidv4().slice(0, 6)}`,
+                ...cloned,
+                viewName: viewTemplate.name,
+                smartObjectMethod: cloned.actions.find(a => a.method)?.method || null
+            };
+        });
 
         return {
             id: `view-${viewGuid.slice(0, 8)}`,

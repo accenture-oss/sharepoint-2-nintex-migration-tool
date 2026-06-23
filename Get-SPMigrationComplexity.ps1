@@ -479,7 +479,7 @@ $AuditScriptBlock = {
                     WebUrl              = $webUrl
                     WebTitle            = $webTitle
                     ListTitle           = $list.Title
-                    ListUrl             = $webUrl.TrimEnd('/') + '/' + $list.DefaultViewUrl.TrimStart('/')
+                    ListUrl             = if ($list.DefaultViewUrl) { $webUrl.TrimEnd('/') + '/' + $list.DefaultViewUrl.TrimStart('/') } else { $webUrl }
                     WorkflowName        = $wf.Name
                     WorkflowType        = "SP2010"
                     ActivityCount       = $counts.ActivityCount
@@ -559,7 +559,7 @@ $AuditScriptBlock = {
                         WebUrl              = $webUrl
                         WebTitle            = $webTitle
                         ListTitle           = $list.Title
-                        ListUrl             = $webUrl.TrimEnd('/') + '/' + $list.DefaultViewUrl.TrimStart('/')
+                        ListUrl             = if ($list.DefaultViewUrl) { $webUrl.TrimEnd('/') + '/' + $list.DefaultViewUrl.TrimStart('/') } else { $webUrl }
                         WorkflowName        = $sub.Name
                         WorkflowType        = "SP2013"
                         ActivityCount       = $counts.ActivityCount
@@ -576,12 +576,20 @@ $AuditScriptBlock = {
             # SP2013 workflow services not deployed on this farm — skip silently
         }
 
-        # ── InfoPath Form Libraries (BaseTemplate 115) ────────────────────────
+        # ── InfoPath Forms (Template 115 + SPD-customized lists) ───────────────
+        # Template 115 = dedicated Form Library
+        # Any other list type can also have InfoPath forms customized via SPD
+        #   (XSN stored in list root folder or Forms subfolder)
         $ipLists = @($visibleLists | Where-Object { $_.BaseTemplate -eq 115 })
 
-        if ($ipLists.Count -gt 0) {
-            # Fix #3: Batch load root folders, files, and content types for all IP lists
-            foreach ($list in $ipLists) {
+        # Check ALL other visible lists for InfoPath customization
+        $candidateLists = @($visibleLists | Where-Object { $_.BaseTemplate -ne 115 })
+
+        # Batch load root folders + files + content types for ALL candidates
+        $allCandidates = @($ipLists) + @($candidateLists)
+
+        if ($allCandidates.Count -gt 0) {
+            foreach ($list in $allCandidates) {
                 $rootFolder = $list.RootFolder
                 $ctx.Load($rootFolder)
                 $ctx.Load($rootFolder.Files)
@@ -594,7 +602,48 @@ $AuditScriptBlock = {
                     SiteUrl = $WebUrl; Context = "Batch InfoPath folder load"
                     Error   = $_.Exception.Message
                 })
-                $ipLists = @()  # Skip InfoPath processing on batch failure
+                $allCandidates = @()
+            }
+
+            # For candidate lists (non-115), check if they actually have XSN files
+            # or InfoPath content types before including them
+            foreach ($cList in $candidateLists) {
+                $hasXsn = $false
+                try {
+                    $xsnCheck = @($cList.RootFolder.Files | Where-Object { $_.Name -like "*.xsn" })
+                    if ($xsnCheck.Count -gt 0) { $hasXsn = $true }
+                } catch { }
+
+                # List Settings > Form Settings > "Customize in InfoPath"
+                # stores XSN in the Item/ subfolder (content type folder)
+                if (-not $hasXsn) {
+                    foreach ($subPath in @("Item", "Forms")) {
+                        try {
+                            $sub = $ctx.Web.GetFolderByServerRelativeUrl($cList.RootFolder.ServerRelativeUrl + "/" + $subPath)
+                            $ctx.Load($sub)
+                            $ctx.Load($sub.Files)
+                            $ctx.ExecuteQuery()
+                            $subXsn = @($sub.Files | Where-Object { $_.Name -like "*.xsn" })
+                            if ($subXsn.Count -gt 0) { $hasXsn = $true; break }
+                        } catch { }
+                    }
+                }
+
+                if (-not $hasXsn) {
+                    # Also check content types for InfoPath indicators
+                    try {
+                        foreach ($ct in $cList.ContentTypes) {
+                            if ($ct.Name -match 'InfoPath|Form' -or $ct.DocumentTemplate -like '*.xsn*') {
+                                $hasXsn = $true
+                                break
+                            }
+                        }
+                    } catch { }
+                }
+
+                if ($hasXsn -and $cList -notin $ipLists) {
+                    $ipLists += $cList
+                }
             }
         }
 
@@ -602,15 +651,45 @@ $AuditScriptBlock = {
             try {
                 $rootFolder   = $list.RootFolder
                 $lastCreated  = Get-BatchedLastCreated -ListId $list.Id.ToString()
-                $formTypeName = if ($list.ContentTypes.Count -gt 0) {
-                                    $list.ContentTypes[0].Name } else { "Form Library" }
-                $xsnFiles     = @($rootFolder.Files | Where-Object { $_.Name -like "*.xsn" })
+                $formTypeName = "Form Library"
+                try {
+                    if ($list.ContentTypes -and $list.ContentTypes.Count -gt 0) {
+                        $formTypeName = $list.ContentTypes[0].Name
+                    }
+                } catch { }
+
+                # Safe URL construction — guard against null DefaultViewUrl
+                $safeViewUrl = $webUrl
+                try {
+                    if ($list.DefaultViewUrl) {
+                        $safeViewUrl = $webUrl.TrimEnd('/') + '/' + $list.DefaultViewUrl.TrimStart('/')
+                    }
+                } catch { }
+
+                $xsnFiles = @()
+                try {
+                    $xsnFiles = @($rootFolder.Files | Where-Object { $_.Name -like "*.xsn" })
+                } catch { }
+
+                # Check Item/ and Forms/ subfolders for customized InfoPath forms
+                if ($xsnFiles.Count -eq 0) {
+                    foreach ($subPath in @("Item", "Forms")) {
+                        try {
+                            $sub = $ctx.Web.GetFolderByServerRelativeUrl($rootFolder.ServerRelativeUrl + "/" + $subPath)
+                            $ctx.Load($sub)
+                            $ctx.Load($sub.Files)
+                            $ctx.ExecuteQuery()
+                            $xsnFiles = @($sub.Files | Where-Object { $_.Name -like "*.xsn" })
+                            if ($xsnFiles.Count -gt 0) { break }
+                        } catch { }
+                    }
+                }
 
                 if ($xsnFiles.Count -eq 0) {
                     $IpResults.Add([PSCustomObject]@{
                         WebUrl = $webUrl; WebTitle = $webTitle; ListTitle = $list.Title
                         FormName = $list.Title; FormType = "Form Library (No XSN)"
-                        FormUrl  = $webUrl.TrimEnd('/') + '/' + $list.DefaultViewUrl.TrimStart('/')
+                        FormUrl  = $safeViewUrl
                         RuleCount=0; ActionCount=0; ValidationCount=0; FormattingCount=0
                         ConditionCount=0; DataConnectionCount=0; FieldCount=0
                         ItemCount=$list.ItemCount; LastItemCreatedDate=$lastCreated
@@ -625,13 +704,16 @@ $AuditScriptBlock = {
                     $bytes  = Get-FileBytes -Ctx $ctx -ServerRelUrl $xsn.ServerRelativeUrl
                     $parsed = Parse-Xsn -Bytes $bytes
 
+                    $xsnUrl = $webUrl
+                    try { $xsnUrl = $webUrl.TrimEnd('/') + $xsn.ServerRelativeUrl } catch { }
+
                     $IpResults.Add([PSCustomObject]@{
                         WebUrl              = $webUrl
                         WebTitle            = $webTitle
                         ListTitle           = $list.Title
                         FormName            = [System.IO.Path]::GetFileNameWithoutExtension($xsn.Name)
                         FormType            = $formTypeName
-                        FormUrl             = $webUrl.TrimEnd('/') + $xsn.ServerRelativeUrl
+                        FormUrl             = $xsnUrl
                         RuleCount           = $parsed.RuleCount
                         ActionCount         = $parsed.ActionCount
                         ValidationCount     = $parsed.ValidationCount
